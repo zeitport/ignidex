@@ -1,7 +1,7 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import type {Card} from '../../models/internal/card.ts';
-import {CardSection} from '../../models/internal/cardSection.ts';
+import type {Card} from '#models/internal/card.ts';
+import {CardSection} from '#models/internal/cardSection.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
 
 @customElement('cc-highlight-section')
@@ -14,21 +14,23 @@ export class HighlightSectionElement extends LitElement {
     render() {
         if (!this.section) return html``;
 
-        const allCards = this.section?.groups.map(group => group.cards).flat();
+        const allCards = this.section.groups.map(group => group.cards).flat();
 
         return html`
-            ${this.section.name ? html`<div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}>${this.section.name}</div>` : ''}
+            <div class="card-section">
+                <div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}>${this.section.name}</div>
 
-            <div class="apps" @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}>
-                ${allCards.map(card => html`
-                    <div class="app" @click=${(event: MouseEvent) => this.handleAppClick(event, card)} @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}>
-                        <cc-card-icon .card="${card}" size="1.5rem"></cc-card-icon>
-                        <div class="meta">
-                            <div class="name">${card.name ?? ''}</div>
-                            <div class="url">${card.description ?? ''}</div>
+                <div class="apps" @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}>
+                    ${allCards.map(card => html`
+                        <div class="app" @click=${(event: MouseEvent) => this.handleAppClick(event, card)} @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}>
+                            <cc-card-icon .card="${card}" size="1.5rem"></cc-card-icon>
+                            <div class="meta">
+                                <div class="name">${card.name ?? ''}</div>
+                                <div class="url">${card.description ?? ''}</div>
+                            </div>
                         </div>
-                    </div>
-                `)}
+                    `)}
+                </div>
             </div>
         `;
     }
