@@ -26,6 +26,9 @@ export class EditBookmarkCardOverlay extends LitElement {
     private url = '';
 
     @state()
+    private description = '';
+
+    @state()
     private nameError = '';
 
     @state()
@@ -52,9 +55,11 @@ export class EditBookmarkCardOverlay extends LitElement {
         if (card) {
             this.name = card.name ?? '';
             this.url = card.url || (this.pastedUrl.value ?? '');
+            this.description = card.description ?? '';
         } else {
             this.url = this.pastedUrl.value ?? '';
             this.name = this.extractDomain(this.url);
+            this.description = '';
         }
         this.nameError = '';
         this.urlError = '';
@@ -109,6 +114,18 @@ export class EditBookmarkCardOverlay extends LitElement {
                     ${this.urlError ? html`<div class="error-message">${this.urlError}</div>` : ''}
                 </div>
 
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input
+                        id="description"
+                        type="text"
+                        .value=${this.description}
+                        @input=${this.handleDescriptionInput}
+                        placeholder="Description"
+                        autocomplete="off"
+                    >
+                </div>
+
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
                 <cc-dialog-button slot="footer" primary @click=${this.handleSave}>Save</cc-dialog-button>
             </cc-overlay>
@@ -129,9 +146,14 @@ export class EditBookmarkCardOverlay extends LitElement {
         }
     }
 
+    private handleDescriptionInput(event: InputEvent) {
+        this.description = (event.target as HTMLInputElement).value;
+    }
+
     private handleClose() {
         this.name = '';
         this.url = '';
+        this.description = '';
         this.nameError = '';
         this.urlError = '';
         activeOverlay.value = null;
@@ -189,7 +211,8 @@ export class EditBookmarkCardOverlay extends LitElement {
                             ...group,
                             cards: [...group.cards, new Card({
                                 name: this.name.trim(),
-                                url: this.url.trim()
+                                url: this.url.trim(),
+                                description: this.description.trim()
                             })]
                         });
                     });
@@ -198,7 +221,8 @@ export class EditBookmarkCardOverlay extends LitElement {
                         ...targetGroup,
                         cards: [new Card({
                             name: this.name.trim(),
-                            url: this.url.trim()
+                            url: this.url.trim(),
+                            description: this.description.trim()
                         })]
                     })];
                 }
@@ -220,7 +244,8 @@ export class EditBookmarkCardOverlay extends LitElement {
                                     return new Card({
                                         ...card,
                                         name: this.name.trim(),
-                                        url: this.url.trim()
+                                        url: this.url.trim(),
+                                        description: this.description.trim()
                                     });
                                 }
                                 return card;
