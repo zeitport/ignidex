@@ -62,6 +62,15 @@
     --list-item-padding: 0.75rem;
     --list-item-gap: 0.75rem;
     --list-item-border-radius: 4px;
+
+    /* Switch */
+    --switch-width: 2.25rem;
+    --switch-height: 1.25rem;
+    --switch-slider-size: 0.9rem;
+    --switch-bg: #404040;
+    --switch-checked-bg: var(--accent);
+    --switch-slider-color: #ffffff;
+    --switch-disabled-opacity: 0.5;
 }
 
 * {
