@@ -22,7 +22,7 @@
         "#elements": "./src/elements/index.ts",
         "#utils/*": "./src/utils/*",
         "#inject": "./src/core/injector.ts",
-        "#models/*": "./src/model/*",
+        "#models/*": "./src/models/*",
         "#core/*": "./src/core/*"
     },
     "devDependencies": {
