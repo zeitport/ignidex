@@ -2,7 +2,7 @@
 
 ## Use case
 
-As a code maintainer I want to ___ to achieve ___.
+As a code maintainer, I want to 
 
 ## Plan
 
@@ -13,3 +13,6 @@ As a code maintainer I want to ___ to achieve ___.
 
 - Run `npm run lint` to check for lint errors
 - Run `npm run tsc` to run the TypeScript compiler
+
+
+## Result (xx%)
