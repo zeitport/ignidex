@@ -27,6 +27,27 @@ async function main() {
             const state = await userStateStore.getOrCreate();
             state.lastUsedStartPanelId = panel.id;
             await userStateStore.set(state);
+
+            if (panel.anchor && window.location.hash !== `#${panel.anchor}`) {
+                if (window.location.hash === '') {
+                    history.replaceState(null, '', `#${panel.anchor}`);
+                } else {
+                    window.location.hash = panel.anchor;
+                }
+            }
+        }
+    });
+
+    window.addEventListener('hashchange', async () => {
+        const anchor = window.location.hash.slice(1);
+        if (anchor) {
+            const currentPanel = activeStartPanel.value;
+            if (currentPanel?.anchor !== anchor) {
+                const entry = await startPanelsStore.getByAnchor(anchor);
+                if (entry) {
+                    activeStartPanel.value = new StartPanel(entry.startPanel);
+                }
+            }
         }
     });
 
@@ -36,15 +57,27 @@ async function main() {
     if (loadUrl) {
         activeStartPanel.value = await loadDataFromUrl(loadUrl);
     } else {
-        const state = await userStateStore.getOrCreate();
-        const lastUsedStartPanelId = state.lastUsedStartPanelId;
+        const anchor = window.location.hash.slice(1);
         let panelLoaded = false;
 
-        if (lastUsedStartPanelId) {
-            const entry = await startPanelsStore.get(lastUsedStartPanelId);
+        if (anchor) {
+            const entry = await startPanelsStore.getByAnchor(anchor);
             if (entry) {
                 activeStartPanel.value = new StartPanel(entry.startPanel);
                 panelLoaded = true;
+            }
+        }
+
+        if (!panelLoaded) {
+            const state = await userStateStore.getOrCreate();
+            const lastUsedStartPanelId = state.lastUsedStartPanelId;
+
+            if (lastUsedStartPanelId) {
+                const entry = await startPanelsStore.get(lastUsedStartPanelId);
+                if (entry) {
+                    activeStartPanel.value = new StartPanel(entry.startPanel);
+                    panelLoaded = true;
+                }
             }
         }
 
