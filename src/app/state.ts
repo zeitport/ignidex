@@ -1,9 +1,9 @@
 import {ObservableProperty} from '#utils/observableProperty.ts';
-import type {Card} from '../model/internal/card.ts';
+import type {Card} from '../models/internal/card.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
-import {StartPanel} from '../model/internal/startPanel.ts';
-import {CardSection} from '../model/internal/cardSection.ts';
-import {CardGroup} from '../model/internal/cardGroup.ts';
+import {StartPanel} from '../models/internal/startPanel.ts';
+import {CardSection} from '../models/internal/cardSection.ts';
+import {CardGroup} from '../models/internal/cardGroup.ts';
 import {ActionInterface} from '../actions/actionInterface.ts';
 
 export const activeStartPanel = new ObservableProperty<StartPanel | null>(null);

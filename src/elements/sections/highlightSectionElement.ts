@@ -1,7 +1,7 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import type {Card} from '../../model/internal/card.ts';
-import {CardSection} from '../../model/internal/cardSection.ts';
+import type {Card} from '../../models/internal/card.ts';
+import {CardSection} from '../../models/internal/cardSection.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
 
 @customElement('cc-highlight-section')

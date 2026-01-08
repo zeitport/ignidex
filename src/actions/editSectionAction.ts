@@ -1,7 +1,7 @@
 import {selectedSection, activeOverlay} from '../app/state.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {ActionInterface} from './actionInterface.ts';
-import {CardSectionType} from '../model/internal/cardSectionType.ts';
+import {CardSectionType} from '../models/internal/cardSectionType.ts';
 
 export class EditSectionAction implements ActionInterface {
     run() {

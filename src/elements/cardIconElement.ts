@@ -2,7 +2,7 @@ import {LitElement, html} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {IconResolver} from '../core/iconResolver.ts';
 import {inject} from '#inject';
-import {Card} from '../model/internal/card.ts';
+import {Card} from '../models/internal/card.ts';
 import {cardIconElementStyle} from './cardIconElementStyle.ts';
 
 @customElement('cc-card-icon')

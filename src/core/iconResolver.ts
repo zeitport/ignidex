@@ -1,4 +1,4 @@
-import type {Card} from '../model/internal/card.ts';
+import type {Card} from '../models/internal/card.ts';
 import {IconResolverResult} from './iconResolverResult.ts';
 import {IconAssetsStore} from './iconAssetsStore.ts';
 import {inject} from '#inject';

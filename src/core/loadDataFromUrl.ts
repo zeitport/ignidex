@@ -1,6 +1,6 @@
 import {inject} from '#core/injector.ts';
 import {IconAssetsStore} from '#core/iconAssetsStore.ts';
-import {StartPanel} from '../model/internal/startPanel.ts';
+import {StartPanel} from '../models/internal/startPanel.ts';
 
 /**
  * '/store/test.json'
