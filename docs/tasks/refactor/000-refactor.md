@@ -4,7 +4,7 @@
 
 As a code maintainer I want to ___ to achieve ___.
 
-## Implementation
+## Plan
 
 - Step 1
 - Step 2
