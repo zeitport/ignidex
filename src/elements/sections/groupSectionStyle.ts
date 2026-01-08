@@ -32,8 +32,9 @@ export const groupSectionStyle = css`
 
     .bookmark-item {
         position: relative;
-        padding: 0.25rem 0;
-        margin: 0;
+        padding: 0 0;
+        margin: 0.25rem 0;
+        height: 1.5rem;
         cursor: pointer;
     }
 
@@ -43,6 +44,7 @@ export const groupSectionStyle = css`
         grid-template-columns: 1.5rem max-content;
         align-items: center;
         grid-column-gap: 0.5rem;
+        height: 1.5rem;
         cursor: pointer;
         background-color: transparent;
         border: none;
@@ -51,10 +53,8 @@ export const groupSectionStyle = css`
 
     .bookmark-item-background {
         position: absolute;
-        inset: 0;
-        transform: scale(0);
-        transform-origin: left center;
-        transition: all ease 500ms;
+        inset: 0% 100% 0% 0%;
+        transition: all ease 700ms;
         border-radius: 0.5rem;
         opacity: 0;
     }
@@ -64,7 +64,7 @@ export const groupSectionStyle = css`
 
         .bookmark-item-background {
             background-color: var(--app-hover-bg);
-            transform: scale(1.05) translateX(-0.5rem);
+            inset: -0.25rem;
             transition: all ease 100ms;
             opacity: 1;
         }
@@ -73,5 +73,7 @@ export const groupSectionStyle = css`
     .bookmark-label {
         font-size: 1rem;
         color: var(--text);
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 `;

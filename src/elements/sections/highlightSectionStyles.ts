@@ -24,7 +24,7 @@ export const highlightSectionStyles = css`
         user-select: none;
     }
 
-    .apps {
+    .bookmarks {
         display: grid;
         grid-template-columns:repeat(4, minmax(0, 1fr));
         gap: 18px 56px;
@@ -32,19 +32,37 @@ export const highlightSectionStyles = css`
         margin-bottom: 30px;
     }
 
-    .app {
+    .bookmark {
+        position: relative;
         display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        min-height: 44px;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0;
     }
 
-    .app:hover {
-        background-color: var(--app-hover-bg);
-        cursor: pointer;
-        outline: solid 0.5rem var(--app-hover-bg);
+    .bookmark-background {
+        position: absolute;
+        inset: 0% 100% 0% 0%;
+        transition: all ease 700ms;
+        border-radius: 0.5rem;
+        opacity: 0;
+    }
 
+    .bookmark:hover {
         --icon-color: var(--icon-color-hover);
+
+        .bookmark-background {
+            background-color: var(--app-hover-bg);
+            inset: -0.5rem;
+            transition: all ease 100ms;
+            opacity: 1;
+        }
+    }
+
+    cc-card-icon,
+    .meta {
+        position: relative;
     }
 
     .app-icon {
