@@ -1,0 +1,86 @@
+:root {
+    --bg: #2b3138;
+    --app-hover-bg: #2e3e49;
+    --panel: #272727;
+    --text: #e7e9ec;
+    --muted: #9aa3ad;
+    --dim: #6f7a86;
+    --accent: #26c3cb;
+    --accent2: #5cb0b8;
+    --line: #29a6a8;
+    --base-font-size: 16px;
+    --icon-color: #ffffff60;
+    --icon-color-hover: #ffffff;
+    --icon-size: 1rem;
+
+    /* Input styling */
+    --input-border-color: #808080;
+    --input-bg: #303030;
+
+    /* Local scope vars for cc-card-icon */
+    --mask-url: '';
+
+    /* Context Menu */
+    --context-menu-font-size: 0.8rem;
+    --context-menu-text: #e0e0e0;
+    --context-menu-bg: #202020;
+    --context-menu-border: rgba(255, 255, 255, 0.5);
+    --context-menu-hover-bg: #2e3e49;
+    --context-menu-hover-text: #ffffff;
+    --context-menu-icon-color: #737373;
+    --context-menu-icon-hover: #c0c0c0;
+    --context-menu-divider: rgba(255, 255, 255, 0.25);
+
+    /* Overlay */
+    --overlay-bg: rgba(0, 0, 0, 0.3);
+    --overlay-backdrop-filter: blur(4.5px) saturate(1.4) brightness(0.9);
+    --overlay-max-width: 800px;
+    --overlay-max-height: 80vh;
+    --overlay-border-radius: 8px;
+    --overlay-header-padding: 1rem;
+    --overlay-header-font-size: 1rem;
+    --overlay-header-bg: #232323;
+    --overlay-footer-bg: #232323;
+    --overlay-body-padding: 1rem;
+    --overlay-footer-padding: 1rem;
+
+    /* Dialog Button */
+    --cc-dialog-button-padding: 0.5rem 1rem;
+    --cc-dialog-button-border-radius: 4px;
+    --cc-dialog-button-font-weight: 500;
+    --cc-dialog-button-font-size: 1rem;
+    --cc-dialog-button-bg: transparent;
+    --cc-dialog-button-color: var(--text);
+    --cc-dialog-button-hover-bg: rgba(255, 255, 255, 0.05);
+    --cc-dialog-button-primary-bg: var(--accent);
+    --cc-dialog-button-primary-color: var(--bg);
+    --cc-dialog-button-primary-hover-bg: #2edae3;
+
+    /* List Item */
+    --list-bg: #2a2e33;
+    --list-bg-hover: #353a40;
+    --list-item-padding: 0.75rem;
+    --list-item-gap: 0.75rem;
+    --list-item-border-radius: 4px;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html {
+    font-size: var(--base-font-size);
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Roboto, system-ui, -apple-system, sans-serif;
+    letter-spacing: .2px;
+}

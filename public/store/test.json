@@ -1,0 +1,146 @@
+{
+    "id": "QwPogLtlpy",
+    "anchor": "start",
+    "meta": {
+        "app": "ignidex",
+        "version": 1,
+        "exportAt": "2026-01-06T21:48:09.044Z",
+        "numberOfCards": 8
+    },
+    "header": {
+        "title": "Start"
+    },
+    "sections": [
+        {
+            "id": "IvyvgTGfPu",
+            "name": "Apps",
+            "type": "highlight",
+            "groups": [
+                {
+                    "id": "omSLtLjugh",
+                    "name": null,
+                    "cards": [
+                        {
+                            "id": "BRtYuspCGL",
+                            "type": "bookmark",
+                            "name": "Foto",
+                            "icon": "MkdNuVGghB",
+                            "iconRef": null,
+                            "url": "https://foto.yakay.at",
+                            "description": "foto.yakay.at"
+                        },
+                        {
+                            "id": "VPglmZkXJJ",
+                            "type": "bookmark",
+                            "name": "Docs",
+                            "icon": "hEmpTsVwaz",
+                            "iconRef": null,
+                            "url": "https://doc.yakay.at",
+                            "description": "doc.yakay.at"
+                        },
+                        {
+                            "id": "VHJrvzZeKi",
+                            "type": "bookmark",
+                            "name": "Kanban",
+                            "icon": "CKEUkrVhhM",
+                            "iconRef": null,
+                            "url": "https://kanban.yakay.at",
+                            "description": "kanban.yakay.at"
+                        },
+                        {
+                            "id": "lzbOqiPMri",
+                            "type": "bookmark",
+                            "name": "Pictogrammers",
+                            "icon": "WhNYpkRYvj",
+                            "iconRef": null,
+                            "url": "https://pictogrammers.com/library/mdi/",
+                            "description": "pictogrammers.com"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fFERiJxijo",
+            "name": "Bookmarks",
+            "type": "groups",
+            "groups": [
+                {
+                    "id": "mSSnhuSUGw",
+                    "name": "Group 1",
+                    "cards": [
+                        {
+                            "id": "ljNELSdCzQ",
+                            "type": "bookmark",
+                            "name": "Pictogrammers",
+                            "icon": null,
+                            "iconRef": null,
+                            "url": "https://pictogrammers.com/library/mdi/",
+                            "description": null
+                        },
+                        {
+                            "id": "xKtpvzoMST",
+                            "type": "bookmark",
+                            "name": "Pictogrammers",
+                            "icon": null,
+                            "iconRef": null,
+                            "url": "https://pictogrammers.com/library/mdi/",
+                            "description": null
+                        }
+                    ]
+                },
+                {
+                    "id": "fjLHsXmrWJ",
+                    "name": "Assets",
+                    "cards": [
+                        {
+                            "id": "RymUMwMmZG",
+                            "type": "bookmark",
+                            "name": "Pictogrammers",
+                            "icon": null,
+                            "iconRef": null,
+                            "url": "https://pictogrammers.com/library/mdi/",
+                            "description": null
+                        },
+                        {
+                            "id": "WWxPEkrJmT",
+                            "type": "bookmark",
+                            "name": "Lucide",
+                            "icon": "YebvsPuobL",
+                            "iconRef": null,
+                            "url": "https://lucide.dev/",
+                            "description": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "icons": [
+        {
+            "id": "CKEUkrVhhM",
+            "source": "mdi:mdiBulletinBoard",
+            "dataUri": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221rem%22%20height%3D%221rem%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12.04%2C2.5L9.53%2C5H14.53L12.04%2C2.5M4%2C7V20H20V7H4M12%2C0L17%2C5V5H20A2%2C2%200%200%2C1%2022%2C7V20A2%2C2%200%200%2C1%2020%2C22H4A2%2C2%200%200%2C1%202%2C20V7A2%2C2%200%200%2C1%204%2C5H7V5L12%2C0M7%2C18V14H12V18H7M14%2C17V10H18V17H14M6%2C12V9H11V12H6Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"
+        },
+        {
+            "id": "MkdNuVGghB",
+            "source": "mdi:mdiImageOutline",
+            "dataUri": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221rem%22%20height%3D%221rem%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M19%2C19H5V5H19M19%2C3H5A2%2C2%200%200%2C0%203%2C5V19A2%2C2%200%200%2C0%205%2C21H19A2%2C2%200%200%2C0%2021%2C19V5A2%2C2%200%200%2C0%2019%2C3M13.96%2C12.29L11.21%2C15.83L9.25%2C13.47L6.5%2C17H17.5L13.96%2C12.29Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"
+        },
+        {
+            "id": "WhNYpkRYvj",
+            "source": "mdi:mdiVectorRectangle",
+            "dataUri": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221rem%22%20height%3D%221rem%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M2%2C4H8V6H16V4H22V10H20V14H22V20H16V18H8V20H2V14H4V10H2V4M16%2C10V8H8V10H6V14H8V16H16V14H18V10H16M4%2C6V8H6V6H4M18%2C6V8H20V6H18M4%2C16V18H6V16H4M18%2C16V18H20V16H18Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"
+        },
+        {
+            "id": "YebvsPuobL",
+            "source": "url:https://lucide.dev/favicon.svg",
+            "dataUri": "data:image/svg+xml;base64,PHN2ZwogIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICB3aWR0aD0iMjQiCiAgaGVpZ2h0PSIyNCIKICB2aWV3Qm94PSIwIDAgMjQgMjQiCiAgZmlsbD0ibm9uZSIKICBzdHJva2U9ImN1cnJlbnRDb2xvciIKICBzdHJva2Utd2lkdGg9IjIiCiAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIgogIHN0cm9rZS1saW5lam9pbj0icm91bmQiCj4KICA8c3R5bGU+CiAgICAucGF0aCB7CiAgICAgIHN0cm9rZTogIzJEMzc0ODsKICAgIH0KICAgIEBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspIHsKICAgICAgLnBhdGggewogICAgICAgIHN0cm9rZTogI2ZmZjsKICAgICAgfQogICAgfQogIDwvc3R5bGU+CiAgPHBhdGggZD0iTTE0IDEyQzE0IDkuNzkwODYgMTIuMjA5MSA4IDEwIDhDNy43OTA4NiA4IDYgOS43OTA4NiA2IDEyQzYgMTYuNDE4MyA5LjU4MTcyIDIwIDE0IDIwQzE4LjQxODMgMjAgMjIgMTYuNDE4MyAyMiAxMkMyMiA4LjQ0NiAyMC40NTUgNS4yNTI4NSAxOCAzLjA1NTU3IiBjbGFzcz0icGF0aCIvPgogIDxwYXRoIGQ9Ik0xMCAxMkMxMCAxNC4yMDkxIDExLjc5MDkgMTYgMTQgMTZDMTYuMjA5MSAxNiAxOCAxNC4yMDkxIDE4IDEyQzE4IDcuNTgxNzIgMTQuNDE4MyA0IDEwIDRDNS41ODE3MiA0IDIgNy41ODE3MiAyIDEyQzIgMTUuNTg0MSAzLjU3MTI3IDE4LjgwMTIgNi4wNjI1MyAyMSIgc3Ryb2tlPSIjRjU2NTY1IiAvPgo8L3N2Zz4K"
+        },
+        {
+            "id": "hEmpTsVwaz",
+            "source": "mdi:mdiFileOutline",
+            "dataUri": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221rem%22%20height%3D%221rem%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M14%2C2H6A2%2C2%200%200%2C0%204%2C4V20A2%2C2%200%200%2C0%206%2C22H18A2%2C2%200%200%2C0%2020%2C20V8L14%2C2M18%2C20H6V4H13V9H18V20Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"
+        }
+    ]
+}

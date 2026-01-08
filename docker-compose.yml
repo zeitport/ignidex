@@ -1,0 +1,10 @@
+services:
+  ignidex:
+    build: .
+    ports:
+      - "4280:80"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
