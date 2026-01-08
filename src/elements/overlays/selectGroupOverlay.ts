@@ -32,7 +32,7 @@ export class SelectGroupOverlay extends LitElement {
                     ${this.pastedUrl.value ? html`<div class="info-text">Select a group to create a bookmark for: <span class="info-url">${this.pastedUrl.value}</span></div>` : ''}
                 </div>
 
-                <cc-list .items=${items} @click=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail, groups)}></cc-list>
+                <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail, groups)}></cc-list>
                 ${groups.length === 0 ? html`<div>No groups found in this section.</div>` : ''}
 
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>

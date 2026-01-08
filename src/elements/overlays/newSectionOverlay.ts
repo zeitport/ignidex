@@ -36,7 +36,7 @@ export class NewSectionOverlay extends LitElement {
             <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
                 <h2 slot="header">New Section</h2>
 
-                <cc-list .items=${items} @click=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail)}></cc-list>
+                <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail)}></cc-list>
 
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
             </cc-overlay>

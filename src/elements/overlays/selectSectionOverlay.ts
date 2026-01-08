@@ -35,7 +35,7 @@ export class SelectSectionOverlay extends LitElement {
                     ${this.pastedUrl.value ? html`<div class="info-text">Select a section to create a bookmark for: <span class="info-url">${this.pastedUrl.value}</span></div>` : ''}
                 </div>
 
-                <cc-list .items=${items} @click=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail, sections)}></cc-list>
+                <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail, sections)}></cc-list>
                 ${sections.length === 0 ? html`<div>No group sections found.</div>` : ''}
 
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>

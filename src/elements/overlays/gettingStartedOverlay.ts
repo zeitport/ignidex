@@ -41,7 +41,7 @@ export class GettingStartedOverlay extends LitElement {
             <cc-overlay ?isOpen=${this.isOpen} .canBeClosed=${false}>
                 <h2 slot="header">Getting Started</h2>
 
-                <cc-list .items=${items} @click=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail)}></cc-list>
+                <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail)}></cc-list>
             </cc-overlay>
         `;
     }
