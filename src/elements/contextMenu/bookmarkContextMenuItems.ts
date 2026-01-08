@@ -1,5 +1,4 @@
 import {
-    mdiArrowAll,
     mdiBookmarkOutline,
     mdiDeleteOutline,
     mdiLink,
@@ -26,11 +25,6 @@ export const bookmarkContextMenuItems = [
         icon: mdiPencilOutline,
         label: 'Edit',
         action: new EditCardAction()
-    }),
-    new ContextMenuItem({
-        icon: mdiArrowAll,
-        label: 'Move',
-        action: new NotImplementedAction({message: 'Move'})
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
