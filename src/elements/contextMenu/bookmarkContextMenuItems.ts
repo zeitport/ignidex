@@ -9,14 +9,15 @@ import {
 import {EditCardAction} from '../../actions/editCardAction.ts';
 import {DeleteCardAction} from '../../actions/deleteCardAction.ts';
 import {MoveCardAction} from '../../actions/moveCardAction.ts';
+import {CopyUrlAction} from '../../actions/copyUrlAction.ts';
 import {NotImplementedAction} from '../../actions/notImplementedAction.ts';
 import {ContextMenuItem} from '../contextMenuItem.ts';
 
 export const bookmarkContextMenuItems = [
     new ContextMenuItem({
         icon: mdiLink,
-        label: 'Copy link',
-        action: new NotImplementedAction({message: 'Copy Link'})
+        label: 'Copy URL',
+        action: new CopyUrlAction()
     }),
     new ContextMenuItem({
         icon: mdiBookmarkOutline,
