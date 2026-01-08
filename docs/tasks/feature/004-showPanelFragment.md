@@ -15,4 +15,4 @@ As a user, I want to see the current panel (anchor) as part of the URL to achiev
 - Run `npm run lint` to check for lint errors
 - Run `npm run tsc` to run the TypeScript compiler
 
-## Result (xx%)
+## Result (100%)
