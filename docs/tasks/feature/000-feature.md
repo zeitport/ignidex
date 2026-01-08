@@ -4,7 +4,7 @@
 
 As a user I want X to achieve Y.
 
-## Implementation
+## Plan
 
 - Step 1
 - Step 2
