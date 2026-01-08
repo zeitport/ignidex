@@ -2,14 +2,23 @@ import {
     mdiDelete,
     mdiPencilOutline,
     mdiArrowUpThin,
-    mdiArrowDownThin
+    mdiArrowDownThin,
+    mdiBookmarkOutline
 } from '@mdi/js';
 import {DeleteSectionAction} from '../../actions/deleteSectionAction.ts';
 import {EditSectionAction} from '../../actions/editSectionAction.ts';
+import {AddCardAction} from '../../actions/addCardAction.ts';
 import {MoveSectionAction} from '../../actions/moveSectionAction.ts';
 import {ContextMenuItem} from '../contextMenuItem.ts';
 
 export const highlightSectionContextMenuItems = [
+    new ContextMenuItem({
+        icon: mdiBookmarkOutline,
+        label: 'Add bookmark',
+        tooltip: 'Add new bookmark to section',
+        action: new AddCardAction()
+    }),
+    ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',

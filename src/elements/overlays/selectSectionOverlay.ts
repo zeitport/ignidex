@@ -4,7 +4,7 @@ import {activeOverlay, activeStartPanel, selectedSection, selectedGroup, selecte
 import {CardSectionType} from '#models/internal/cardSectionType.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
-import {ListItem} from '../listElement.ts';
+import {ListItem} from '#elements';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
 import '../listElement.ts';
@@ -22,7 +22,7 @@ export class SelectSectionOverlay extends LitElement {
     private pastedUrl = pastedUrl.watch(this);
 
     render() {
-        const sections = this.activeStartPanel.value?.sections.filter(section => section.type === CardSectionType.Groups) ?? [];
+        const sections = this.activeStartPanel.value?.sections.filter(section => section.type === CardSectionType.Groups || section.type === CardSectionType.Highlight) ?? [];
         const items: ListItem[] = sections.map(section => ({
             id: section.id,
             label: section.name || 'Untitled Section'
@@ -36,7 +36,7 @@ export class SelectSectionOverlay extends LitElement {
                 </div>
 
                 <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail, sections)}></cc-list>
-                ${sections.length === 0 ? html`<div>No group sections found.</div>` : ''}
+                ${sections.length === 0 ? html`<div>No sections found.</div>` : ''}
 
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
             </cc-overlay>
@@ -48,7 +48,11 @@ export class SelectSectionOverlay extends LitElement {
         if (!section) return;
 
         selectedSection.value = section;
-        if (section.groups.length === 0) {
+        if (section.type === CardSectionType.Highlight) {
+            selectedGroup.value = section.groups[0] ?? new CardGroup({name: 'Group'});
+            selectedCard.value = null;
+            activeOverlay.value = OverlayType.editBookmark;
+        } else if (section.groups.length === 0) {
             selectedGroup.value = new CardGroup({name: 'Group'});
             selectedCard.value = null;
             activeOverlay.value = OverlayType.editBookmark;

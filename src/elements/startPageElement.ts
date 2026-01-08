@@ -7,7 +7,7 @@ import './sections/groupSectionElement.ts';
 import {when} from 'lit/directives/when.js';
 import {activeOverlay, activeStartPanel, selectedGroup, selectedCard, selectedSection, pastedUrl} from '../app/state.ts';
 import type {Card} from '../models/internal/card.ts';
-import type {CardGroup} from '../models/internal/cardGroup.ts';
+import {CardGroup} from '../models/internal/cardGroup.ts';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
 import {bookmarkContextMenuItems} from './contextMenu/bookmarkContextMenuItems.ts';
@@ -181,8 +181,10 @@ export class StartPageElement extends LitElement {
 
         if (event.detail.section.type === CardSectionType.Highlight) {
             contextMenu.items = highlightSectionContextMenuItems;
+            selectedGroup.value = event.detail.section.groups[0] ?? new CardGroup({name: 'Group'});
         } else if (event.detail.section.type === CardSectionType.Groups) {
             contextMenu.items = bookmarkSectionContextMenuItems;
+            selectedGroup.value = null;
         }
 
         selectedSection.value = event.detail.section;
