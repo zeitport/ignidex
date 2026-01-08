@@ -92,18 +92,12 @@
 
 ## Icons (Privacy-First)
 
-* [ ] Built-in icon library (`iconName`)
-* [ ] Deterministic generated icons
-
-    * [ ] Stable color from name/domain
-    * [ ] Letter(s) fallback
 * [ ] Upload icon (SVG/PNG)
-* [ ] Store uploaded icons in IndexedDB
-* [ ] `iconRef` resolution
+* [x] Store uploaded icons in IndexedDB
 * [ ] Blob URL lifecycle cleanup
 * [ ] Icon picker UI
 * [ ] Change / remove icon
-* [ ] Never show broken icon (fallback always)
+* [x] Never show broken icon (fallback always)
 
 ---
 
@@ -113,13 +107,12 @@
 * [ ] Max width setting
 * [ ] Theme (light/dark)
 * [ ] Background (color or image)
-* [ ] Persist settings locally
+* [x] Persist settings locally
 
 ---
 
 ## Export (Portable)
 
-* [ ] Export as single HTML file
 * [ ] Embed JSON config
 * [ ] Embed uploaded icons
 * [ ] Works offline
