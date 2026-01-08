@@ -11,7 +11,7 @@ import {AddGroupAction} from '../../actions/addGroupAction.ts';
 import {MoveSectionAction} from '../../actions/moveSectionAction.ts';
 import {ContextMenuItem} from '../contextMenuItem.ts';
 
-export const sectionContextMenuItems = [
+export const bookmarkSectionContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',

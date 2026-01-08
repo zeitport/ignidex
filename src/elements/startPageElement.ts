@@ -14,7 +14,8 @@ import {bookmarkContextMenuItems} from './contextMenu/bookmarkContextMenuItems.t
 import {documentContextMenuItems} from './contextMenu/documentContextMenuItems.ts';
 import {panelContextMenuItems} from './contextMenu/panelContextMenuItems.ts';
 import {groupContextMenuItems} from './contextMenu/groupContextMenuItems.ts';
-import {sectionContextMenuItems} from './contextMenu/sectionContextMenuItems.ts';
+import {bookmarkSectionContextMenuItems} from './contextMenu/bookmarkSectionContextMenuItems.ts';
+import {highlightSectionContextMenuItems} from './contextMenu/highlightSectionContextMenuItems.ts';
 import type {ContextMenuElement} from './contextMenuElement.ts';
 import {OverlayType} from './overlays/overlayType.ts';
 import './overlays/gettingStartedOverlay.ts';
@@ -177,7 +178,12 @@ export class StartPageElement extends LitElement {
     private handleSectionContextMenu(event: {detail: {section: CardSection, x: number, y: number}}) {
         console.log('Show Section ContextMenu', event);
         const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
-        contextMenu.items = sectionContextMenuItems;
+
+        if (event.detail.section.type === CardSectionType.Highlight) {
+            contextMenu.items = highlightSectionContextMenuItems;
+        } else if (event.detail.section.type === CardSectionType.Groups) {
+            contextMenu.items = bookmarkSectionContextMenuItems;
+        }
 
         selectedSection.value = event.detail.section;
 
