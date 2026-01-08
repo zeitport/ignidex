@@ -21,6 +21,7 @@ async function main() {
     if (state.baseFontSize) {
         document.documentElement.style.setProperty('--base-font-size', `${state.baseFontSize}px`);
     }
+    document.documentElement.style.setProperty('--text-transform', state.useUppercase ? 'uppercase' : 'none');
 
     activeStartPanel.observe(async (panel) => {
         if (panel) {

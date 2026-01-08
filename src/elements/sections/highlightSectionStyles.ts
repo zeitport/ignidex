@@ -7,7 +7,7 @@ export const highlightSectionStyles = css`
     .section-title {
         margin: 1.5rem 0 1rem;
         font-size: 0.8rem;
-        text-transform: uppercase;
+        text-transform: var(--text-transform);
         color: var(--muted);
         font-weight: 600;
         user-select: none;
@@ -18,7 +18,7 @@ export const highlightSectionStyles = css`
         padding: 0;
         line-height: 1.25rem;
         font-size: 0.8rem;
-        text-transform: uppercase;
+        text-transform: var(--text-transform);
         color: var(--accent);
         font-weight: 300;
         user-select: none;
@@ -84,7 +84,7 @@ export const highlightSectionStyles = css`
         margin-top: 4px;
         font-size: 11px;
         color: var(--accent);
-        text-transform: uppercase;
+        text-transform: var(--text-transform);
         letter-spacing: 0.05rem;
         text-decoration: none;
     }

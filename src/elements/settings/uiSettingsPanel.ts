@@ -16,6 +16,9 @@ export class UISettingsPanel extends LitElement {
     @state()
     private selectedFontSize: number = 16;
 
+    @state()
+    private useUppercase: boolean = true;
+
     static styles = css`
         :host {
             display: flex;
@@ -94,6 +97,7 @@ export class UISettingsPanel extends LitElement {
         const state = await this.userStateStore.getOrCreate();
         this.selectedColor = state.accentColor;
         this.selectedFontSize = state.baseFontSize;
+        this.useUppercase = state.useUppercase;
     }
 
     render() {
@@ -136,6 +140,14 @@ export class UISettingsPanel extends LitElement {
                     `)}
                 </div>
             </cc-settings-section>
+
+            <cc-settings-section>
+                <span slot="label">Text Transform</span>
+                <span slot="description">Enable uppercase text for a modern look.</span>
+                <div>
+                    <cc-switch .checked=${this.useUppercase} @change=${(event: CustomEvent) => this.toggleTextTransform(event.detail.checked)}></cc-switch>
+                </div>
+            </cc-settings-section>
         `;
     }
 
@@ -153,6 +165,14 @@ export class UISettingsPanel extends LitElement {
         state.baseFontSize = size;
         await this.userStateStore.set(state);
         document.documentElement.style.setProperty('--base-font-size', `${size}px`);
+    }
+
+    private async toggleTextTransform(checked: boolean) {
+        this.useUppercase = checked;
+        const state = await this.userStateStore.getOrCreate();
+        state.useUppercase = checked;
+        await this.userStateStore.set(state);
+        document.documentElement.style.setProperty('--text-transform', checked ? 'uppercase' : 'none');
     }
 }
 
