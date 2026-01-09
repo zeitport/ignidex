@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit';
+import {LitElement, html, type PropertyValues} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {IconResolver} from '../core/iconResolver.ts';
 import {inject} from '#inject';
@@ -17,12 +17,21 @@ export class CardIconElement extends LitElement {
 
     private iconResolver: IconResolver = inject(IconResolver);
 
-
     @state()
     iconDataUri: string | null = null;
 
-    async connectedCallback() {
+    connectedCallback() {
         super.connectedCallback();
+        this.resolveIcon();
+    }
+
+    protected willUpdate(changedProperties: PropertyValues<this>): void {
+        if (changedProperties.has('card')) {
+            this.resolveIcon();
+        }
+    }
+
+    private async resolveIcon() {
         const result = await this.iconResolver.resolve(this.card);
 
         if (!result.dataUri) {
@@ -30,7 +39,6 @@ export class CardIconElement extends LitElement {
         }
 
         this.iconDataUri = result.dataUri;
-        console.log(`Connected: ${this.iconDataUri}`);
     }
 
     render() {
