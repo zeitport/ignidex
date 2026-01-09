@@ -5,6 +5,5 @@ export interface CardDto {
     description: string | null;
     iconName: string | null;
     iconUrl: string | null;
-    iconRef: string | null;
     url: string | null;
 }

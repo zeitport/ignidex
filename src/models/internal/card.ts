@@ -6,13 +6,6 @@ export class Card {
     name: string | null;
     description: string | null;
     icon: string | null;
-
-    /**
-     * #TODO
-     * Not implemented
-     */
-    iconRef: string | null;
-
     url: string | null;
 
     constructor(init: Partial<Card> = {}) {
@@ -20,7 +13,6 @@ export class Card {
         this.type = init.type ?? 'bookmark';
         this.name = init.name ?? null;
         this.icon = init.icon ?? null;
-        this.iconRef = init.iconRef ?? null;
         this.url = init.url ?? null;
         this.description = init.description ?? null;
     }
