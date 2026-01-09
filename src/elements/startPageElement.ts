@@ -162,6 +162,7 @@ export class StartPageElement extends LitElement {
     }
 
     private handleCardContextMenu(event: {detail: {card: Card, x: number, y: number}} & CustomEvent) {
+        if (this.activeOverlay.value) return;
         console.log('Show CardContextMenu', event);
 
         if (event.detail.card.type === 'bookmark') {
@@ -176,6 +177,7 @@ export class StartPageElement extends LitElement {
     }
 
     private handleSectionContextMenu(event: {detail: {section: CardSection, x: number, y: number}}) {
+        if (this.activeOverlay.value) return;
         console.log('Show Section ContextMenu', event);
         const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
 
@@ -193,6 +195,7 @@ export class StartPageElement extends LitElement {
     }
 
     private handleGroupContextMenu(event: {detail: {section: CardSection, group: CardGroup, x: number, y: number}}) {
+        if (this.activeOverlay.value) return;
         console.log('Show Group ContextMenu', event);
         const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
         contextMenu.items = groupContextMenuItems;
@@ -204,17 +207,19 @@ export class StartPageElement extends LitElement {
     }
 
     private handlePanelContextMenu(event: MouseEvent) {
-        console.log('Show Panel ContextMenu', event);
         event.preventDefault();
         event.stopPropagation();
+        if (this.activeOverlay.value) return;
+        console.log('Show Panel ContextMenu', event);
         const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
         contextMenu.items = panelContextMenuItems;
         contextMenu.open(event.clientX, event.clientY);
     }
 
     private handleDocumentContextMenu = (event: MouseEvent) => {
-        console.log('Show DocumentContextMenu', event);
         event.preventDefault();
+        if (this.activeOverlay.value) return;
+        console.log('Show DocumentContextMenu', event);
         const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
         contextMenu.items = documentContextMenuItems;
         contextMenu.open(event.clientX, event.clientY);
