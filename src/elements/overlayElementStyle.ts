@@ -63,9 +63,13 @@ export const overlayElementStyle = css`
         }
     }
 
-    .overlay-body {
-        padding: var(--overlay-body-padding, 1rem);
+    .overlay-body-section {
         overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .overlay-body {
+        margin: var(--overlay-body-margin);
         flex: 1;
     }
 

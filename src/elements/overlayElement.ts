@@ -57,8 +57,10 @@ export class OverlayElement extends LitElement {
                     <div class="overlay-header" ?hidden=${!this.hasHeader}>
                         <slot name="header" @slotchange=${this.handleHeaderSlotChange}></slot>
                     </div>
-                    <div class="overlay-body">
-                        <slot></slot>
+                    <div class="overlay-body-section">
+                        <div class="overlay-body">
+                            <slot></slot>
+                        </div>
                     </div>
                     <div class="overlay-footer" ?hidden=${!this.hasFooter}>
                         <slot name="footer" @slotchange=${this.handleFooterSlotChange}></slot>

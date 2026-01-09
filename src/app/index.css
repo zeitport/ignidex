@@ -42,7 +42,7 @@
     --overlay-header-font-size: 1rem;
     --overlay-header-bg: #232323;
     --overlay-footer-bg: #232323;
-    --overlay-body-padding: 1rem;
+    --overlay-body-margin: 1rem;
     --overlay-footer-padding: 1rem;
 
     /* Dialog Button */
