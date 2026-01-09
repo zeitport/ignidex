@@ -15,4 +15,7 @@ As a code maintainer, I want to
 - Run `npm run tsc` to run the TypeScript compiler
 
 
-## Result (xx%)
+## Review of AI code
+
+- Score: 0/10
+- 
