@@ -1,6 +1,7 @@
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {mdiDeleteOutline} from '@mdi/js';
+import {mdiDeleteOutline, mdiClipboardOutline, mdiContentCopy} from '@mdi/js';
+import {svgToDataUri} from '#utils/svgToDataUri.ts';
 import {activeOverlay, activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl} from '../../app/state.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/startPanelsStore.ts';
@@ -13,6 +14,12 @@ import {Card} from '#models/internal/card.ts';
 import {createId} from '#utils/createId.ts';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
+import '../contextMenuElement.ts';
+import {ContextMenuItem} from '../contextMenuItem.ts';
+import type {ContextMenuElement} from '../contextMenuElement.ts';
+import {PasteIconAction} from '../../actions/iconPreview/pasteIconAction.ts';
+import {DeleteIconAction} from '../../actions/iconPreview/deleteIconAction.ts';
+import {CopyIconDataUrlAction} from '../../actions/iconPreview/copyIconDataUrlAction.ts';
 import {editBookmarkCardOverlayStyle} from './editBookmarkCardOverlayStyle.ts';
 
 @customElement('cc-edit-bookmark-card-overlay')
@@ -58,8 +65,10 @@ export class EditBookmarkCardOverlay extends LitElement {
             if (this.isOpen) {
                 this.resetFields();
                 window.addEventListener('paste', this.handleIconPaste);
+                window.addEventListener('click', this.handleWindowClick);
             } else {
                 window.removeEventListener('paste', this.handleIconPaste);
+                window.removeEventListener('click', this.handleWindowClick);
             }
         }
     }
@@ -67,6 +76,7 @@ export class EditBookmarkCardOverlay extends LitElement {
     disconnectedCallback(): void {
         super.disconnectedCallback();
         window.removeEventListener('paste', this.handleIconPaste);
+        window.removeEventListener('click', this.handleWindowClick);
     }
 
     private async resetFields() {
@@ -132,6 +142,7 @@ export class EditBookmarkCardOverlay extends LitElement {
                         <div
                             class="icon-preview ${this.iconDataUri ? 'has-icon' : ''}"
                             @click=${this.handleIconPreviewClick}
+                            @contextmenu=${this.handleIconContextMenu}
                         >
                             ${this.iconDataUri
                                 ? html`<div class="icon-preview-icon" style="--mask-url: url('${this.iconDataUri}')"></div>`
@@ -199,6 +210,8 @@ export class EditBookmarkCardOverlay extends LitElement {
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
                 <cc-dialog-button slot="footer" primary @click=${this.handleSave}>Save</cc-dialog-button>
             </cc-overlay>
+
+            <cc-context-menu id="iconContextMenu"></cc-context-menu>
         `;
     }
 
@@ -233,7 +246,7 @@ export class EditBookmarkCardOverlay extends LitElement {
         const reader = new FileReader();
         reader.onload = () => {
             const svgContent = reader.result as string;
-            this.iconDataUri = this.svgToDataUri(svgContent);
+            this.iconDataUri = svgToDataUri(svgContent);
             this.iconUrl = file.name;
         };
         reader.readAsText(file);
@@ -244,33 +257,18 @@ export class EditBookmarkCardOverlay extends LitElement {
         const target = event.target as HTMLElement;
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
 
-        const pastedText = event.clipboardData?.getData('text')?.trim() ?? '';
+        const pastedText = event.clipboardData?.getData('text') ?? '';
         if (!pastedText) return;
 
-        // SVG markup
-        if (pastedText.startsWith('<svg') || pastedText.startsWith('<?xml')) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.iconDataUri = this.svgToDataUri(pastedText);
-            this.iconUrl = '';
-            return;
-        }
+        const action = new PasteIconAction((dataUri, source) => {
+            this.iconDataUri = dataUri;
+            this.iconUrl = source;
+        });
 
-        // Data URI
-        if (pastedText.startsWith('data:image/svg+xml')) {
+        const processed = await action.processText(pastedText);
+        if (processed) {
             event.preventDefault();
             event.stopPropagation();
-            this.iconDataUri = pastedText;
-            this.iconUrl = '';
-            return;
-        }
-
-        // URL (http/https)
-        if (pastedText.startsWith('http://') || pastedText.startsWith('https://')) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.iconUrl = pastedText;
-            await this.fetchIconFromUrl(pastedText);
         }
     };
 
@@ -280,25 +278,52 @@ export class EditBookmarkCardOverlay extends LitElement {
         this.iconUrl = '';
     }
 
-    private async fetchIconFromUrl(url: string) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) return;
+    private handleIconContextMenu(event: MouseEvent) {
+        event.preventDefault();
+        event.stopPropagation();
 
-            const contentType = response.headers.get('content-type') ?? '';
-            if (!contentType.includes('svg')) return;
-
-            const svgContent = await response.text();
-            if (svgContent.includes('<svg')) {
-                this.iconDataUri = this.svgToDataUri(svgContent);
-            }
-        } catch {
-            // Silently fail - user can try another URL
-        }
+        const contextMenu = this.shadowRoot!.getElementById('iconContextMenu') as ContextMenuElement;
+        contextMenu.items = this.buildIconContextMenuItems();
+        contextMenu.open(event.clientX, event.clientY);
     }
 
-    private svgToDataUri(svg: string): string {
-        return `data:image/svg+xml;utf8,${encodeURIComponent(svg.trim())}`;
+    private handleWindowClick = () => {
+        const contextMenu = this.shadowRoot?.getElementById('iconContextMenu') as ContextMenuElement | null;
+        contextMenu?.close();
+    };
+
+    private buildIconContextMenuItems(): ContextMenuItem[] {
+        const items: ContextMenuItem[] = [
+            new ContextMenuItem({
+                icon: mdiClipboardOutline,
+                label: 'Paste',
+                action: new PasteIconAction((dataUri, source) => {
+                    this.iconDataUri = dataUri;
+                    this.iconUrl = source;
+                })
+            })
+        ];
+
+        if (this.iconDataUri) {
+            items.push(
+                new ContextMenuItem({
+                    icon: mdiContentCopy,
+                    label: 'Copy Data URL',
+                    action: new CopyIconDataUrlAction(() => this.iconDataUri)
+                }),
+                ContextMenuItem.divider(),
+                new ContextMenuItem({
+                    icon: mdiDeleteOutline,
+                    label: 'Delete',
+                    action: new DeleteIconAction(() => {
+                        this.iconDataUri = '';
+                        this.iconUrl = '';
+                    })
+                })
+            );
+        }
+
+        return items;
     }
 
     private handleClose() {
