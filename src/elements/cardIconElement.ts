@@ -13,9 +13,6 @@ export class CardIconElement extends LitElement {
     card!: Card;
 
     @property({type: String})
-    size = '1rem';
-
-    @property({type: String})
     color = 'currentColor';
 
     private iconResolver: IconResolver = inject(IconResolver);
@@ -41,10 +38,8 @@ export class CardIconElement extends LitElement {
             return html``
         }
 
-        const size = this.size ?? '1rem';
-
         return html`
-            <div class="mono-icon" aria-hidden="true" style="--icon-size:${size}; --mask-url: url('${this.iconDataUri}')"></div>
+            <div class="mono-icon" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>
         `;
     }
 }

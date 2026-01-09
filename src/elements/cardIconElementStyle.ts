@@ -9,8 +9,8 @@ export const cardIconElementStyle = css`
     }
 
     .mono-icon {
-        width: var(--icon-size, 1.5rem);
-        height: var(--icon-size, 1.5rem);
+        width: var(--icon-size);
+        height: var(--icon-size);
         background-color: var(--icon-color);
         mask-image: var(--mask-url);
         mask-repeat: no-repeat;
