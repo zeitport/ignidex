@@ -25,7 +25,7 @@ export class HighlightSectionElement extends LitElement {
                     ${allCards.map(card => html`
                         <div class="bookmark" @click=${(event: MouseEvent) => this.handleAppClick(event, card)} @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}>
                             <div class="bookmark-background"></div>
-                            <cc-card-icon .card="${card}" size="1.5rem"></cc-card-icon>
+                            <cc-card-icon .card="${card}" style="--icon-size: 1.75rem"></cc-card-icon>
                             <div class="meta">
                                 <div class="name">${card.name ?? ''}</div>
                                 ${when(card.description, description => html`<div class="url">${description}</div>`)}

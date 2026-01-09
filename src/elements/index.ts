@@ -1,4 +1,5 @@
 export * from './cardIconElement.ts';
+export * from './iconPreviewElement.ts';
 export * from './startPageElement.ts';
 export * from './sections/groupSectionElement.ts';
 export * from './sections/highlightSectionElement.ts';
