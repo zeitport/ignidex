@@ -14,4 +14,7 @@ As a user I want X to achieve Y.
 - Run `npm run lint` to check for lint errors
 - Run `npm run tsc` to run the TypeScript compiler
 
-## Result (xx%)
+## Review of AI code
+
+- Score: 5/10
+- 
