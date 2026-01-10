@@ -1,5 +1,5 @@
 import {inject} from '#core/injector.ts';
-import {IconAssetsStore} from '#core/iconAssetsStore.ts';
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {StartPanel} from '../models/internal/startPanel.ts';
 
 /**
@@ -13,10 +13,10 @@ export async function loadDataFromUrl(url: string): Promise<StartPanel> {
         const data = await response.json();
 
         if (data.icons && Array.isArray(data.icons)) {
-            const iconAssetsDatabase = inject(IconAssetsStore);
+            const imageAssetsDatabase = inject(ImageAssetsStore);
             for (const icon of data.icons) {
                 if (icon.id && icon.dataUri) {
-                    await iconAssetsDatabase.set(icon);
+                    await imageAssetsDatabase.set(icon);
                 }
             }
         }

@@ -66,7 +66,7 @@ interface ActionInterface {
 }
 ```
 
-**IndexedDB Layer:** `DatabaseConnector` provides promise-based access to stores: `iconAssets`, `startPanels`, `userState`.
+**IndexedDB Layer:** `DatabaseConnector` provides promise-based access to stores: `imageAssets`, `startPanels`, `userState`.
 
 ### Data Model Hierarchy
 

@@ -1,4 +1,4 @@
-import {UserStateEntry} from '../models/idb/userStateEntry.ts';
+import {UserStateEntry} from '#models/idb/userStateEntry.ts';
 import {DatabaseConnector} from './databaseConnector.ts';
 
 export class UserStateStore {

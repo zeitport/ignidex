@@ -2,8 +2,8 @@ import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {activeOverlay, activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl} from '../../app/state.ts';
 import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/startPanelsStore.ts';
-import {IconAssetsStore} from '#core/iconAssetsStore.ts';
+import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
@@ -45,7 +45,7 @@ export class EditBookmarkCardOverlay extends LitElement {
     private iconUrl = '';
 
     private startPanelsStore = inject(StartPanelsStore);
-    private iconAssetsStore = inject(IconAssetsStore);
+    private imageAssetsStore = inject(ImageAssetsStore);
 
     private selectedCard = selectedCard.watch(this);
     private selectedSection = selectedSection.watch(this);
@@ -86,7 +86,7 @@ export class EditBookmarkCardOverlay extends LitElement {
             return;
         }
 
-        const entry = await this.iconAssetsStore.get(iconId);
+        const entry = await this.imageAssetsStore.get(iconId);
         if (entry?.dataUri) {
             this.iconDataUri = entry.dataUri;
             this.iconUrl = entry.source ?? '';
@@ -245,7 +245,7 @@ export class EditBookmarkCardOverlay extends LitElement {
         let iconId: string | null = null;
         if (this.iconDataUri) {
             iconId = cardToEdit?.icon ?? createId();
-            await this.iconAssetsStore.set({
+            await this.imageAssetsStore.set({
                 id: iconId,
                 source: this.iconUrl || null,
                 dataUri: this.iconDataUri

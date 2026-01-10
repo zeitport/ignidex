@@ -3,7 +3,7 @@ import {customElement, state} from 'lit/decorators.js';
 import {colorPalette} from './colorPalette.ts';
 import './settingsSection.ts';
 import './settingsHeader.ts';
-import {UserStateStore} from '../../core/userStateStore.ts';
+import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
 
 @customElement('cc-ui-settings-panel')

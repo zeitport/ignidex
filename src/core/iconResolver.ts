@@ -1,11 +1,11 @@
 import type {Card} from '../models/internal/card.ts';
 import {IconResolverResult} from './iconResolverResult.ts';
-import {IconAssetsStore} from './iconAssetsStore.ts';
+import {ImageAssetsStore} from './idb/imageAssetsStore.ts';
 import {inject} from '#inject';
 import {mdiLinkOff} from '@mdi/js';
 
 export class IconResolver {
-    private iconAssetsDatabase: IconAssetsStore = inject(IconAssetsStore);
+    private imageAssetsDatabase: ImageAssetsStore = inject(ImageAssetsStore);
 
     async resolve(card: Card): Promise<IconResolverResult> {
         let result = new IconResolverResult({
@@ -14,7 +14,7 @@ export class IconResolver {
 
         if (card.icon) {
             try {
-                const entry = await this.iconAssetsDatabase.get(card.icon);
+                const entry = await this.imageAssetsDatabase.get(card.icon);
 
                 if (entry) {
                     if (entry.dataUri) {

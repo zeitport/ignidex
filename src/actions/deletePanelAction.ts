@@ -3,7 +3,7 @@ import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/startPanelsStore.ts';
+import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
 
 export class DeletePanelAction implements ActionInterface {

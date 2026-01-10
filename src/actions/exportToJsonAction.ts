@@ -1,5 +1,5 @@
 import {inject} from '#core/injector.ts';
-import {IconAssetsStore} from '#core/iconAssetsStore.ts';
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import {activeStartPanel} from '../app/state.ts';
 import type {ActionInterface} from './actionInterface.ts';
@@ -12,8 +12,8 @@ export class ExportToJsonAction implements ActionInterface {
             return;
         }
 
-        const iconAssetsDatabase = inject(IconAssetsStore);
-        const allIcons = await iconAssetsDatabase.getAll();
+        const imageAssetsStore = inject(ImageAssetsStore);
+        const allIcons = await imageAssetsStore.getAll();
         const usedIconIds = this.getUsedIconIds(startPanel);
         const icons = allIcons.filter(icon => usedIconIds.has(icon.id));
 

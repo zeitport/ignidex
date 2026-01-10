@@ -1,6 +1,6 @@
 import {activeOverlay, activeStartPanel} from '../app/state.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
-import {StartPanelsStore} from './startPanelsStore.ts';
+import {StartPanelsStore} from './idb/startPanelsStore.ts';
 import {inject} from '#inject';
 
 /**

@@ -1,9 +1,10 @@
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+
 export class DatabaseConnector {
     private dbPromise: Promise<IDBDatabase> | null = null;
     private readonly dbName: string = 'ignidex';
-    private readonly dbVersion: number = 4;
+    private readonly dbVersion: number = 5;
 
-    private readonly iconAssetsStoreName = 'iconAssets';
     private readonly startPanelsStoreName = 'startPanels';
     private readonly userStateStoreName = 'userState';
 
@@ -27,7 +28,7 @@ export class DatabaseConnector {
                 const db = request.result;
                 const transaction = request.transaction!;
 
-                this.upgradeIconAssetsStore(db);
+                ImageAssetsStore.upgrade(db);
                 this.upgradeStartPanelsStore(db, transaction);
                 this.upgradeUserStateStore(db);
             };
@@ -104,12 +105,6 @@ export class DatabaseConnector {
             req.onsuccess = () => resolve((req.result as T) ?? null);
             req.onerror = () => reject(req.error ?? new Error(`Failed to read from ${storeName} by index ${indexName}`));
         });
-    }
-
-    private upgradeIconAssetsStore(db: IDBDatabase): void {
-        if (!db.objectStoreNames.contains(this.iconAssetsStoreName)) {
-            db.createObjectStore(this.iconAssetsStoreName, {keyPath: 'id'});
-        }
     }
 
     private upgradeStartPanelsStore(db: IDBDatabase, transaction: IDBTransaction): void {

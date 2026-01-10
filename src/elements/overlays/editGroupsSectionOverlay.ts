@@ -2,7 +2,7 @@ import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {activeOverlay, activeStartPanel, selectedSection} from '../../app/state.ts';
 import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/startPanelsStore.ts';
+import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {CardSection} from '#models/internal/cardSection.ts';

@@ -2,12 +2,12 @@ import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import './settingsSection.ts';
 import './settingsHeader.ts';
-import {IconAssetsStore} from '../../core/iconAssetsStore.ts';
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {inject} from '#inject';
 
 @customElement('cc-storage-settings-panel')
 export class StorageSettingsPanel extends LitElement {
-    private iconAssetsStore = inject(IconAssetsStore);
+    private imageAssetsStore = inject(ImageAssetsStore);
 
     @state()
     private storageSizeMB: string = '0.00';
@@ -40,7 +40,7 @@ export class StorageSettingsPanel extends LitElement {
     }
 
     private async calculateStorageSize() {
-        const assets = await this.iconAssetsStore.getAll();
+        const assets = await this.imageAssetsStore.getAll();
         this.iconCount = assets.length;
         let totalBytes = 0;
         for (const asset of assets) {

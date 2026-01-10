@@ -1,5 +1,5 @@
 import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/startPanelsStore.ts';
+import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {activeStartPanel} from '../app/state.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {createId} from '#utils/createId.ts';
