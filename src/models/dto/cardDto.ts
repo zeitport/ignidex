@@ -3,7 +3,6 @@ export interface CardDto {
     type: 'bookmark';
     name: string | null;
     description: string | null;
-    iconName: string | null;
-    iconUrl: string | null;
+    icon: string | null;
     url: string | null;
 }
