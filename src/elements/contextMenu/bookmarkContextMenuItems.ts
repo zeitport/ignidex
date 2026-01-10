@@ -2,6 +2,7 @@ import {
     mdiBookmarkOutline,
     mdiDeleteOutline,
     mdiLink,
+    mdiOpenInNew,
     mdiPencilOutline,
     mdiArrowUpThin,
     mdiArrowDownThin
@@ -10,10 +11,16 @@ import {EditCardAction} from '../../actions/editCardAction.ts';
 import {DeleteCardAction} from '../../actions/deleteCardAction.ts';
 import {MoveCardAction} from '../../actions/moveCardAction.ts';
 import {CopyUrlAction} from '../../actions/copyUrlAction.ts';
+import {OpenInNewTabAction} from '../../actions/openInNewTabAction.ts';
 import {NotImplementedAction} from '../../actions/notImplementedAction.ts';
 import {ContextMenuItem} from '../contextMenuItem.ts';
 
 export const bookmarkContextMenuItems = [
+    new ContextMenuItem({
+        icon: mdiOpenInNew,
+        label: 'Open in new tab',
+        action: new OpenInNewTabAction()
+    }),
     new ContextMenuItem({
         icon: mdiLink,
         label: 'Copy URL',
