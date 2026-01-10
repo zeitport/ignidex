@@ -13,9 +13,9 @@ export class ExportToJsonAction implements ActionInterface {
         }
 
         const imageAssetsStore = inject(ImageAssetsStore);
-        const allIcons = await imageAssetsStore.getAll();
+        const allImages = await imageAssetsStore.getAll();
         const usedIconIds = this.getUsedIconIds(startPanel);
-        const icons = allIcons.filter(icon => usedIconIds.has(icon.id));
+        const images = allImages.filter(image => usedIconIds.has(image.id));
 
         const exportData: StartPanelDto = {
             meta: {
@@ -25,7 +25,7 @@ export class ExportToJsonAction implements ActionInterface {
                 numberOfCards: this.countAllCards(startPanel),
             },
             ...(startPanel as any),
-            icons: icons.map(icon => ({
+            images: images.map(icon => ({
                 id: icon.id,
                 source: icon.source,
                 dataUri: icon.dataUri,

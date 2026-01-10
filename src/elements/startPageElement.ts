@@ -5,7 +5,7 @@ import './cardIconElement.ts';
 import './sections/highlightSectionElement.ts';
 import './sections/groupSectionElement.ts';
 import {when} from 'lit/directives/when.js';
-import {activeOverlay, activeStartPanel, selectedGroup, selectedCard, selectedSection, pastedUrl} from '../app/state.ts';
+import {activeOverlay, activeStartPanel, selectedGroup, selectedCard, selectedSection, pastedUrl, isDraggingFile, messageOverlayContent} from '../app/state.ts';
 import type {Card} from '../models/internal/card.ts';
 import {CardGroup} from '../models/internal/cardGroup.ts';
 import type {CardSection} from '../models/internal/cardSection.ts';
@@ -29,7 +29,10 @@ import './overlays/selectSectionOverlay.ts';
 import './overlays/selectGroupOverlay.ts';
 import './overlays/confirmationOverlay.ts';
 import './overlays/settingsOverlay.ts';
+import './overlays/messageOverlay.ts';
+import './overlays/dropFileOverlay.ts';
 import {startPageElementStyle} from './startPageElementStyle.ts';
+import {ImportFromJsonAction} from '../actions/importFromJsonAction.ts';
 
 @customElement('cc-start-page')
 export class StartPageElement extends LitElement {
@@ -37,6 +40,8 @@ export class StartPageElement extends LitElement {
 
     private activeOverlay = activeOverlay.watch(this);
     private activeStartPanel = activeStartPanel.watch(this);
+    private isDraggingFile = isDraggingFile.watch(this);
+    private dragCounter = 0;
 
     private sectionRenderer: Map<CardSectionType, (section: CardSection) => TemplateResult> = new Map(
         [
@@ -51,6 +56,10 @@ export class StartPageElement extends LitElement {
         document.addEventListener('click', this.handleClickEvent);
         document.addEventListener('contextmenu', this.handleDocumentContextMenu);
         document.addEventListener('paste', this.handlePaste);
+        document.addEventListener('dragenter', this.handleDragEnter);
+        document.addEventListener('dragleave', this.handleDragLeave);
+        document.addEventListener('dragover', this.handleDragOver);
+        document.addEventListener('drop', this.handleDrop);
     }
 
     disconnectedCallback() {
@@ -59,6 +68,10 @@ export class StartPageElement extends LitElement {
         document.removeEventListener('click', this.handleClickEvent);
         document.removeEventListener('contextmenu', this.handleDocumentContextMenu);
         document.removeEventListener('paste', this.handlePaste);
+        document.removeEventListener('dragenter', this.handleDragEnter);
+        document.removeEventListener('dragleave', this.handleDragLeave);
+        document.removeEventListener('dragover', this.handleDragOver);
+        document.removeEventListener('drop', this.handleDrop);
     }
 
     render() {
@@ -70,6 +83,8 @@ export class StartPageElement extends LitElement {
             <cc-context-menu id="contextMenu"></cc-context-menu>
 
             ${this.renderOverlay()}
+
+            <cc-drop-file-overlay ?isOpen=${this.isDraggingFile.value}></cc-drop-file-overlay>
         `;
     }
 
@@ -155,6 +170,10 @@ export class StartPageElement extends LitElement {
 
             if (this.activeOverlay.value === OverlayType.selectGroup) {
                 return html`<cc-select-group-overlay isOpen></cc-select-group-overlay>`;
+            }
+
+            if (this.activeOverlay.value === OverlayType.message) {
+                return html`<cc-message-overlay isOpen></cc-message-overlay>`;
             }
         }
 
@@ -244,6 +263,59 @@ export class StartPageElement extends LitElement {
             pastedUrl.value = pastedText;
             activeOverlay.value = OverlayType.selectSection;
         }
+    }
+
+    private hasFiles(event: DragEvent): boolean {
+        return event.dataTransfer?.types.includes('Files') ?? false;
+    }
+
+    private handleDragEnter = (event: DragEvent) => {
+        event.preventDefault();
+        if (!this.hasFiles(event)) return;
+
+        this.dragCounter++;
+        if (this.dragCounter === 1) {
+            isDraggingFile.value = true;
+        }
+    }
+
+    private handleDragLeave = (event: DragEvent) => {
+        event.preventDefault();
+        if (!this.hasFiles(event)) return;
+
+        this.dragCounter--;
+        if (this.dragCounter === 0) {
+            isDraggingFile.value = false;
+        }
+    }
+
+    private handleDragOver = (event: DragEvent) => {
+        event.preventDefault();
+    }
+
+    private handleDrop = (event: DragEvent) => {
+        event.preventDefault();
+        this.dragCounter = 0;
+        isDraggingFile.value = false;
+
+        const files = event.dataTransfer?.files;
+        if (!files || files.length === 0) return;
+
+        if (files.length > 1) {
+            messageOverlayContent.value = 'Only one file can be imported at a time.';
+            activeOverlay.value = OverlayType.message;
+            return;
+        }
+
+        const file = files[0];
+        if (!file.name.endsWith('.json')) {
+            messageOverlayContent.value = 'Only JSON files are supported.';
+            activeOverlay.value = OverlayType.message;
+            return;
+        }
+
+        const action = new ImportFromJsonAction(file);
+        action.run();
     }
 }
 

@@ -13,3 +13,5 @@ export const selectedSection = new ObservableProperty<CardSection | null>(null);
 export const selectedGroup = new ObservableProperty<CardGroup | null>(null);
 export const activeAction = new ObservableProperty<ActionInterface | null>(null);
 export const pastedUrl = new ObservableProperty<string | null>(null);
+export const messageOverlayContent = new ObservableProperty<string | null>(null);
+export const isDraggingFile = new ObservableProperty<boolean>(false);
