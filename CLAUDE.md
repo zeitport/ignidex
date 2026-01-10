@@ -33,10 +33,7 @@ Use the package.json import aliases:
 
 - `src/app/` - Global styles (`index.css`) and observable state (`state.ts`)
 - `src/core/` - Persistence layer (IndexedDB), stores, dependency injection
-- `src/models/` - Three model layers:
-  - `internal/` - Runtime classes with constructors
-  - `dto/` - Plain data transfer objects for serialization
-  - `idb/` - IndexedDB entry wrappers
+- `src/models/` - Data models (see Data Model Layers below)
 - `src/elements/` - Lit web components
 - `src/actions/` - User interaction commands implementing `ActionInterface`
 - `src/utils/` - Observable property system, ID generation
@@ -68,6 +65,30 @@ interface ActionInterface {
 
 **IndexedDB Layer:** `DatabaseConnector` provides promise-based access to stores: `imageAssets`, `startPanels`, `userState`.
 
+### Data Model Layers
+
+The `src/models/` directory contains three distinct model layers:
+
+**internal/** - In-memory runtime models
+- Classes with constructors that auto-generate IDs via `createId()`
+- Support partial initialization with sensible defaults
+- Automatically instantiate nested child objects
+- Used throughout the app at runtime
+- Example: `new Card({name: 'GitHub'})` creates a full Card with generated ID
+
+**idb/** - IndexedDB entry wrappers
+- Classes that wrap internal models for database storage
+- Add indexing fields required by IndexedDB (e.g., primary key `id`)
+- `StartPanelEntry` wraps a `StartPanel` with anchor for URL fragment matching
+- `ImageAssetEntry` stores images separately with `dataUri` for binary data
+- `UserStateEntry` stores user preferences (accent color, font size, etc.)
+
+**dto/** - Data Transfer Objects for JSON export/import
+- Plain interfaces (not classes) for serialization
+- Self-contained: `StartPanelDto` includes `images[]` and `meta` for portable export
+- May differ from internal models
+- Used when importing/exporting data to JSON files
+
 ### Data Model Hierarchy
 
 ```
@@ -79,7 +100,7 @@ StartPanel
 
 ### Component Naming
 
-Web components use `cc-` prefix (e.g., `<cc-start-page>`, `<cc-card-icon>`).
+Web components use `cc-` prefix (e.g., `<cc-start-panel>`, `<cc-card-icon>`).
 
 ## Linting
 
