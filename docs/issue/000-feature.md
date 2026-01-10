@@ -17,9 +17,7 @@ As a user, I want X to achieve Y.
 ## AI Code Generation
 
 ### Quality Score
-0/10
 
-### Estimated Cost
-[Insert estimated costs in € here]
+0/10
 
 ## Comments
