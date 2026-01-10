@@ -1,8 +1,8 @@
-# Refactor: 
+# Issue: 
 
 ## Use case
 
-As a code maintainer, I want to 
+As a user, I want X to achieve Y.
 
 ## Plan
 
@@ -14,8 +14,12 @@ As a code maintainer, I want to
 - Run `npm run lint` to check for lint errors
 - Run `npm run tsc` to run the TypeScript compiler
 
+## AI Code Generation
 
-## Review of AI code
+### Quality Score
+0/10
 
-- Score: 0/10
-- 
+### Estimated Cost
+[Insert estimated costs in € here]
+
+## Comments
