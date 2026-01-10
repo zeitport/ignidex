@@ -3,18 +3,26 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {activeOverlay, activeStartPanel} from '../../app/state.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
+import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
+import {createId} from '#utils/createId.ts';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
-import {panelOverlayStyle} from './panelOverlayStyle.ts';
+import '../iconPreviewElement.ts';
+import type {IconPreviewChangeEvent} from '../iconPreviewElement.ts';
+import {editPanelOverlayStyle} from './editPanelOverlayStyle.ts';
 
 @customElement('cc-edit-panel-overlay')
 export class EditPanelOverlay extends LitElement {
-    static styles = panelOverlayStyle;
+    static styles = editPanelOverlayStyle;
 
     @property({type: Boolean})
     isOpen = false;
+
+    @property({type: Boolean})
+    isCreateMode = false;
 
     @state()
     private name = '';
@@ -23,9 +31,21 @@ export class EditPanelOverlay extends LitElement {
     private anchor = '';
 
     @state()
+    private description = '';
+
+    @state()
     private nameError = '';
 
+    @state()
+    private iconDataUri = '';
+
+    @state()
+    private iconUrl = '';
+
+    private isAnchorManuallyEdited = false;
+
     private startPanelsStore = inject(StartPanelsStore);
+    private imageAssetsStore = inject(ImageAssetsStore);
 
     private watchActiveStartPanel = activeStartPanel.watch(this);
 
@@ -42,50 +62,106 @@ export class EditPanelOverlay extends LitElement {
         }
     }
 
-    private resetFields() {
+    private async resetFields() {
         const currentPanel = this.watchActiveStartPanel.value;
-        if (currentPanel) {
+
+        if (currentPanel && !this.isCreateMode) {
             this.name = currentPanel.header?.title ?? '';
             this.anchor = currentPanel.anchor ?? '';
+            this.description = currentPanel.header?.description ?? '';
+            await this.loadExistingIcon(currentPanel.header?.icon ?? null);
+        } else {
+            this.name = '';
+            this.anchor = '';
+            this.description = '';
+            this.iconDataUri = '';
+            this.iconUrl = '';
         }
         this.nameError = '';
+        this.isAnchorManuallyEdited = false;
+    }
+
+    private async loadExistingIcon(iconId: string | null) {
+        if (!iconId) {
+            this.iconDataUri = '';
+            this.iconUrl = '';
+            return;
+        }
+
+        const entry = await this.imageAssetsStore.get(iconId);
+        if (entry?.dataUri) {
+            this.iconDataUri = entry.dataUri;
+            this.iconUrl = entry.source ?? '';
+        } else {
+            this.iconDataUri = '';
+            this.iconUrl = '';
+        }
     }
 
     render() {
+        const isCreating = this.isCreateMode || !this.watchActiveStartPanel.value;
+
         return html`
             <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
-                <h2 slot="header">Edit Panel</h2>
+                <h2 slot="header">${isCreating ? 'New Panel' : 'Edit Panel'}</h2>
 
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <span class="description">The display name of the panel.</span>
-                    <input
-                        id="name"
-                        type="text"
-                        .value=${this.name}
-                        @input=${this.handleNameInput}
-                        class=${this.nameError ? 'error' : ''}
-                        placeholder="My Awesome Panel"
-                        autocomplete="off"
-                    >
-                    ${this.nameError ? html`<div class="error-message">${this.nameError}</div>` : ''}
-                </div>
+                <div class="form-layout">
+                    <div class="icon-column">
+                        <label>Icon</label>
+                        <cc-icon-preview
+                            .dataUri=${this.iconDataUri}
+                            .source=${this.iconUrl}
+                            .active=${this.isOpen}
+                            @icon-change=${this.handleIconChange}
+                        ></cc-icon-preview>
+                    </div>
 
-                <div class="form-group">
-                    <label for="anchor">Anchor</label>
-                    <span class="description">A unique identifier used in the URL (e.g., #my-panel).</span>
-                    <input
-                        id="anchor"
-                        type="text"
-                        .value=${this.anchor}
-                        @input=${this.handleAnchorInput}
-                        placeholder="my-panel"
-                        autocomplete="off"
-                    >
+                    <div class="details-column">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <span class="field-description">The display name of the panel.</span>
+                            <input
+                                id="name"
+                                type="text"
+                                .value=${this.name}
+                                @input=${this.handleNameInput}
+                                class=${this.nameError ? 'error' : ''}
+                                placeholder="My Awesome Panel"
+                                autocomplete="off"
+                            >
+                            ${this.nameError ? html`<div class="error-message">${this.nameError}</div>` : ''}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <span class="field-description">A short description shown below the panel name.</span>
+                            <input
+                                id="description"
+                                type="text"
+                                .value=${this.description}
+                                @input=${this.handleDescriptionInput}
+                                placeholder="Description"
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="anchor">Anchor</label>
+                            <span class="field-description">A unique identifier used in the URL (e.g., #my-panel).${isCreating ? ' Leave empty to use a random ID.' : ''}</span>
+                            <input
+                                id="anchor"
+                                type="text"
+                                .value=${this.anchor}
+                                @input=${this.handleAnchorInput}
+                                placeholder="my-panel"
+                                autocomplete="off"
+                            >
+                        </div>
+                    </div>
                 </div>
 
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
-                <cc-dialog-button slot="footer" primary @click=${this.handleSave}>Save</cc-dialog-button>
+                <cc-dialog-button slot="footer" primary @click=${this.handleSave}>${isCreating ? 'Create' : 'Save'}</cc-dialog-button>
             </cc-overlay>
         `;
     }
@@ -95,14 +171,44 @@ export class EditPanelOverlay extends LitElement {
         if (this.name.trim()) {
             this.nameError = '';
         }
+
+        if (this.isCreateMode && !this.isAnchorManuallyEdited) {
+            this.anchor = this.slugify(this.name);
+        }
+    }
+
+    private handleDescriptionInput(event: InputEvent) {
+        this.description = (event.target as HTMLInputElement).value;
     }
 
     private handleAnchorInput(event: InputEvent) {
         this.anchor = (event.target as HTMLInputElement).value;
+        this.isAnchorManuallyEdited = true;
+    }
+
+    private handleIconChange(event: CustomEvent<IconPreviewChangeEvent>) {
+        this.iconDataUri = event.detail.dataUri;
+        this.iconUrl = event.detail.source;
     }
 
     private handleClose() {
+        this.name = '';
+        this.anchor = '';
+        this.description = '';
+        this.nameError = '';
+        this.iconDataUri = '';
+        this.iconUrl = '';
+        this.isAnchorManuallyEdited = false;
         activeOverlay.value = null;
+    }
+
+    private slugify(text: string): string {
+        return text
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/[\s_-]+/g, '-')
+            .replace(/^-+|-+$/g, '');
     }
 
     private async handleSave() {
@@ -112,31 +218,85 @@ export class EditPanelOverlay extends LitElement {
         }
 
         const currentPanel = this.watchActiveStartPanel.value;
-        if (!currentPanel) {
-            this.handleClose();
-            return;
+        const isCreating = this.isCreateMode || !currentPanel;
+
+        if (isCreating) {
+            await this.createPanel();
+        } else {
+            await this.updatePanel(currentPanel);
+        }
+    }
+
+    private async createPanel() {
+        const id = createId();
+        let anchor = this.anchor.trim() || id;
+
+        const existingPanelByAnchor = await this.startPanelsStore.getByAnchor(anchor);
+        if (existingPanelByAnchor) {
+            anchor = id;
         }
 
+        let iconId: string | null = null;
+        if (this.iconDataUri) {
+            iconId = createId();
+            await this.imageAssetsStore.set({
+                id: iconId,
+                source: this.iconUrl || null,
+                dataUri: this.iconDataUri
+            });
+        }
+
+        const newStartPanel = new StartPanel({
+            id: id,
+            anchor: anchor,
+            header: new StartPanelHeader({
+                title: this.name.trim(),
+                icon: iconId,
+                description: this.description.trim() || null
+            }),
+            sections: []
+        });
+
+        const newEntry = new StartPanelEntry({
+            id: id,
+            anchor: anchor,
+            startPanel: newStartPanel
+        });
+
+        await this.startPanelsStore.set(newEntry);
+        activeStartPanel.value = newStartPanel;
+
+        this.handleClose();
+    }
+
+    private async updatePanel(currentPanel: StartPanel) {
         const updatedAnchor = this.anchor.trim() || currentPanel.id;
 
-        // Check for anchor collision if anchor changed
         if (updatedAnchor !== currentPanel.anchor) {
             const existingPanelByAnchor = await this.startPanelsStore.getByAnchor(updatedAnchor);
             if (existingPanelByAnchor && existingPanelByAnchor.id !== currentPanel.id) {
-                // If anchor is taken, maybe we should warn?
-                // For now, let's keep it simple and just use it, or we could prevent it.
-                // Given the instructions, "same logic, same features" as new panel.
-                // New panel falls back to ID if anchor exists.
+                // Anchor collision - keep existing anchor
             }
+        }
+
+        let iconId: string | null = null;
+        if (this.iconDataUri) {
+            iconId = currentPanel.header?.icon ?? createId();
+            await this.imageAssetsStore.set({
+                id: iconId,
+                source: this.iconUrl || null,
+                dataUri: this.iconDataUri
+            });
         }
 
         const updatedStartPanel = new StartPanel({
             ...currentPanel,
             anchor: updatedAnchor,
-            header: {
-                ...currentPanel.header,
-                title: this.name.trim()
-            }
+            header: new StartPanelHeader({
+                title: this.name.trim(),
+                icon: iconId,
+                description: this.description.trim() || null
+            })
         });
 
         const updatedEntry = new StartPanelEntry({

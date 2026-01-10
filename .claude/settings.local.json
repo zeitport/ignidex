@@ -1,19 +1,20 @@
 {
-    "permissions": {
-        "allow": [
-            "Bash(find:*)",
-            "Bash(npm run lint)",
-            "Bash(npm outdated:*)",
-            "Bash(npm run tsc:*)",
-            "Bash(wc:*)",
-            "Bash(npm install)",
-            "Bash(npx tsc:*)",
-            "Bash(node:*)",
-            "Bash(npm ls:*)",
-            "mcp__ignidex__createId"
-        ]
-    },
-    "enabledMcpjsonServers": [
-        "ignidex"
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(npm run lint)",
+      "Bash(npm outdated:*)",
+      "Bash(npm run tsc:*)",
+      "Bash(wc:*)",
+      "Bash(npm install)",
+      "Bash(npx tsc:*)",
+      "Bash(node:*)",
+      "Bash(npm ls:*)",
+      "mcp__ignidex__createId",
+      "Bash(npm run build:*)"
     ]
+  },
+  "enabledMcpjsonServers": [
+    "ignidex"
+  ]
 }

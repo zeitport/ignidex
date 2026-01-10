@@ -24,7 +24,14 @@ export class ExportToJsonAction implements ActionInterface {
                 exportAt: new Date().toISOString(),
                 numberOfCards: this.countAllCards(startPanel),
             },
-            ...(startPanel as any),
+            id: startPanel.id,
+            anchor: startPanel.anchor,
+            header: startPanel.header ? {
+                title: startPanel.header.title,
+                icon: startPanel.header.icon,
+                description: startPanel.header.description
+            } : null,
+            sections: startPanel.sections,
             images: images.map(icon => ({
                 id: icon.id,
                 source: icon.source,
@@ -58,6 +65,10 @@ export class ExportToJsonAction implements ActionInterface {
 
     private getUsedIconIds(startPanel: any): Set<string> {
         const usedIconIds = new Set<string>();
+
+        if (startPanel.header?.icon) {
+            usedIconIds.add(startPanel.header.icon);
+        }
 
         for (const section of startPanel.sections) {
             for (const group of section.groups) {

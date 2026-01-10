@@ -1,0 +1,76 @@
+import {LitElement, html, type PropertyValues} from 'lit';
+import {customElement, property, state} from 'lit/decorators.js';
+import {inject} from '#inject';
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import type {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
+import {startPanelHeaderElementStyle} from './startPanelHeaderElementStyle.ts';
+
+@customElement('cc-start-panel-header')
+export class StartPanelHeaderElement extends LitElement {
+    static styles = startPanelHeaderElementStyle;
+
+    @property({type: Object})
+    header: StartPanelHeader | null = null;
+
+    @state()
+    private iconDataUri: string | null = null;
+
+    private imageAssetsStore = inject(ImageAssetsStore);
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.resolveIcon();
+    }
+
+    protected willUpdate(changedProperties: PropertyValues<this>): void {
+        if (changedProperties.has('header')) {
+            this.resolveIcon();
+        }
+    }
+
+    private async resolveIcon() {
+        if (!this.header?.icon) {
+            this.iconDataUri = null;
+            return;
+        }
+
+        const entry = await this.imageAssetsStore.get(this.header.icon);
+        this.iconDataUri = entry?.dataUri ?? null;
+    }
+
+    render() {
+        const title = this.header?.title ?? 'Start';
+        const description = this.header?.description;
+        const hasIcon = !!this.iconDataUri;
+
+        return html`
+            <div class="header">
+                ${hasIcon ? html`
+                    <div class="icon">
+                        <div class="mono-icon" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>
+                    </div>
+                ` : ''}
+                <div class="content">
+                    <h1 @contextmenu=${this.handleContextMenu}>${title}</h1>
+                    ${description ? html`<div class="description">${description}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    private handleContextMenu(event: MouseEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.dispatchEvent(new CustomEvent('panel-context-menu', {
+            detail: {x: event.clientX, y: event.clientY},
+            bubbles: true,
+            composed: true
+        }));
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'cc-start-panel-header': StartPanelHeaderElement
+    }
+}

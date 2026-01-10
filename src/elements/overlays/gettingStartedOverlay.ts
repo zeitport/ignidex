@@ -7,6 +7,7 @@ import {loadDataFromUrl} from '../../core/loadDataFromUrl.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {StartPanelEntry} from '../../models/idb/startPanelEntry.ts';
 import {StartPanel} from '../../models/internal/startPanel.ts';
+import {StartPanelHeader} from '../../models/internal/startPanelHeader.ts';
 import {ListItem} from '../listElement.ts';
 import '../overlayElement.ts';
 import '../listElement.ts';
@@ -55,7 +56,7 @@ export class GettingStartedOverlay extends LitElement {
     }
 
     private async handleStartEmpty() {
-        const panel = new StartPanel({header: {title: 'New Panel'}});
+        const panel = new StartPanel({header: new StartPanelHeader({title: 'New Panel'})});
         await this.startPanelsStore.set(new StartPanelEntry({id: panel.id, startPanel: panel}));
         activeStartPanel.value = panel;
         this.handleClose();

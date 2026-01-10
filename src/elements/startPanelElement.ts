@@ -2,6 +2,7 @@ import type {StartPanel} from '#models/internal/startPanel.ts';
 import {LitElement, html, type TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import './cardIconElement.ts';
+import './startPanelHeaderElement.ts';
 import './sections/highlightSectionElement.ts';
 import './sections/groupSectionElement.ts';
 import {when} from 'lit/directives/when.js';
@@ -19,7 +20,6 @@ import {highlightSectionContextMenuItems} from './contextMenu/highlightSectionCo
 import type {ContextMenuElement} from './contextMenuElement.ts';
 import {OverlayType} from './overlays/overlayType.ts';
 import './overlays/gettingStartedOverlay.ts';
-import './overlays/newPanelOverlay.ts';
 import './overlays/editPanelOverlay.ts';
 import './overlays/newSectionOverlay.ts';
 import './overlays/editHighlightSectionOverlay.ts';
@@ -34,8 +34,8 @@ import './overlays/dropFileOverlay.ts';
 import {startPageElementStyle} from './startPageElementStyle.ts';
 import {ImportFromJsonAction} from '../actions/importFromJsonAction.ts';
 
-@customElement('cc-start-page')
-export class StartPageElement extends LitElement {
+@customElement('cc-start-panel')
+export class StartPanelElement extends LitElement {
     static styles = startPageElementStyle;
 
     private activeOverlay = activeOverlay.watch(this);
@@ -94,13 +94,12 @@ export class StartPageElement extends LitElement {
                 class="wrap"
                 @card-context-menu=${this.handleCardContextMenu}
                 @section-context-menu=${this.handleSectionContextMenu}
-                @group-context-menu=${this.handleGroupContextMenu}>
+                @group-context-menu=${this.handleGroupContextMenu}
+                @panel-context-menu=${this.handlePanelContextMenuEvent}>
                 <div class="topline"></div>
 
                 <div class="toprow">
-                    <div>
-                        <h1 @contextmenu=${this.handlePanelContextMenu}>${startPanel.header?.title ?? 'Start'}</h1>
-                    </div>
+                    <cc-start-panel-header .header=${startPanel.header}></cc-start-panel-header>
                 </div>
 
                 ${startPanel.sections.map(section => this.renderSections(section))}
@@ -133,7 +132,7 @@ export class StartPageElement extends LitElement {
             }
 
             if (this.activeOverlay.value === OverlayType.newPanel) {
-                return html`<cc-new-panel-overlay isOpen></cc-new-panel-overlay>`;
+                return html`<cc-edit-panel-overlay isOpen isCreateMode></cc-edit-panel-overlay>`;
             }
 
             if (this.activeOverlay.value === OverlayType.editPanel) {
@@ -225,14 +224,12 @@ export class StartPageElement extends LitElement {
         contextMenu.open(event.detail.x, event.detail.y);
     }
 
-    private handlePanelContextMenu(event: MouseEvent) {
-        event.preventDefault();
-        event.stopPropagation();
+    private handlePanelContextMenuEvent(event: CustomEvent<{x: number, y: number}>) {
         if (this.activeOverlay.value) return;
         console.log('Show Panel ContextMenu', event);
         const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
         contextMenu.items = panelContextMenuItems;
-        contextMenu.open(event.clientX, event.clientY);
+        contextMenu.open(event.detail.x, event.detail.y);
     }
 
     private handleDocumentContextMenu = (event: MouseEvent) => {
@@ -321,6 +318,6 @@ export class StartPageElement extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'cc-start-page': StartPageElement
+        'cc-start-panel': StartPanelElement
     }
 }

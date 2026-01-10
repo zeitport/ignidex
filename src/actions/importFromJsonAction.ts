@@ -109,6 +109,10 @@ export class ImportFromJsonAction implements ActionInterface {
         remapped.id = newPanelId;
         remapped.anchor = newAnchor;
 
+        if (remapped.header?.icon && idMap.has(remapped.header.icon)) {
+            remapped.header.icon = idMap.get(remapped.header.icon);
+        }
+
         for (const section of remapped.sections) {
             for (const group of section.groups) {
                 for (const card of group.cards) {

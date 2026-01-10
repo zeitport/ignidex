@@ -1,6 +1,7 @@
 import {inject} from '#core/injector.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {StartPanel} from '../models/internal/startPanel.ts';
+import {StartPanelHeader} from '../models/internal/startPanelHeader.ts';
 
 /**
  * '/store/test.json'
@@ -24,6 +25,6 @@ export async function loadDataFromUrl(url: string): Promise<StartPanel> {
         return new StartPanel(data);
     } catch (error) {
         console.error('Failed to load /store/test.json', error);
-        return new StartPanel({header: {title: 'Oops!'}});
+        return new StartPanel({header: new StartPanelHeader({title: 'Oops!'})});
     }
 }
