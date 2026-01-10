@@ -1,0 +1,12 @@
+{
+    "mcpServers": {
+        "ignidex": {
+            "command": "npm",
+            "args": [
+                "run",
+                "mcp"
+            ],
+            "cwd": "."
+        }
+    }
+}

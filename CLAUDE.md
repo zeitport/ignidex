@@ -41,6 +41,11 @@ Use the package.json import aliases:
 - `src/actions/` - User interaction commands implementing `ActionInterface`
 - `src/utils/` - Observable property system, ID generation
 
+### MCP Tools
+
+The local `ignidex-mcp` server provides project-specific tools:
+- `createId` - Use this tool to generate unique IDs (nanoid) when creating new entities
+
 ### Key Patterns
 
 **Dependency Injection:** Use `inject(ClassName)` from `#inject` to get singleton instances of stores and services.
