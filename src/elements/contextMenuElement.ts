@@ -20,6 +20,22 @@ export class ContextMenuElement extends LitElement {
     @property({type: Boolean, reflect: true})
     isOpen: boolean = false;
 
+    connectedCallback() {
+        super.connectedCallback();
+        document.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        document.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    private handleKeyDown = (event: KeyboardEvent) => {
+        if (this.isOpen && event.key === 'Escape') {
+            this.close();
+        }
+    };
+
     render() {
         if (!this.isOpen) return html``;
 
