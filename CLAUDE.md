@@ -16,7 +16,7 @@ npm run lint:fix # Run oxlint with auto-fix
 npm run tsc      # TypeScript type-check only
 ```
 
-Dev server loads: `http://localhost:3000/?load=http://localhost:3000/store/test.json`
+Dev server loads: `http://localhost:3000`
 
 ## Architecture
 

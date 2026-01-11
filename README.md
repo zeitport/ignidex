@@ -31,7 +31,7 @@ You can specify which `startPanel.json` file to load by using the `load` URL par
 These shared panels are opened in a read-only mode, but can be downloaded and edited locally.
 
 **Example:**
-`http://localhost:3000/?load=http%3A%2F%2Flocalhost%3A3000%2Fstore%2Ftest.json`
+`http://localhost:3000/?load=http%3A%2F%2Flocalhost%3A3000%2Fexamples%2Fignidex.json`
 
 Note: The URL passed to the `load` parameter should be URL-encoded.
 

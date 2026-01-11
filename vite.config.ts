@@ -6,7 +6,6 @@ export default defineConfig({
     plugins: [],
     server: {
         host: true,
-        port: 3000,
-        open: '/?load=http://localhost:3000/store/test.json'
+        port: 3000
     }
 });

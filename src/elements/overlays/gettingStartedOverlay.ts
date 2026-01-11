@@ -63,7 +63,7 @@ export class GettingStartedOverlay extends LitElement {
     }
 
     private async handleLoadTest() {
-        const panel = await loadDataFromUrl('/store/test.json');
+        const panel = await loadDataFromUrl('/examples/ignidex.json');
         await this.startPanelsStore.set(new StartPanelEntry({id: panel.id, startPanel: panel}));
         activeStartPanel.value = panel;
         this.handleClose();

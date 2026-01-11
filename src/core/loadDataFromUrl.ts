@@ -24,7 +24,7 @@ export async function loadDataFromUrl(url: string): Promise<StartPanel> {
 
         return new StartPanel(data);
     } catch (error) {
-        console.error('Failed to load /store/test.json', error);
+        console.error('Failed to load from url', error);
         return new StartPanel({header: new StartPanelHeader({title: 'Oops!'})});
     }
 }
