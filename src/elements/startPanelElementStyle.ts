@@ -1,6 +1,6 @@
 import {css} from 'lit';
 
-export const startPageElementStyle = css`
+export const startPanelElementStyle = css`
     :host {
         position: absolute;
         inset: 0;
@@ -13,13 +13,6 @@ export const startPageElementStyle = css`
         position: relative;
     }
 
-    .topline {
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0, var(--line) 12%, var(--line) 88%, transparent 100%);
-        margin: 0 0 18px 0;
-        opacity: .9;
-    }
-
     .toprow {
         display: flex;
         align-items: flex-start;
@@ -27,8 +20,8 @@ export const startPageElementStyle = css`
         gap: 24px;
         margin-bottom: 22px;
     }
+
     .toprow h1 {
-        cursor: context-menu;
         user-select: none;
     }
 `;

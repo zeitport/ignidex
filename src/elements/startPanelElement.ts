@@ -31,12 +31,12 @@ import './overlays/confirmationOverlay.ts';
 import './overlays/settingsOverlay.ts';
 import './overlays/messageOverlay.ts';
 import './overlays/dropFileOverlay.ts';
-import {startPageElementStyle} from './startPageElementStyle.ts';
+import {startPanelElementStyle} from './startPanelElementStyle.ts';
 import {ImportFromJsonAction} from '../actions/importFromJsonAction.ts';
 
 @customElement('cc-start-panel')
 export class StartPanelElement extends LitElement {
-    static styles = startPageElementStyle;
+    static styles = startPanelElementStyle;
 
     private activeOverlay = activeOverlay.watch(this);
     private activeStartPanel = activeStartPanel.watch(this);
@@ -96,7 +96,6 @@ export class StartPanelElement extends LitElement {
                 @section-context-menu=${this.handleSectionContextMenu}
                 @group-context-menu=${this.handleGroupContextMenu}
                 @panel-context-menu=${this.handlePanelContextMenuEvent}>
-                <div class="topline"></div>
 
                 <div class="toprow">
                     <cc-start-panel-header .header=${startPanel.header}></cc-start-panel-header>

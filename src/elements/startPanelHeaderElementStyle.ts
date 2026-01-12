@@ -8,7 +8,7 @@ export const startPanelHeaderElementStyle = css`
     .header {
         display: flex;
         align-items: flex-start;
-        gap: 16px;
+        gap: 1rem;
     }
 
     .icon {
@@ -20,7 +20,7 @@ export const startPanelHeaderElementStyle = css`
     .icon .mono-icon {
         width: 48px;
         height: 48px;
-        background-color: var(--text, #e7e9ec);
+        background-color: var(--text);
         mask-image: var(--mask-url);
         mask-repeat: no-repeat;
         mask-position: center;
@@ -39,13 +39,12 @@ export const startPanelHeaderElementStyle = css`
 
     h1 {
         margin: 0;
-        cursor: context-menu;
         user-select: none;
     }
 
     .description {
         margin-top: 4px;
-        color: var(--muted, #9aa3ad);
+        color: var(--muted);
         font-size: 0.95rem;
         line-height: 1.4;
     }
