@@ -38,6 +38,9 @@ function registerKeyboardNavigation() {
         } else if (event.key === 'ArrowRight') {
             inject(SwitchPanelNextAction).run();
         }
+
+        event.stopPropagation();
+        event.preventDefault();
     });
 }
 
