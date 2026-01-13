@@ -1,16 +1,18 @@
 {
     "name": "@zeitport/ignidex",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "description": "A calm, local-first personal start page.",
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && npm run lint && vite build",
+        "build": "npm run sync-sw && tsc && npm run lint && vite build",
         "preview": "vite preview",
         "lint": "oxlint --config ./.oxlintrc.json",
         "lint:fix": "oxlint --config ./.oxlintrc.json --fix",
         "tsc": "tsc",
-        "mcp": "node --experimental-strip-types ./ai/mcp/server.ts"
+        "mcp": "node --experimental-strip-types ./ai/mcp/server.ts",
+        "icons": "node scripts/generate-icons.js",
+        "sync-sw": "node scripts/sync-sw-version.js"
     },
     "author": "Chris Zeitport <chris@zeitport.com>",
     "license": "ISC",
@@ -29,8 +31,9 @@
     "devDependencies": {
         "@modelcontextprotocol/sdk": "^1.0.0",
         "@types/node": "^24.0.0",
-        "typescript": "~5.6.2",
         "oxlint": "^1.37.0",
+        "sharp": "^0.34.5",
+        "typescript": "~5.6.2",
         "vite": "^6.0.3"
     }
 }
