@@ -4,7 +4,10 @@ import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {createId} from '#utils/createId.ts';
-import {activeStartPanel} from './app/state.ts';
+import {activeStartPanel, activeOverlay} from './app/state.ts';
+import {inject} from '#inject';
+import {SwitchPanelBackAction} from './actions/switchPanelBackAction.ts';
+import {SwitchPanelNextAction} from './actions/switchPanelNextAction.ts';
 import '#elements';
 
 function registerServiceWorker() {
@@ -15,8 +18,32 @@ function registerServiceWorker() {
     }
 }
 
+function registerKeyboardNavigation() {
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (activeOverlay.value !== null) {
+            return;
+        }
+
+        const activeElement = document.activeElement;
+        const isInputFocused = activeElement instanceof HTMLInputElement
+            || activeElement instanceof HTMLTextAreaElement
+            || (activeElement instanceof HTMLElement && activeElement.isContentEditable);
+
+        if (isInputFocused) {
+            return;
+        }
+
+        if (event.key === 'ArrowLeft') {
+            inject(SwitchPanelBackAction).run();
+        } else if (event.key === 'ArrowRight') {
+            inject(SwitchPanelNextAction).run();
+        }
+    });
+}
+
 async function main() {
     registerServiceWorker();
+    registerKeyboardNavigation();
     console.log('Starting application...');
     console.log(createId());
 
