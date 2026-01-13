@@ -33,7 +33,7 @@ export const groupSectionStyle = css`
     .bookmark-item {
         position: relative;
         padding: 0 0;
-        margin: 0.25rem 0;
+        margin: 0.5rem 0;
         height: 1.5rem;
         cursor: pointer;
     }
@@ -63,10 +63,10 @@ export const groupSectionStyle = css`
         --icon-color: var(--icon-color-hover);
 
         .bookmark-item-background {
-            background-color: var(--app-hover-bg);
+            background-color: var(--accent);
             inset: -0.25rem;
             transition: all ease 100ms;
-            opacity: 1;
+            opacity: 0.1;
         }
     }
 

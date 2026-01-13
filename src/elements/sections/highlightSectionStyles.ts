@@ -53,10 +53,10 @@ export const highlightSectionStyles = css`
         --icon-color: var(--icon-color-hover);
 
         .bookmark-background {
-            background-color: var(--app-hover-bg);
+            background-color: var(--accent);
             inset: -0.5rem;
             transition: all ease 100ms;
-            opacity: 1;
+            opacity: 0.1;
         }
     }
 
@@ -85,7 +85,6 @@ export const highlightSectionStyles = css`
         font-size: 11px;
         color: var(--accent);
         text-transform: var(--text-transform);
-        letter-spacing: 0.05rem;
         text-decoration: none;
     }
 `;

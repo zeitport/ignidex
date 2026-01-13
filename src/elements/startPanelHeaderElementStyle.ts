@@ -3,24 +3,43 @@ import {css} from 'lit';
 export const startPanelHeaderElementStyle = css`
     :host {
         display: block;
+        width: 100%;
+        position: relative;
+        margin-block: 1rem;
+    }
+
+    .header-back {
+        position: absolute;
+        inset: -1rem;
+        background-color: var(--accent);
+        border-radius: 0.5rem;
+        opacity: 0.05;
+    }
+
+    .header-stripe {
+        position: absolute;
+        inset: -1rem;
+        border-radius: 0.5rem;
+        border-inline-start: var(--panel-header-stripe);
     }
 
     .header {
-        display: flex;
-        align-items: flex-start;
+        position: relative;
+        display: grid;
+        align-items: center;
+        grid-template-columns: auto 1fr;
         gap: 1rem;
     }
 
     .icon {
-        width: 48px;
-        height: 48px;
-        flex-shrink: 0;
+        width: 3rem;
+        height: 3rem;
     }
 
     .icon .mono-icon {
-        width: 48px;
-        height: 48px;
-        background-color: var(--text);
+        width: 3rem;
+        height: 3rem;
+        background-color: var(--panel-header-icon-color);
         mask-image: var(--mask-url);
         mask-repeat: no-repeat;
         mask-position: center;
@@ -33,8 +52,10 @@ export const startPanelHeaderElementStyle = css`
     }
 
     .content {
-        flex: 1;
-        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
     }
 
     h1 {
@@ -43,9 +64,9 @@ export const startPanelHeaderElementStyle = css`
     }
 
     .description {
-        margin-top: 4px;
+        margin: 0;
+        padding: 0;
         color: var(--muted);
-        font-size: 0.95rem;
-        line-height: 1.4;
+        font-size: 0.8rem;
     }
 `;

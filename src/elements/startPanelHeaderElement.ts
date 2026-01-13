@@ -44,14 +44,16 @@ export class StartPanelHeaderElement extends LitElement {
         const hasIcon = !!this.iconDataUri;
 
         return html`
-            <div class="header">
+            <div class="header-back"></div>
+            <div class="header-stripe"></div>
+            <div class="header" @contextmenu=${this.handleContextMenu}>
                 ${hasIcon ? html`
                     <div class="icon">
                         <div class="mono-icon" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>
                     </div>
                 ` : ''}
                 <div class="content">
-                    <h1 @contextmenu=${this.handleContextMenu}>${title}</h1>
+                    <h1>${title}</h1>
                     ${description ? html`<div class="description">${description}</div>` : ''}
                 </div>
             </div>

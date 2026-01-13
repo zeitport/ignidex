@@ -15,7 +15,9 @@
     --icon-size: 1.25rem;
 
     /* Start Panel Header */
-    --panel-header-bg: #414652;
+    --panel-header-bg: #303540;
+    --panel-header-stripe: 0rem solid var(--accent);
+    --panel-header-icon-color: var(--accent);
 
     /* Input styling */
     --input-border-color: #808080;
@@ -95,5 +97,4 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Roboto, system-ui, -apple-system, sans-serif;
-    letter-spacing: .2px;
 }
