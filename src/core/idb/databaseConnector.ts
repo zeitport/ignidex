@@ -3,7 +3,7 @@ import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 export class DatabaseConnector {
     private dbPromise: Promise<IDBDatabase> | null = null;
     private readonly dbName: string = 'ignidex';
-    private readonly dbVersion: number = 5;
+    private readonly dbVersion: number = 9;
 
     private readonly startPanelsStoreName = 'startPanels';
     private readonly userStateStoreName = 'userState';
@@ -25,6 +25,8 @@ export class DatabaseConnector {
             const request = this.idb!.open(this.dbName, this.dbVersion);
 
             request.onupgradeneeded = () => {
+                console.log(`Upgrading IndexedDB database to version ${this.dbVersion}`);
+
                 const db = request.result;
                 const transaction = request.transaction!;
 
@@ -109,14 +111,38 @@ export class DatabaseConnector {
 
     private upgradeStartPanelsStore(db: IDBDatabase, transaction: IDBTransaction): void {
         if (!db.objectStoreNames.contains(this.startPanelsStoreName)) {
+            console.log(`Creating start panels store with anchor index`);
             const store = db.createObjectStore(this.startPanelsStoreName, {keyPath: 'id'});
             store.createIndex('anchor', 'anchor', {unique: false});
         } else {
             const store = transaction.objectStore(this.startPanelsStoreName);
+
             if (!store.indexNames.contains('anchor')) {
+                console.log(`Creating anchor index.`);
                 store.createIndex('anchor', 'anchor', {unique: false});
             }
+
+            this.migrateStartPanelsOrder(store);
         }
+    }
+
+    private migrateStartPanelsOrder(store: IDBObjectStore): void {
+        console.log(`Migrate Start Panels Order`);
+        const request = store.openCursor();
+        let orderIndex = 0;
+
+        request.onsuccess = () => {
+            const cursor = request.result;
+            if (cursor) {
+                const entry = cursor.value;
+                if (entry.order === undefined || entry.order === null) {
+                    entry.order = orderIndex;
+                    cursor.update(entry);
+                    orderIndex++;
+                }
+                cursor.continue();
+            }
+        };
     }
 
     private upgradeUserStateStore(db: IDBDatabase): void {

@@ -2,8 +2,12 @@ import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import type {Card} from '#models/internal/card.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
+import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '../../app/state.ts';
+import {bookmarkContextMenuItems} from '../contextMenu/bookmarkContextMenuItems.ts';
+import {highlightSectionContextMenuItems} from '../contextMenu/highlightSectionContextMenuItems.ts';
 
 @customElement('cc-highlight-section')
 export class HighlightSectionElement extends LitElement {
@@ -19,9 +23,9 @@ export class HighlightSectionElement extends LitElement {
 
         return html`
             <div class="card-section">
-                <div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}>${this.section.name}</div>
+                <div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>${this.section.name}</div>
 
-                <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}>
+                <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>
                     ${allCards.map(card => html`
                         <div class="bookmark" @click=${(event: MouseEvent) => this.handleAppClick(event, card)} @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}>
                             <div class="bookmark-background"></div>
@@ -37,36 +41,31 @@ export class HighlightSectionElement extends LitElement {
         `;
     }
 
-    private handleContextMenu(event: MouseEvent) {
+    private handleSectionContextMenu(event: MouseEvent) {
         event.preventDefault();
         event.stopPropagation();
 
-        this.dispatchEvent(new CustomEvent('section-context-menu', {
-            detail: {
-                event,
-                section: this.section,
-                x: event.clientX,
-                y: event.clientY,
-            },
-            bubbles: true,
-            composed: true
-        }));
+        selectedSection.value = this.section;
+        selectedGroup.value = this.section?.groups[0] ?? new CardGroup({name: 'Group'});
+        activeContextMenu.value = {
+            items: highlightSectionContextMenuItems,
+            x: event.clientX,
+            y: event.clientY
+        };
     }
 
     private handleCardContextMenu(event: MouseEvent, card: Card) {
         event.preventDefault();
         event.stopPropagation();
 
-        this.dispatchEvent(new CustomEvent('card-context-menu', {
-            detail: {
-                event,
-                card,
+        if (card.type === 'bookmark') {
+            selectedCard.value = card;
+            activeContextMenu.value = {
+                items: bookmarkContextMenuItems,
                 x: event.clientX,
-                y: event.clientY,
-            },
-            bubbles: true,
-            composed: true
-        }));
+                y: event.clientY
+            };
+        }
     }
 
     handleAppClick(event: MouseEvent, card: Card) {

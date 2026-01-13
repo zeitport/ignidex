@@ -87,9 +87,11 @@ export class ImportFromJsonAction implements ActionInterface {
         const panelData = this.remapIds(data, panelId, anchor, oldToNewIdMap);
         const startPanel = new StartPanel(panelData);
 
+        const nextOrder = await startPanelsStore.getNextOrder();
         const entry = new StartPanelEntry({
             id: startPanel.id,
             anchor: startPanel.anchor,
+            order: nextOrder,
             startPanel
         });
 

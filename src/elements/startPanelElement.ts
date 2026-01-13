@@ -6,17 +6,10 @@ import './startPanelHeaderElement.ts';
 import './sections/highlightSectionElement.ts';
 import './sections/groupSectionElement.ts';
 import {when} from 'lit/directives/when.js';
-import {activeOverlay, activeStartPanel, selectedGroup, selectedCard, selectedSection, pastedUrl, isDraggingFile, messageOverlayContent} from '../app/state.ts';
-import type {Card} from '../models/internal/card.ts';
-import {CardGroup} from '../models/internal/cardGroup.ts';
+import {activeOverlay, activeStartPanel, pastedUrl, isDraggingFile, messageOverlayContent, activeContextMenu} from '../app/state.ts';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
-import {bookmarkContextMenuItems} from './contextMenu/bookmarkContextMenuItems.ts';
 import {documentContextMenuItems} from './contextMenu/documentContextMenuItems.ts';
-import {panelContextMenuItems} from './contextMenu/panelContextMenuItems.ts';
-import {groupContextMenuItems} from './contextMenu/groupContextMenuItems.ts';
-import {bookmarkSectionContextMenuItems} from './contextMenu/bookmarkSectionContextMenuItems.ts';
-import {highlightSectionContextMenuItems} from './contextMenu/highlightSectionContextMenuItems.ts';
 import type {ContextMenuElement} from './contextMenuElement.ts';
 import {OverlayType} from './overlays/overlayType.ts';
 import './overlays/gettingStartedOverlay.ts';
@@ -41,6 +34,7 @@ export class StartPanelElement extends LitElement {
     private activeOverlay = activeOverlay.watch(this);
     private activeStartPanel = activeStartPanel.watch(this);
     private isDraggingFile = isDraggingFile.watch(this);
+    private activeContextMenu = activeContextMenu.watch(this);
     private dragCounter = 0;
 
     private sectionRenderer: Map<CardSectionType, (section: CardSection) => TemplateResult> = new Map(
@@ -80,22 +74,17 @@ export class StartPanelElement extends LitElement {
         return html`
             ${when(startPanel, panel => this.renderStartPanel(panel))}
 
-            <cc-context-menu id="contextMenu"></cc-context-menu>
-
             ${this.renderOverlay()}
 
             <cc-drop-file-overlay ?isOpen=${this.isDraggingFile.value}></cc-drop-file-overlay>
+
+            <cc-context-menu id="contextMenu"></cc-context-menu>
         `;
     }
 
     private renderStartPanel(startPanel: StartPanel) {
         return html`
-            <div
-                class="wrap"
-                @card-context-menu=${this.handleCardContextMenu}
-                @section-context-menu=${this.handleSectionContextMenu}
-                @group-context-menu=${this.handleGroupContextMenu}
-                @panel-context-menu=${this.handlePanelContextMenuEvent}>
+            <div class="wrap">
 
                 <div class="toprow">
                     <cc-start-panel-header .header=${startPanel.header}></cc-start-panel-header>
@@ -178,74 +167,34 @@ export class StartPanelElement extends LitElement {
         return html``;
     }
 
-    private handleCardContextMenu(event: {detail: {card: Card, x: number, y: number}} & CustomEvent) {
-        if (this.activeOverlay.value) return;
-        console.log('Show CardContextMenu', event);
+    updated(changedProperties: Map<string, unknown>) {
+        super.updated(changedProperties);
 
-        if (event.detail.card.type === 'bookmark') {
-            const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
-            contextMenu.items = bookmarkContextMenuItems;
+        const menu = this.activeContextMenu.value;
+        const contextMenu = this.shadowRoot?.getElementById('contextMenu') as ContextMenuElement | null;
 
-            selectedCard.value = event.detail.card;
-
-            const {x, y} = event.detail;
-            contextMenu.open(x, y);
+        if (contextMenu) {
+            if (menu) {
+                contextMenu.items = menu.items;
+                contextMenu.open(menu.x, menu.y);
+            } else {
+                contextMenu.close();
+            }
         }
-    }
-
-    private handleSectionContextMenu(event: {detail: {section: CardSection, x: number, y: number}}) {
-        if (this.activeOverlay.value) return;
-        console.log('Show Section ContextMenu', event);
-        const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
-
-        if (event.detail.section.type === CardSectionType.Highlight) {
-            contextMenu.items = highlightSectionContextMenuItems;
-            selectedGroup.value = event.detail.section.groups[0] ?? new CardGroup({name: 'Group'});
-        } else if (event.detail.section.type === CardSectionType.Groups) {
-            contextMenu.items = bookmarkSectionContextMenuItems;
-            selectedGroup.value = null;
-        }
-
-        selectedSection.value = event.detail.section;
-
-        contextMenu.open(event.detail.x, event.detail.y);
-    }
-
-    private handleGroupContextMenu(event: {detail: {section: CardSection, group: CardGroup, x: number, y: number}}) {
-        if (this.activeOverlay.value) return;
-        console.log('Show Group ContextMenu', event);
-        const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
-        contextMenu.items = groupContextMenuItems;
-
-        selectedSection.value = event.detail.section;
-        selectedGroup.value = event.detail.group;
-
-        contextMenu.open(event.detail.x, event.detail.y);
-    }
-
-    private handlePanelContextMenuEvent(event: CustomEvent<{x: number, y: number}>) {
-        if (this.activeOverlay.value) return;
-        console.log('Show Panel ContextMenu', event);
-        const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
-        contextMenu.items = panelContextMenuItems;
-        contextMenu.open(event.detail.x, event.detail.y);
     }
 
     private handleDocumentContextMenu = (event: MouseEvent) => {
         event.preventDefault();
         if (this.activeOverlay.value) return;
-        console.log('Show DocumentContextMenu', event);
-        const contextMenu = this.shadowRoot!.getElementById('contextMenu')! as ContextMenuElement;
-        contextMenu.items = documentContextMenuItems;
-        contextMenu.open(event.clientX, event.clientY);
+        activeContextMenu.value = {
+            items: documentContextMenuItems,
+            x: event.clientX,
+            y: event.clientY
+        };
     }
 
     private handleClickEvent = () => {
-        const contextMenu = this.shadowRoot!.getElementById('contextMenu') as ContextMenuElement;
-
-        if (contextMenu) {
-            contextMenu.close();
-        }
+        activeContextMenu.value = null;
     }
 
     private handlePaste = (event: ClipboardEvent) => {

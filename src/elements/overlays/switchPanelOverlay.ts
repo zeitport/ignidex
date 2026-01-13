@@ -1,14 +1,13 @@
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel} from '../../app/state.ts';
+import {activeOverlay, activeStartPanel, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '../../app/state.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
-import {ListItem} from '../listElement.ts';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
-import '../listElement.ts';
 import {switchPanelOverlayStyle} from './switchPanelOverlayStyle.ts';
+import {switchPanelContextMenuItems} from '../contextMenu/switchPanelContextMenuItems.ts';
 
 @customElement('cc-switch-panel-overlay')
 export class SwitchPanelOverlay extends LitElement {
@@ -21,25 +20,49 @@ export class SwitchPanelOverlay extends LitElement {
     private panels: Array<StartPanelEntry> = [];
 
     private startPanelsStore = inject(StartPanelsStore);
+    private panelOrderSubscription: { unsubscribe: () => void } | null = null;
 
-    async updated(changedProperties: Map<string, any>) {
+    connectedCallback() {
+        super.connectedCallback();
+        this.panelOrderSubscription = panelOrderVersion.observe(() => {
+            if (this.isOpen) {
+                this.loadPanels();
+            }
+        });
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.panelOrderSubscription?.unsubscribe();
+    }
+
+    async updated(changedProperties: Map<string, unknown>) {
         if (changedProperties.has('isOpen') && this.isOpen) {
-            this.panels = await this.startPanelsStore.getAll();
+            await this.loadPanels();
         }
     }
 
-    render() {
-        const items: ListItem[] = this.panels.map(entry => ({
-            id: entry.id,
-            label: entry.startPanel.header?.title || 'Untitled',
-            description: `#${entry.anchor}`
-        }));
+    private async loadPanels() {
+        this.panels = await this.startPanelsStore.getAll();
+    }
 
+    render() {
         return html`
             <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
                 <h2 slot="header">Switch Panel</h2>
 
-                <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail)}></cc-list>
+                <div class="panel-list">
+                    ${this.panels.map(entry => html`
+                        <div class="panel-item"
+                             @click=${() => this.handleSelect(entry)}
+                             @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event, entry)}>
+                            <div class="panel-info">
+                                <span class="panel-label">${entry.startPanel.header?.title || 'Untitled'}</span>
+                                <span class="panel-description">#${entry.anchor}</span>
+                            </div>
+                        </div>
+                    `)}
+                </div>
                 ${this.panels.length === 0 ? html`<div>No local panels found.</div>` : ''}
 
                 <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
@@ -47,12 +70,21 @@ export class SwitchPanelOverlay extends LitElement {
         `;
     }
 
-    private handleSelect(item: ListItem) {
-        const entry = this.panels.find(panel => panel.id === item.id);
-        if (entry) {
-            activeStartPanel.value = entry.startPanel;
-            this.handleClose();
-        }
+    private handleSelect(entry: StartPanelEntry) {
+        activeStartPanel.value = entry.startPanel;
+        this.handleClose();
+    }
+
+    private handleContextMenu(event: MouseEvent, entry: StartPanelEntry) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        selectedPanelEntry.value = entry;
+        activeContextMenu.value = {
+            items: switchPanelContextMenuItems,
+            x: event.clientX,
+            y: event.clientY
+        };
     }
 
     private handleClose() {

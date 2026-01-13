@@ -257,9 +257,11 @@ export class EditPanelOverlay extends LitElement {
             sections: []
         });
 
+        const nextOrder = await this.startPanelsStore.getNextOrder();
         const newEntry = new StartPanelEntry({
             id: id,
             anchor: anchor,
+            order: nextOrder,
             startPanel: newStartPanel
         });
 

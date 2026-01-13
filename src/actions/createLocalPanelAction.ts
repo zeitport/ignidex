@@ -45,9 +45,11 @@ export class CreateLocalPanelAction implements ActionInterface {
             anchor: anchor
         });
 
+        const nextOrder = await startPanelsStore.getNextOrder();
         const newEntry = new StartPanelEntry({
             id: id,
             anchor: newStartPanel.anchor,
+            order: nextOrder,
             startPanel: newStartPanel
         });
 

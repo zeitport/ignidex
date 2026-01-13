@@ -4,6 +4,8 @@ import {inject} from '#inject';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import type {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {startPanelHeaderElementStyle} from './startPanelHeaderElementStyle.ts';
+import {activeContextMenu} from '../app/state.ts';
+import {panelContextMenuItems} from './contextMenu/panelContextMenuItems.ts';
 
 @customElement('cc-start-panel-header')
 export class StartPanelHeaderElement extends LitElement {
@@ -63,11 +65,11 @@ export class StartPanelHeaderElement extends LitElement {
     private handleContextMenu(event: MouseEvent) {
         event.preventDefault();
         event.stopPropagation();
-        this.dispatchEvent(new CustomEvent('panel-context-menu', {
-            detail: {x: event.clientX, y: event.clientY},
-            bubbles: true,
-            composed: true
-        }));
+        activeContextMenu.value = {
+            items: panelContextMenuItems,
+            x: event.clientX,
+            y: event.clientY
+        };
     }
 }
 
