@@ -1,3 +1,5 @@
+import {panelHeaderHint} from '#app/hints/panelHeaderHint.ts';
+import {hoverHint} from '#core/hoverHintDirective.ts';
 import {LitElement, html, type PropertyValues} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {inject} from '#inject';
@@ -48,7 +50,10 @@ export class StartPanelHeaderElement extends LitElement {
         return html`
             <div class="header-back"></div>
             <div class="header-stripe"></div>
-            <div class="header" @contextmenu=${this.handleContextMenu}>
+            <div class="header"
+                 ${hoverHint(panelHeaderHint)}
+                 @contextmenu=${this.handleContextMenu}
+                >
                 ${hasIcon ? html`
                     <div class="icon">
                         <div class="mono-icon" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>

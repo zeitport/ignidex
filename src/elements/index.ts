@@ -11,4 +11,4 @@ export * from './overlays/editBookmarkCardOverlay.ts';
 export * from './overlays/switchPanelOverlay.ts';
 export * from './switchElement.ts';
 export * from './radioButtonElement.ts';
-export * from './hoverHintElement.ts';
+export * from './hoverHint/hoverHintElement.ts';

@@ -1,0 +1,65 @@
+import {activeHoverHint, hoverHintMode} from '#app/state.ts';
+import type {HoverHint} from '#core/hoverHint.ts';
+import {HoverHintMode} from '#models/idb/hoverHintMode.ts';
+import {mdiMouseLeftClickOutline, mdiMouseRightClickOutline, mdiMouseScrollWheel} from '@mdi/js';
+import type {TemplateResult} from 'lit';
+import {html, LitElement} from 'lit';
+import {customElement} from 'lit/decorators.js';
+import {hoverHintElementStyle} from './hoverHintElementStyle.ts';
+import {parseHintTemplate} from './parseHintTemplate.ts';
+import type {TemplateToken} from './templateToken.ts';
+
+@customElement('cc-hover-hint')
+export class HoverHintElement extends LitElement {
+    static styles = hoverHintElementStyle;
+
+    private activeHoverHint = activeHoverHint.watch(this);
+    private hoverHintMode = hoverHintMode.watch(this);
+
+    render() {
+        const hint = this.activeHoverHint.value;
+        const mode = this.hoverHintMode.value;
+
+        if (!hint || mode === HoverHintMode.Off) {
+            return html``;
+        }
+
+        return html`<div class="hint ${mode === HoverHintMode.Muted ? 'muted' : ''}">${this.renderHintText(hint)}</div>`;
+    }
+
+    private renderHintText(hint: HoverHint) {
+        const tokens = parseHintTemplate(hint.text);
+        return tokens.map((token) => this.renderToken(token));
+    }
+
+    private renderToken(token: TemplateToken): TemplateResult | string {
+        switch (token.type) {
+            case 'separator':
+                return html`<span class="separator"></span>`;
+            case 'text':
+                return token.value;
+            case 'plus':
+                return html`<strong class="plus">+</strong>`;
+            case 'key':
+                return html`<span class="key">${token.value}</span>`;
+            case 'mouse':
+                return this.renderMouseIcon(token.value as 'LMB' | 'RMB' | 'MMB');
+        }
+    }
+
+    private renderMouseIcon(button: 'LMB' | 'RMB' | 'MMB'): TemplateResult {
+        const iconPath = {
+            LMB: mdiMouseLeftClickOutline,
+            RMB: mdiMouseRightClickOutline,
+            MMB: mdiMouseScrollWheel,
+        }[button];
+
+        return html`<svg class="mouse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="${iconPath}" /></svg>`;
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'cc-hover-hint': HoverHintElement
+    }
+}

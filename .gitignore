@@ -1,6 +1,7 @@
 .idea
 .env
 tmpclaude*
+nul
 
 # Logs
 logs

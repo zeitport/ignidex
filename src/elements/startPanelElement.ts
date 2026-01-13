@@ -24,7 +24,7 @@ import './overlays/confirmationOverlay.ts';
 import './overlays/settingsOverlay.ts';
 import './overlays/messageOverlay.ts';
 import './overlays/dropFileOverlay.ts';
-import './hoverHintElement.ts';
+import './hoverHint/hoverHintElement.ts';
 import {startPanelElementStyle} from './startPanelElementStyle.ts';
 import {ImportFromJsonAction} from '../actions/importFromJsonAction.ts';
 
