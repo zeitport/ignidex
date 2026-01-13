@@ -1,7 +1,7 @@
 {
     "name": "@zeitport/ignidex",
     "version": "0.3.0",
-    "description": "A simple, link-only start page with grouping and visual highlights.",
+    "description": "A calm, local-first personal start page.",
     "type": "module",
     "scripts": {
         "dev": "vite",
