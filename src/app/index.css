@@ -40,9 +40,9 @@
     /* Overlay */
     --overlay-bg: rgba(0, 0, 0, 0.3);
     --overlay-backdrop-filter: blur(4.5px) saturate(1.4) brightness(0.9);
-    --overlay-max-width: 800px;
-    --overlay-max-height: 80vh;
-    --overlay-border-radius: 8px;
+    --overlay-max-width: 50rem;
+    --overlay-max-height: 90vh;
+    --overlay-border-radius: 0.5rem;
     --overlay-header-padding: 1rem;
     --overlay-header-font-size: 1rem;
     --overlay-header-bg: #232323;
@@ -80,7 +80,8 @@
 }
 
 * {
-    box-sizing: border-box
+    box-sizing: border-box;
+    color-scheme: dark;
 }
 
 html {

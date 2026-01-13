@@ -41,10 +41,10 @@ export const overlayElementStyle = css`
     .overlay-container {
         pointer-events: auto;
         width: 100%;
-        max-width: var(--overlay-max-width, 800px);
-        max-height: var(--overlay-max-height, 80vh);
-        background: var(--panel, #2b3138);
-        border-radius: var(--overlay-border-radius, 8px);
+        max-width: var(--overlay-max-width);
+        max-height: var(--overlay-max-height);
+        background: var(--panel);
+        border-radius: var(--overlay-border-radius);
         display: flex;
         flex-direction: column;
         overflow: hidden;

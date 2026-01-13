@@ -27,7 +27,7 @@ export class SettingsOverlay extends LitElement {
     static styles = css`
         .settings-container {
             display: flex;
-            min-height: 400px;
+            min-height: 60vh;
         }
 
         .settings-sidebar {

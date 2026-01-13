@@ -11,7 +11,7 @@ export class ConfirmationOverlay extends LitElement {
         panelOverlayStyle,
         css`
             :host {
-                --overlay-max-width: 32rem;
+                --overlay-max-width: 50rem;
             }
         `
     ];
