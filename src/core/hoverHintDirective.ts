@@ -5,6 +5,8 @@ class HoverHintDirective extends Directive {
     private el?: HTMLElement;
     private hint?: HoverHint;
     private onEnter = () => HoverHint.show(this.hint!);
+
+    // SWITCH: The next line will hide the hover-hint on mouse leave
     private onLeave = () => HoverHint.clear();
 
     constructor(partInfo: PartInfo) {
