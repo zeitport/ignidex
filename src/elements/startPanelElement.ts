@@ -24,6 +24,7 @@ import './overlays/confirmationOverlay.ts';
 import './overlays/settingsOverlay.ts';
 import './overlays/messageOverlay.ts';
 import './overlays/dropFileOverlay.ts';
+import './hoverHintElement.ts';
 import {startPanelElementStyle} from './startPanelElementStyle.ts';
 import {ImportFromJsonAction} from '../actions/importFromJsonAction.ts';
 
@@ -79,6 +80,8 @@ export class StartPanelElement extends LitElement {
             <cc-drop-file-overlay ?isOpen=${this.isDraggingFile.value}></cc-drop-file-overlay>
 
             <cc-context-menu id="contextMenu"></cc-context-menu>
+
+            <cc-hover-hint></cc-hover-hint>
         `;
     }
 

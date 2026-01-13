@@ -6,8 +6,11 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
 import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '../../app/state.ts';
+import {ActiveHoverHint} from '../../app/activeHoverHint.ts';
 import {bookmarkContextMenuItems} from '../contextMenu/bookmarkContextMenuItems.ts';
 import {highlightSectionContextMenuItems} from '../contextMenu/highlightSectionContextMenuItems.ts';
+
+const BOOKMARK_HINT = new ActiveHoverHint({html: html`Click to open · Right-click for menu · Drag to move`});
 
 @customElement('cc-highlight-section')
 export class HighlightSectionElement extends LitElement {
@@ -27,7 +30,11 @@ export class HighlightSectionElement extends LitElement {
 
                 <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>
                     ${allCards.map(card => html`
-                        <div class="bookmark" @click=${(event: MouseEvent) => this.handleAppClick(event, card)} @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}>
+                        <div class="bookmark"
+                             @click=${(event: MouseEvent) => this.handleAppClick(event, card)}
+                             @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
+                             @mouseenter=${() => this.handleBookmarkMouseEnter()}
+                             @mouseleave=${() => this.handleBookmarkMouseLeave()}>
                             <div class="bookmark-background"></div>
                             <cc-card-icon .card="${card}" style="--icon-size: 1.75rem"></cc-card-icon>
                             <div class="meta">
@@ -78,6 +85,14 @@ export class HighlightSectionElement extends LitElement {
                 window.location.href = card.url;
             }
         }
+    }
+
+    private handleBookmarkMouseEnter() {
+        ActiveHoverHint.show(BOOKMARK_HINT);
+    }
+
+    private handleBookmarkMouseLeave() {
+        ActiveHoverHint.clear();
     }
 }
 
