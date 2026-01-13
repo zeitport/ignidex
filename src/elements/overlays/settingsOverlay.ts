@@ -2,11 +2,12 @@ import {html, LitElement, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {activeOverlay} from '../../app/state.ts';
 import {ListItem} from '../listElement.ts';
-import {mdiPalette, mdiDatabase} from '@mdi/js';
+import {mdiPalette, mdiDatabase, mdiInformationOutline} from '@mdi/js';
 import '../overlayElement.ts';
 import '../listElement.ts';
 import '../settings/uiSettingsPanel.ts';
 import '../settings/storageSettingsPanel.ts';
+import '../settings/aboutSettingsPanel.ts';
 import '../dialogButton.ts';
 
 @customElement('cc-settings-overlay')
@@ -20,6 +21,7 @@ export class SettingsOverlay extends LitElement {
     private panels: ListItem[] = [
         {id: 'ui', label: 'UI', icon: mdiPalette},
         {id: 'storage', label: 'Storage', icon: mdiDatabase},
+        {id: 'about', label: 'About', icon: mdiInformationOutline},
     ];
 
     static styles = css`
@@ -66,6 +68,8 @@ export class SettingsOverlay extends LitElement {
                 return html`<cc-ui-settings-panel></cc-ui-settings-panel>`;
             case 'storage':
                 return html`<cc-storage-settings-panel></cc-storage-settings-panel>`;
+            case 'about':
+                return html`<cc-about-settings-panel></cc-about-settings-panel>`;
             default:
                 return html``;
         }
