@@ -4,7 +4,7 @@ import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {createId} from '#utils/createId.ts';
-import {activeStartPanel, activeOverlay} from './app/state.ts';
+import {activeStartPanel, activeOverlay, hoverHintMode} from './app/state.ts';
 import {inject} from '#inject';
 import {SwitchPanelBackAction} from './actions/switchPanelBackAction.ts';
 import {SwitchPanelNextAction} from './actions/switchPanelNextAction.ts';
@@ -35,12 +35,13 @@ function registerKeyboardNavigation() {
 
         if (event.key === 'ArrowLeft') {
             inject(SwitchPanelBackAction).run();
+            event.stopPropagation();
+            event.preventDefault();
         } else if (event.key === 'ArrowRight') {
             inject(SwitchPanelNextAction).run();
+            event.stopPropagation();
+            event.preventDefault();
         }
-
-        event.stopPropagation();
-        event.preventDefault();
     });
 }
 
@@ -61,6 +62,7 @@ async function main() {
         document.documentElement.style.setProperty('--base-font-size', `${state.baseFontSize}px`);
     }
     document.documentElement.style.setProperty('--text-transform', state.useUppercase ? 'uppercase' : 'none');
+    hoverHintMode.value = state.hoverHintMode;
 
     activeStartPanel.observe(async (panel) => {
         if (panel) {
