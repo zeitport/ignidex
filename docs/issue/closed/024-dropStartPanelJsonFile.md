@@ -34,8 +34,5 @@ As a user, I want to drop my exported JSON file to create a new start panel.
 ### Quality Score
 8/10
 
-### Estimated Cost
-€2.50
-
 ## Comments
 - Ai re-implemented an overlay style instead of using the existin cc-overlay element (-2).

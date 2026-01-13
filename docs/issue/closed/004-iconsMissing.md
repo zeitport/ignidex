@@ -29,9 +29,6 @@ When refreshing the page, the icons are displayed correctly.
 ### Quality Score
 8/10
 
-### Estimated Cost
-~0.75 **€**
-
 ### Problems
 
 - None
