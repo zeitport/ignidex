@@ -30,11 +30,12 @@
         "nanoid": "^5.1.6"
     },
     "imports": {
+        "#app/*": "./src/app/*",
+        "#core/*": "./src/core/*",
         "#elements": "./src/elements/index.ts",
-        "#utils/*": "./src/utils/*",
         "#inject": "./src/core/injector.ts",
         "#models/*": "./src/models/*",
-        "#core/*": "./src/core/*"
+        "#utils/*": "./src/utils/*"
     },
     "devDependencies": {
         "@modelcontextprotocol/sdk": "^1.0.0",

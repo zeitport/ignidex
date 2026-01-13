@@ -3,14 +3,13 @@ import {customElement, property} from 'lit/decorators.js';
 import type {Card} from '#models/internal/card.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
+import {hoverHint} from '#core/hoverHintDirective.ts';
+import {bookmarkHint} from '#app/hints/index.ts';
 import {groupSectionStyle} from './groupSectionStyle.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '../../app/state.ts';
-import {ActiveHoverHint} from '../../app/activeHoverHint.ts';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#app/state.ts';
 import {bookmarkContextMenuItems} from '../contextMenu/bookmarkContextMenuItems.ts';
 import {bookmarkSectionContextMenuItems} from '../contextMenu/bookmarkSectionContextMenuItems.ts';
 import {groupContextMenuItems} from '../contextMenu/groupContextMenuItems.ts';
-
-const BOOKMARK_HINT = new ActiveHoverHint({html: html`Click to open · Right-click for menu · Drag to move`});
 
 @customElement('cc-groups-section')
 export class GroupSectionElement extends LitElement {
@@ -47,10 +46,10 @@ export class GroupSectionElement extends LitElement {
     renderCard(card: Card) {
         return html`
             <div class="bookmark-item"
+                 ${hoverHint(bookmarkHint)}
                  @click=${(event: MouseEvent) => this.handleCardClick(event, card)}
                  @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
-                 @mouseenter=${() => this.handleBookmarkMouseEnter()}
-                 @mouseleave=${() => this.handleBookmarkMouseLeave()}>
+                 >
                 <div class="bookmark-item-background"></div>
                 <div class="bookmark-item-content">
                     <cc-card-icon .card=${card}></cc-card-icon>
@@ -108,14 +107,6 @@ export class GroupSectionElement extends LitElement {
             x: event.clientX,
             y: event.clientY
         };
-    }
-
-    private handleBookmarkMouseEnter() {
-        ActiveHoverHint.show(BOOKMARK_HINT);
-    }
-
-    private handleBookmarkMouseLeave() {
-        ActiveHoverHint.clear();
     }
 }
 

@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {hoverHintElementStyle} from './hoverHintElementStyle.ts';
-import {activeHoverHint, hoverHintMode} from '../app/state.ts';
+import {activeHoverHint, hoverHintMode} from '#app/state.ts';
 import {HoverHintMode} from '#models/idb/hoverHintMode.ts';
 
 @customElement('cc-hover-hint')
@@ -19,7 +19,7 @@ export class HoverHintElement extends LitElement {
             return html``;
         }
 
-        return html`<div class="hint ${mode === HoverHintMode.Muted ? 'muted' : ''}">${hint.html}</div>`;
+        return html`<div class="hint ${mode === HoverHintMode.Muted ? 'muted' : ''}">${hint.text}</div>`;
     }
 }
 
