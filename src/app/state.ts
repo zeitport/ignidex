@@ -1,3 +1,4 @@
+import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
 import {ObservableProperty} from '#utils/observableProperty.ts';
 import {ActiveHoverHint} from './activeHoverHint.ts';
 import type {Card} from '../models/internal/card.ts';
@@ -28,3 +29,4 @@ export const activeContextMenu = new ObservableProperty<ActiveContextMenu | null
 export const selectedPanelEntry = new ObservableProperty<StartPanelEntry | null>(null);
 export const panelOrderVersion = new ObservableProperty<number>(0);
 export const activeHoverHint = new ObservableProperty<ActiveHoverHint | null>(null);
+export const hoverHintMode = new ObservableProperty<HoverHintModeType>(HoverHintMode.Highlighted);

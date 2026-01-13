@@ -2,14 +2,6 @@
     "name": "@zeitport/ignidex",
     "version": "0.4.0-beta",
     "description": "A calm, local-first personal start page.",
-    "homepage": "https://github.com/zeitport/ignidex",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/zeitport/ignidex.git"
-    },
-    "bugs": {
-        "url": "https://github.com/zeitport/ignidex/issues"
-    },
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -23,6 +15,14 @@
         "sync-sw": "node scripts/sync-sw-version.js"
     },
     "author": "Chris Zeitport <chris@zeitport.com>",
+    "homepage": "https://github.com/zeitport/ignidex",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zeitport/ignidex.git"
+    },
+    "bugs": {
+        "url": "https://github.com/zeitport/ignidex/issues"
+    },
     "license": "BSD-3-Clause",
     "dependencies": {
         "@mdi/js": "^7.4.47",

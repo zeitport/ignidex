@@ -21,6 +21,12 @@ export const hoverHintElementStyle = css`
         white-space: nowrap;
     }
 
+    .hint.muted {
+        background-color: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--input-border-color);
+    }
+
     :host([hidden]) {
         display: none;
     }

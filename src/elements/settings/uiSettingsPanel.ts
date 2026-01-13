@@ -1,10 +1,13 @@
+import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {colorPalette} from './colorPalette.ts';
 import './settingsSection.ts';
 import './settingsHeader.ts';
+import '../radioButtonElement.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
+import {hoverHintMode} from '../../app/state.ts';
 
 @customElement('cc-ui-settings-panel')
 export class UISettingsPanel extends LitElement {
@@ -18,6 +21,9 @@ export class UISettingsPanel extends LitElement {
 
     @state()
     private useUppercase: boolean = true;
+
+    @state()
+    private selectedHoverHintMode: HoverHintModeType = HoverHintMode.Highlighted;
 
     static styles = css`
         :host {
@@ -98,6 +104,7 @@ export class UISettingsPanel extends LitElement {
         this.selectedColor = state.accentColor;
         this.selectedFontSize = state.baseFontSize;
         this.useUppercase = state.useUppercase;
+        this.selectedHoverHintMode = state.hoverHintMode;
     }
 
     render() {
@@ -148,6 +155,20 @@ export class UISettingsPanel extends LitElement {
                     <cc-switch .checked=${this.useUppercase} @change=${(event: CustomEvent) => this.toggleTextTransform(event.detail.checked)}></cc-switch>
                 </div>
             </cc-settings-section>
+
+            <cc-settings-section>
+                <span slot="label">Hover Hints</span>
+                <span slot="description">Select how to display hover hints for elements.</span>
+                <cc-radio-button
+                    .options=${[
+                        {label: 'Off', value: HoverHintMode.Off},
+                        {label: 'Muted', value: HoverHintMode.Muted},
+                        {label: 'Highlighted', value: HoverHintMode.Highlighted}
+                    ]}
+                    .value=${this.selectedHoverHintMode}
+                    @change=${(event: CustomEvent) => this.selectHoverHintMode(event.detail.value)}
+                ></cc-radio-button>
+            </cc-settings-section>
         `;
     }
 
@@ -173,6 +194,14 @@ export class UISettingsPanel extends LitElement {
         state.useUppercase = checked;
         await this.userStateStore.set(state);
         document.documentElement.style.setProperty('--text-transform', checked ? 'uppercase' : 'none');
+    }
+
+    private async selectHoverHintMode(mode: HoverHintModeType) {
+        this.selectedHoverHintMode = mode;
+        const state = await this.userStateStore.getOrCreate();
+        state.hoverHintMode = mode;
+        await this.userStateStore.set(state);
+        hoverHintMode.value = mode;
     }
 }
 
