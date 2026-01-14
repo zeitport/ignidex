@@ -9,7 +9,7 @@ As a user, I want X to achieve Y.
 - Review this issue and ask questions to improve the plan and clarify unclear requirements.
 - Document answers in section [Clarifications]
 - ...
-- Document result in [AI Code Changes]
+- Document a brief summary in [AI Code Changes] (no sub headlines)
 
 ## Clarifications
 
