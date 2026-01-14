@@ -21,27 +21,27 @@ export const documentContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPlus,
         label: 'New panel',
-        tooltip: 'Create a new panel',
+        tooltip: i18n.text.hints.createNewPanel,
         action: new NewPanelAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiExport,
         label: 'Export as JSON',
-        tooltip: 'Export data as JSON file',
+        tooltip: i18n.text.hints.exportJson,
         action: new ExportToJsonAction()
     }),
     new ContextMenuItem({
         icon: mdiCloudDownloadOutline ,
         label: 'Create local panel',
-        tooltip: 'Add current panel to my collection of panels (or clone it)',
+        tooltip: i18n.text.hints.createLocalPanel,
         action: new CreateLocalPanelAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiCog,
         label: 'Settings',
-        tooltip: '[LMB] or [F1] opens the app settings',
+        tooltip: i18n.text.hints.openSettings,
         action: new OpenSettingsAction()
     })
 ];

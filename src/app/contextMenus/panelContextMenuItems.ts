@@ -21,20 +21,20 @@ export const panelContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPencil,
         label: 'Edit panel',
-        tooltip: 'Edit current panel',
+        tooltip: i18n.text.hints.editPanel,
         action: new EditPanelAction()
     }),
     new ContextMenuItem({
         icon: mdiShapeSquarePlus,
         label: 'Add Section',
-        tooltip: 'Add new section to panel',
+        tooltip: i18n.text.hints.addSectionToPanel,
         action: new AddSectionAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiDeleteOutline,
         label: 'Delete panel',
-        tooltip: 'Delete current panel',
+        tooltip: i18n.text.hints.deletePanel,
         action: new DeletePanelAction()
     }),
 ];

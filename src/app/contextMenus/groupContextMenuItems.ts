@@ -1,3 +1,4 @@
+import {i18n} from '#i18n';
 import {
     mdiDelete,
     mdiPencilOutline,
@@ -12,20 +13,20 @@ export const groupContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',
-        tooltip: 'Edit group',
+        tooltip: i18n.text.hints.editGroup,
         action: new EditGroupAction()
     }),
     new ContextMenuItem({
         icon: mdiPlus,
         label: 'Add Bookmark',
-        tooltip: 'Add new bookmark to group',
+        tooltip: i18n.text.hints.addBookmarkToGroup,
         action: new AddCardAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiDelete,
         label: 'Delete...',
-        tooltip: 'Delete group',
+        tooltip: i18n.text.hints.deleteGroup,
         action: new DeleteGroupAction()
     })
 ];
