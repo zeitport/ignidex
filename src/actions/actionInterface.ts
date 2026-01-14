@@ -6,4 +6,5 @@ export interface ActionInterface {
     confirm?(): void | Promise<void>;
     cancel?(): void | Promise<void>;
     isDisabled?(): boolean | Promise<boolean>;
+    disabledHint?: string;
 }

@@ -3,8 +3,12 @@ import {HoverHint} from './hoverHint.ts';
 
 class HoverHintDirective extends Directive {
     private el?: HTMLElement;
-    private hint?: HoverHint;
-    private onEnter = () => HoverHint.show(this.hint!);
+    private hint?: HoverHint | null;
+    private onEnter = () => {
+        if (this.hint) {
+            HoverHint.show(this.hint);
+        }
+    };
 
     // SWITCH: The next line will hide the hover-hint on mouse leave
     private onLeave = () => HoverHint.clear();
@@ -17,11 +21,11 @@ class HoverHintDirective extends Directive {
         }
     }
 
-    render(_hint: HoverHint) {
+    render(_hint: HoverHint | null | undefined) {
         return;
     }
 
-    update(part: any, [hint]: [HoverHint]) {
+    update(part: any, [hint]: [HoverHint | null | undefined]) {
         const el = part.element as HTMLElement;
 
         if (this.el !== el) {

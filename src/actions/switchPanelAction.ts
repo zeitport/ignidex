@@ -6,6 +6,7 @@ import {ActionInterface} from './actionInterface.ts';
 
 export class SwitchPanelAction implements ActionInterface {
     private startPanelsStore = inject(StartPanelsStore);
+    disabledHint?: string;
 
     run() {
         activeOverlay.value = OverlayType.switchPanel;
@@ -13,6 +14,10 @@ export class SwitchPanelAction implements ActionInterface {
 
     async isDisabled(): Promise<boolean> {
         const panels = await this.startPanelsStore.getAll();
-        return panels.length <= 1;
+        const disabled = panels.length <= 1;
+        if (disabled) {
+            this.disabledHint = 'Only one panel exists';
+        }
+        return disabled;
     }
 }

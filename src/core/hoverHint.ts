@@ -1,5 +1,9 @@
 import {activeHoverHint} from '../app/state.ts';
 
+/**
+ * Use the "hoverHint" directive to show a hint when hovering over an element.
+ * @see {HoverHintDirective}
+ */
 export class HoverHint {
     text: string;
 
