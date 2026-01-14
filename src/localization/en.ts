@@ -20,6 +20,7 @@ export const tokens = {
         iconPreviewPaste: '[LMB] or [CTRL] + [V] Paste icon from clipboard (SVG, URL, or data URI)',
         iconPreviewCopy: '[LMB] Copy icon data URI to clipboard',
         iconPreviewDelete: '[LMB] Remove icon',
-        iconPreviewNoIcon: 'No icon selected'
+        iconPreviewNoIcon: 'No icon selected',
+        switchPanelListItem: '[RMB] open menu to move items up/down'
     }
 };

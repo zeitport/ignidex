@@ -8,13 +8,13 @@ export class IconResolver {
     private imageAssetsDatabase: ImageAssetsStore = inject(ImageAssetsStore);
 
     async resolve(card: Card): Promise<IconResolverResult> {
-        let result = new IconResolverResult({
-            error: 'No icon resolver strategy found. Please make sure that the card has one of this properties: iconName, iconUrl'
-        });
+        return this.resolveById(card.icon);
+    }
 
-        if (card.icon) {
+    async resolveById(iconId: string | null): Promise<IconResolverResult> {
+        if (iconId) {
             try {
-                const entry = await this.imageAssetsDatabase.get(card.icon);
+                const entry = await this.imageAssetsDatabase.get(iconId);
 
                 if (entry) {
                     if (entry.dataUri) {
@@ -28,12 +28,7 @@ export class IconResolver {
             }
         }
 
-        // Fallback: Icon could not be resolved, fall back to a mdi icon.
-        if (result.dataUri === null) {
-            result = this.resolveFallbackIcon();
-        }
-
-        return result;
+        return this.resolveFallbackIcon();
     }
 
     private resolveFallbackIcon() {

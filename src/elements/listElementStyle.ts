@@ -47,6 +47,18 @@ export const listElementStyle = css`
         height: 1.5rem;
     }
 
+    .item-icon-mask {
+        background-color: var(--icon-color);
+        mask-image: var(--mask-url);
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+        -webkit-mask-image: var(--mask-url);
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        -webkit-mask-size: contain;
+    }
+
     .item-info {
         display: flex;
         flex-direction: column;
