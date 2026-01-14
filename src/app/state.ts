@@ -32,3 +32,9 @@ export const messageOverlayContent = new ObservableProperty<string | null>(null)
 export const isDraggingFile = new ObservableProperty<boolean>(false);
 export const panelOrderVersion = new ObservableProperty<number>(0);
 export const hoverHintMode = new ObservableProperty<HoverHintModeType>(HoverHintMode.Dark);
+
+export interface IconPreviewState {
+    dataUri: string;
+    source: string;
+}
+export const activeIconPreview = new ObservableProperty<IconPreviewState | null>(null);

@@ -53,6 +53,8 @@ The local `ignidex-mcp` server provides project-specific tools:
 - `selectedCard/selectedSection/selectedGroup` - Context menu targets
 - `activeAction` - Currently executing action
 
+Observable state objects must not contain callbacks. Actions should update state directly, and components should watch for changes and react accordingly.
+
 **Action Pattern:** User interactions are encapsulated in action classes implementing `ActionInterface`:
 ```typescript
 interface ActionInterface {

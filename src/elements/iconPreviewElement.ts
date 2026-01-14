@@ -1,13 +1,12 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {mdiDeleteOutline, mdiClipboardOutline, mdiContentCopy} from '@mdi/js';
+import {mdiDeleteOutline} from '@mdi/js';
 import {svgToDataUri} from '#utils/svgToDataUri.ts';
 import './contextMenuElement.ts';
-import {ContextMenuItem} from './contextMenuItem.ts';
 import type {ContextMenuElement} from './contextMenuElement.ts';
 import {PasteIconAction} from '../actions/iconPreview/pasteIconAction.ts';
-import {DeleteIconAction} from '../actions/iconPreview/deleteIconAction.ts';
-import {CopyIconDataUrlAction} from '../actions/iconPreview/copyIconDataUrlAction.ts';
+import {iconPreviewContextMenuItems} from '../app/contextMenus/iconPreviewContextMenuItems.ts';
+import {activeIconPreview} from '#state';
 import {iconPreviewElementStyle} from './iconPreviewElementStyle.ts';
 
 export interface IconPreviewChangeEvent {
@@ -18,6 +17,8 @@ export interface IconPreviewChangeEvent {
 @customElement('cc-icon-preview')
 export class IconPreviewElement extends LitElement {
     static styles = iconPreviewElementStyle;
+
+    private iconPreviewState = activeIconPreview.watch(this);
 
     @property({type: String})
     dataUri = '';
@@ -33,17 +34,26 @@ export class IconPreviewElement extends LitElement {
 
         if (changedProperties.has('active')) {
             if (this.active) {
-                window.addEventListener('paste',this.onPaste);
+                this.syncIconPreviewState();
+                window.addEventListener('paste', this.onPaste);
                 window.addEventListener('click', this.handleWindowClick);
             } else {
+                activeIconPreview.value = null;
                 window.removeEventListener('paste', this.onPaste);
                 window.removeEventListener('click', this.handleWindowClick);
             }
         }
+
+        if (changedProperties.has('dataUri') && this.active) {
+            this.syncIconPreviewState();
+        }
+
+        this.checkForExternalChanges();
     }
 
     disconnectedCallback(): void {
         super.disconnectedCallback();
+        activeIconPreview.value = null;
         window.removeEventListener('paste', this.onPaste);
         window.removeEventListener('click', this.handleWindowClick);
     }
@@ -77,6 +87,24 @@ export class IconPreviewElement extends LitElement {
         `;
     }
 
+    private syncIconPreviewState() {
+        activeIconPreview.value = {
+            dataUri: this.dataUri,
+            source: this.source
+        };
+    }
+
+    private checkForExternalChanges() {
+        if (!this.active) return;
+
+        const state = this.iconPreviewState.value;
+        if (!state) return;
+
+        if (state.dataUri !== this.dataUri || state.source !== this.source) {
+            this.emitChange(state.dataUri, state.source);
+        }
+    }
+
     private handlePreviewClick = () => {
         const fileInput = this.shadowRoot?.getElementById('icon-file') as HTMLInputElement;
         fileInput?.click();
@@ -106,10 +134,7 @@ export class IconPreviewElement extends LitElement {
         const pastedText = event.clipboardData?.getData('text') ?? '';
         if (!pastedText) return;
 
-        const action = new PasteIconAction((dataUri, source) => {
-            this.emitChange(dataUri, source);
-        });
-
+        const action = new PasteIconAction();
         const processed = await action.processText(pastedText);
         if (processed) {
             event.preventDefault();
@@ -127,7 +152,7 @@ export class IconPreviewElement extends LitElement {
         event.stopPropagation();
 
         const contextMenu = this.shadowRoot!.getElementById('iconContextMenu') as ContextMenuElement;
-        contextMenu.items = this.buildContextMenuItems();
+        contextMenu.items = iconPreviewContextMenuItems;
         contextMenu.open(event.clientX, event.clientY);
     }
 
@@ -135,38 +160,6 @@ export class IconPreviewElement extends LitElement {
         const contextMenu = this.shadowRoot?.getElementById('iconContextMenu') as ContextMenuElement | null;
         contextMenu?.close();
     };
-
-    private buildContextMenuItems(): ContextMenuItem[] {
-        const items: ContextMenuItem[] = [
-            new ContextMenuItem({
-                icon: mdiClipboardOutline,
-                label: 'Paste',
-                action: new PasteIconAction((dataUri, source) => {
-                    this.emitChange(dataUri, source);
-                })
-            })
-        ];
-
-        if (this.dataUri) {
-            items.push(
-                new ContextMenuItem({
-                    icon: mdiContentCopy,
-                    label: 'Copy Data URL',
-                    action: new CopyIconDataUrlAction(() => this.dataUri)
-                }),
-                ContextMenuItem.divider(),
-                new ContextMenuItem({
-                    icon: mdiDeleteOutline,
-                    label: 'Delete',
-                    action: new DeleteIconAction(() => {
-                        this.emitChange('', '');
-                    })
-                })
-            );
-        }
-
-        return items;
-    }
 
     private emitChange(dataUri: string, source: string) {
         this.dispatchEvent(new CustomEvent<IconPreviewChangeEvent>('icon-change', {

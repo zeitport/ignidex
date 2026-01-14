@@ -1,9 +1,15 @@
 import type {ActionInterface} from '../actionInterface.ts';
+import {activeIconPreview} from '#state';
+import {i18n} from '#i18n';
 
 export class DeleteIconAction implements ActionInterface {
-    constructor(private onDelete: () => void) {}
-
     run() {
-        this.onDelete();
+        activeIconPreview.value = {dataUri: '', source: ''};
     }
+
+    isDisabled(): boolean {
+        return !activeIconPreview.value?.dataUri;
+    }
+
+    disabledHint = i18n.text.hints.iconPreviewNoIcon;
 }
