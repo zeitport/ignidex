@@ -10,7 +10,7 @@ export interface StartPanelDto {
      * The anchor is matched against the fragment of the location URL
      */
     anchor: string | null;
-    header: StartPanelHeaderDto | null;
+    header: StartPanelHeaderDto;
     sections: Array<CardSectionDto>;
     images: Array<ImageDto>;
 }

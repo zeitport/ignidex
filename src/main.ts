@@ -20,35 +20,37 @@ function registerServiceWorker() {
 }
 
 function registerKeyboardNavigation() {
-    document.addEventListener('keydown', (event: KeyboardEvent) => {
-        if (activeOverlay.value !== null) {
-            return;
-        }
+    document.addEventListener('keydown', (event: KeyboardEvent) =>  void handleKeyDown(event));
+}
 
-        const activeElement = document.activeElement;
-        const isInputFocused = activeElement instanceof HTMLInputElement
-            || activeElement instanceof HTMLTextAreaElement
-            || (activeElement instanceof HTMLElement && activeElement.isContentEditable);
+async function handleKeyDown(event: KeyboardEvent) {
+    if (activeOverlay.value !== null) {
+        return;
+    }
 
-        if (isInputFocused) {
-            return;
-        }
+    const activeElement = document.activeElement;
+    const isInputFocused = activeElement instanceof HTMLInputElement
+        || activeElement instanceof HTMLTextAreaElement
+        || (activeElement instanceof HTMLElement && activeElement.isContentEditable);
 
-        if (event.key === 'ArrowLeft') {
-            inject(SwitchPanelBackAction).run();
-            event.stopPropagation();
-            event.preventDefault();
-        } else if (event.key === 'ArrowRight') {
-            inject(SwitchPanelNextAction).run();
-            event.stopPropagation();
-            event.preventDefault();
-        } else if (event.key === 'F1') {
-            activeContextMenu.value = null;
-            inject(OpenSettingsAction).run();
-            event.stopPropagation();
-            event.preventDefault();
-        }
-    });
+    if (isInputFocused) {
+        return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+        await inject(SwitchPanelBackAction).run();
+        event.stopPropagation();
+        event.preventDefault();
+    } else if (event.key === 'ArrowRight') {
+        await inject(SwitchPanelNextAction).run();
+        event.stopPropagation();
+        event.preventDefault();
+    } else if (event.key === 'F1') {
+        activeContextMenu.value = null;
+        inject(OpenSettingsAction).run();
+        event.stopPropagation();
+        event.preventDefault();
+    }
 }
 
 async function main() {
@@ -57,8 +59,8 @@ async function main() {
     console.log('Starting application...');
     console.log(createId());
 
-    const userStateStore = new UserStateStore();
-    const startPanelsStore = new StartPanelsStore();
+    const userStateStore = inject(UserStateStore);
+    const startPanelsStore = inject(StartPanelsStore);
 
     const state = await userStateStore.getOrCreate();
     if (state.accentColor) {
@@ -86,18 +88,7 @@ async function main() {
         }
     });
 
-    window.addEventListener('hashchange', async () => {
-        const anchor = window.location.hash.slice(1);
-        if (anchor) {
-            const currentPanel = activeStartPanel.value;
-            if (currentPanel?.anchor !== anchor) {
-                const entry = await startPanelsStore.getByAnchor(anchor);
-                if (entry) {
-                    activeStartPanel.value = new StartPanel(entry.startPanel);
-                }
-            }
-        }
-    });
+    window.addEventListener('hashchange', () => void handleHashChange());
 
     const urlParams = new URLSearchParams(window.location.search);
     const loadUrl = urlParams.get('load');
@@ -135,4 +126,19 @@ async function main() {
     }
 }
 
-main();
+async function handleHashChange() {
+    const anchor = window.location.hash.slice(1);
+
+    if (anchor) {
+        const startPanelsStore = inject(StartPanelsStore);
+        const currentPanel = activeStartPanel.value;
+        if (currentPanel?.anchor !== anchor) {
+            const entry = await startPanelsStore.getByAnchor(anchor);
+            if (entry) {
+                activeStartPanel.value = new StartPanel(entry.startPanel);
+            }
+        }
+    }
+}
+
+void main();

@@ -40,12 +40,12 @@ export class ConfirmationOverlay extends LitElement {
         `;
     }
 
-    private handleConfirm() {
-        this.activeAction.value?.confirm?.();
+    private handleConfirm = async () => {
+        await this.activeAction.value?.confirm?.();
     }
 
-    private handleCancel() {
-        this.activeAction.value?.cancel?.();
+    private handleCancel = async () => {
+        await this.activeAction.value?.cancel?.();
     }
 }
 

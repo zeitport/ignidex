@@ -1,3 +1,4 @@
+import type {CardGroup} from '#models/internal/cardGroup.ts';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {activeOverlay, selectedSection, selectedGroup, selectedCard, pastedUrl} from '#state';
@@ -19,7 +20,7 @@ export class SelectGroupOverlay extends LitElement {
     private pastedUrl = pastedUrl.watch(this);
 
     render() {
-        const groups = this.selectedSection.value?.groups ?? [];
+        const groups: CardGroup[] = this.selectedSection.value?.groups ?? [];
         const items: ListItem[] = groups.map(group => ({
             id: group.id,
             label: group.name || 'Untitled Group'
@@ -40,7 +41,7 @@ export class SelectGroupOverlay extends LitElement {
         `;
     }
 
-    private handleSelect(item: ListItem, groups: any[]) {
+    private handleSelect = (item: ListItem, groups: CardGroup[]) => {
         const group = groups.find(group => group.id === item.id);
         if (!group) return;
 
@@ -49,7 +50,7 @@ export class SelectGroupOverlay extends LitElement {
         activeOverlay.value = OverlayType.editBookmark;
     }
 
-    private handleClose() {
+    private handleClose = () => {
         activeOverlay.value = null;
         selectedSection.value = null;
         selectedGroup.value = null;

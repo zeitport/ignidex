@@ -43,7 +43,7 @@ export class SelectSectionOverlay extends LitElement {
         `;
     }
 
-    private handleSelect(item: ListItem, sections: CardSection[]) {
+    private handleSelect = (item: ListItem, sections: CardSection[]) => {
         const section = sections.find(section => section.id === item.id);
         if (!section) return;
 
@@ -61,7 +61,7 @@ export class SelectSectionOverlay extends LitElement {
         }
     }
 
-    private handleClose() {
+    private handleClose = () => {
         activeOverlay.value = null;
         selectedSection.value = null;
         pastedUrl.value = null;

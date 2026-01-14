@@ -8,7 +8,7 @@ export class NotImplementedAction implements ActionInterface {
         this.message = init.message ?? 'LogCardAction';
     }
 
-    async isDisabled(): Promise<boolean> {
+    isDisabled(): boolean {
         this.disabledHint = 'Not implemented yet';
         return true;
     }

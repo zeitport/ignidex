@@ -1,6 +1,8 @@
 import {inject} from '#core/injector.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
+import type {StartPanel} from '#models/internal/startPanel.ts';
+import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {activeStartPanel} from '#state';
 import type {ActionInterface} from './actionInterface.ts';
 
@@ -30,7 +32,7 @@ export class ExportToJsonAction implements ActionInterface {
                 title: startPanel.header.title,
                 icon: startPanel.header.icon,
                 description: startPanel.header.description
-            } : null,
+            } : new StartPanelHeader(),
             sections: startPanel.sections,
             images: images.map(icon => ({
                 id: icon.id,
@@ -52,7 +54,7 @@ export class ExportToJsonAction implements ActionInterface {
         URL.revokeObjectURL(url);
     }
 
-    private countAllCards(startPanel: any): number {
+    private countAllCards(startPanel: StartPanel): number {
         let totalCards = 0;
         for (const section of startPanel.sections) {
             for (const group of section.groups) {
@@ -63,7 +65,7 @@ export class ExportToJsonAction implements ActionInterface {
         return totalCards;
     }
 
-    private getUsedIconIds(startPanel: any): Set<string> {
+    private getUsedIconIds(startPanel: StartPanel): Set<string> {
         const usedIconIds = new Set<string>();
 
         if (startPanel.header?.icon) {

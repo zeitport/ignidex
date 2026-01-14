@@ -117,13 +117,13 @@ export class ContextMenuElement extends LitElement {
         return html`<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="${path}" /></svg>`;
     }
 
-    private handleAction(item: ContextMenuItem, isDisabled: boolean) {
+    private async handleAction(item: ContextMenuItem, isDisabled: boolean) {
         if (isDisabled) return;
 
         this.isOpen = false;
 
         if (item.action) {
-            item.action.run();
+            await item.action.run();
         }
     }
 }

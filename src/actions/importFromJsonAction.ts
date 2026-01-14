@@ -34,7 +34,7 @@ export class ImportFromJsonAction implements ActionInterface {
 
     private parseJson(content: string): StartPanelDto {
         try {
-            return JSON.parse(content);
+            return JSON.parse(content) as StartPanelDto;
         } catch {
             throw new Error('Invalid JSON file');
         }
@@ -107,19 +107,20 @@ export class ImportFromJsonAction implements ActionInterface {
         newAnchor: string | null,
         idMap: Map<string, string>
     ): Partial<StartPanel> {
-        const remapped = structuredClone(data) as any;
+        const remapped = structuredClone(data);
         remapped.id = newPanelId;
         remapped.anchor = newAnchor;
 
-        if (remapped.header?.icon && idMap.has(remapped.header.icon)) {
-            remapped.header.icon = idMap.get(remapped.header.icon);
+        const iconId = remapped.header?.icon ?? null;
+        if (iconId && idMap.has(iconId) && remapped.header) {
+            remapped.header.icon = idMap.get(iconId) ?? null;
         }
 
         for (const section of remapped.sections) {
             for (const group of section.groups) {
                 for (const card of group.cards) {
                     if (card.icon && idMap.has(card.icon)) {
-                        card.icon = idMap.get(card.icon);
+                        card.icon = idMap.get(card.icon) ?? null;
                     }
                 }
             }

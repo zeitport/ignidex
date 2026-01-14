@@ -74,21 +74,21 @@ export class EditGroupsSectionOverlay extends LitElement {
         `;
     }
 
-    private handleNameInput(event: InputEvent) {
+    private handleNameInput = (event: InputEvent) => {
         this.name = (event.target as HTMLInputElement).value;
         if (this.name.trim()) {
             this.nameError = '';
         }
     }
 
-    private handleClose() {
+    private handleClose = () => {
         this.name = '';
         this.nameError = '';
         activeOverlay.value = null;
         selectedSection.value = null;
     }
 
-    private async handleSave() {
+    private handleSave = async() => {
         if (!this.name.trim()) {
             this.nameError = 'Name must not be empty.';
             return;

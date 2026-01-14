@@ -36,9 +36,9 @@ export class SwitchPanelOverlay extends LitElement {
         this.panelOrderSubscription?.unsubscribe();
     }
 
-    async updated(changedProperties: Map<string, unknown>) {
+    updated(changedProperties: Map<string, unknown>): void {
         if (changedProperties.has('isOpen') && this.isOpen) {
-            await this.loadPanels();
+            void this.loadPanels();
         }
     }
 
@@ -87,7 +87,7 @@ export class SwitchPanelOverlay extends LitElement {
         };
     }
 
-    private handleClose() {
+    private handleClose = () => {
         activeOverlay.value = null;
     }
 }

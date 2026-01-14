@@ -12,9 +12,10 @@ export class SwitchElement extends LitElement {
     @property({type: Boolean, reflect: true})
     disabled = false;
 
-    private toggle() {
+    private toggle = () => {
         if (this.disabled) return;
         this.checked = !this.checked;
+
         this.dispatchEvent(new CustomEvent('change', {
             detail: {checked: this.checked},
             bubbles: true,

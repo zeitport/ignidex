@@ -1,7 +1,7 @@
 import {ObservableController} from '#utils/observableController.ts';
 import {ReactiveControllerHost} from 'lit';
 
-export type ObservablePropertyCallback<T> = (value: T) => void;
+export type ObservablePropertyCallback<T> = (value: T) => void | Promise<void>;
 
 export class ObservableProperty<T> {
     private propertyValue: T;
@@ -20,7 +20,7 @@ export class ObservableProperty<T> {
         return this.propertyValue;
     }
 
-    observe(callback: (value: T) => void) {
+    observe(callback: (value: T) => void | Promise<void>) {
         this.subscribers.add(callback);
         callback(this.propertyValue);
 
@@ -31,7 +31,7 @@ export class ObservableProperty<T> {
         }
     }
 
-    unsubscribe(callback: (value: T) => void) {
+    unsubscribe(callback: (value: T) => void | Promise<void>) {
         this.subscribers.delete(callback);
         callback(this.propertyValue);
     }

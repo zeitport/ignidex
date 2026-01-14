@@ -34,18 +34,18 @@ export class OverlayElement extends LitElement {
         }
     };
 
-    private handleBackdropClick(event: MouseEvent) {
+    private handleBackdropClick = (event: MouseEvent) => {
         if (this.canBeClosed && event.target === event.currentTarget) {
             this.close();
         }
     }
 
-    private handleHeaderSlotChange(event: Event) {
+    private handleHeaderSlotChange = (event: Event) => {
         const slot = event.target as HTMLSlotElement;
         this.hasHeader = slot.assignedNodes({flatten: true}).length > 0;
     }
 
-    private handleFooterSlotChange(event: Event) {
+    private handleFooterSlotChange = (event: Event) => {
         const slot = event.target as HTMLSlotElement;
         this.hasFooter = slot.assignedNodes({flatten: true}).length > 0;
     }

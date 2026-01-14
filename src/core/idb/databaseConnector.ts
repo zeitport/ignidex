@@ -1,4 +1,5 @@
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import type {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 
 export class DatabaseConnector {
     private dbPromise: Promise<IDBDatabase> | null = null;
@@ -97,7 +98,7 @@ export class DatabaseConnector {
         });
     }
 
-    async getByIndex<T>(storeName: string, indexName: string, value: any): Promise<T | null> {
+    async getByIndex<T>(storeName: string, indexName: string, value: IDBValidKey): Promise<T | null> {
         const db = await this.open();
         return await new Promise<T | null>((resolve, reject) => {
             const tx = db.transaction(storeName, 'readonly');
@@ -133,8 +134,10 @@ export class DatabaseConnector {
 
         request.onsuccess = () => {
             const cursor = request.result;
-            if (cursor) {
-                const entry = cursor.value;
+
+            if (cursor && cursor.value) {
+                const entry = cursor.value as Partial<StartPanelEntry>;
+
                 if (entry.order === undefined || entry.order === null) {
                     entry.order = orderIndex;
                     cursor.update(entry);

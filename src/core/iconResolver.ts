@@ -30,13 +30,13 @@ export class IconResolver {
 
         // Fallback: Icon could not be resolved, fall back to a mdi icon.
         if (result.dataUri === null) {
-            result = await this.resolveFallbackIcon();
+            result = this.resolveFallbackIcon();
         }
 
         return result;
     }
 
-    private async resolveFallbackIcon() {
+    private resolveFallbackIcon() {
         return this.resolveMdiIcon(mdiLinkOff);
     }
 
@@ -62,11 +62,11 @@ export class IconResolver {
     //     }
     // }
 
-    private async resolveMdiIcon(iconPath: string): Promise<IconResolverResult> {
+    private resolveMdiIcon(pathData: string): IconResolverResult {
         const result = new IconResolverResult();
 
-        if (iconPath) {
-            const svg = this.createSvgFromMdiIconPath(iconPath);
+        if (pathData) {
+            const svg = this.createSvgFromPathData(pathData);
             result.dataUri = this.svgToDataUri(svg);
         } else {
             result.error = `Could not find mdi icon path`;
@@ -79,7 +79,7 @@ export class IconResolver {
         return `data:image/svg+xml;utf8,${encodeURIComponent(svg.trim())}`;
     }
 
-    private createSvgFromMdiIconPath(path: string): string {
+    private createSvgFromPathData(path: string): string {
         return `<svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path d="${path}"></path></svg>`;
     }
 }

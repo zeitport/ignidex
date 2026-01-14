@@ -41,7 +41,7 @@ export class MessageOverlay extends LitElement {
         `;
     }
 
-    private handleClose() {
+    private handleClose = () => {
         activeOverlay.value = null;
         messageOverlayContent.value = null;
     }

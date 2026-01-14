@@ -62,7 +62,7 @@ export class EditPanelOverlay extends LitElement {
         }
     }
 
-    private async resetFields() {
+    private async resetFields(): Promise<void> {
         const currentPanel = this.watchActiveStartPanel.value;
 
         if (currentPanel && !this.isCreateMode) {
@@ -166,7 +166,7 @@ export class EditPanelOverlay extends LitElement {
         `;
     }
 
-    private handleNameInput(event: InputEvent) {
+    private handleNameInput = (event: InputEvent) => {
         this.name = (event.target as HTMLInputElement).value;
         if (this.name.trim()) {
             this.nameError = '';
@@ -177,21 +177,21 @@ export class EditPanelOverlay extends LitElement {
         }
     }
 
-    private handleDescriptionInput(event: InputEvent) {
+    private handleDescriptionInput = (event: InputEvent) => {
         this.description = (event.target as HTMLInputElement).value;
     }
 
-    private handleAnchorInput(event: InputEvent) {
+    private handleAnchorInput = (event: InputEvent) => {
         this.anchor = (event.target as HTMLInputElement).value;
         this.isAnchorManuallyEdited = true;
     }
 
-    private handleIconChange(event: CustomEvent<IconPreviewChangeEvent>) {
+    private handleIconChange = (event: CustomEvent<IconPreviewChangeEvent>) => {
         this.iconDataUri = event.detail.dataUri;
         this.iconUrl = event.detail.source;
     }
 
-    private handleClose() {
+    private handleClose = () => {
         this.name = '';
         this.anchor = '';
         this.description = '';
@@ -211,7 +211,7 @@ export class EditPanelOverlay extends LitElement {
             .replace(/^-+|-+$/g, '');
     }
 
-    private async handleSave() {
+    private handleSave = async() => {
         if (!this.name.trim()) {
             this.nameError = 'Name must not be empty.';
             return;

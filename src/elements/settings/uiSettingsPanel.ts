@@ -1,6 +1,8 @@
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
+import type {CheckedCustomEvent} from '../customEvents/checkedCustomEvent.ts';
+import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts';
 import {colorPalette} from './colorPalette.ts';
 import './settingsSection.ts';
 import './settingsHeader.ts';
@@ -98,8 +100,12 @@ export class UISettingsPanel extends LitElement {
         }
     `;
 
-    async connectedCallback() {
+    connectedCallback(): void {
         super.connectedCallback();
+        void this.loadUserState();
+    }
+
+    async loadUserState() {
         const state = await this.userStateStore.getOrCreate();
         this.selectedColor = state.accentColor;
         this.selectedFontSize = state.baseFontSize;
@@ -152,7 +158,7 @@ export class UISettingsPanel extends LitElement {
                 <span slot="label">Text Transform</span>
                 <span slot="description">Enable uppercase text for a modern look.</span>
                 <div>
-                    <cc-switch .checked=${this.useUppercase} @change=${(event: CustomEvent) => this.toggleTextTransform(event.detail.checked)}></cc-switch>
+                    <cc-switch .checked=${this.useUppercase} @change=${(event: CheckedCustomEvent) => this.toggleTextTransform(event.detail.checked)}></cc-switch>
                 </div>
             </cc-settings-section>
 
@@ -166,7 +172,7 @@ export class UISettingsPanel extends LitElement {
                         {label: 'Highlighted', value: HoverHintMode.Highlighted}
                     ]}
                     .value=${this.selectedHoverHintMode}
-                    @change=${(event: CustomEvent) => this.selectHoverHintMode(event.detail.value)}
+                    @change=${(event: CustomEventWithValue<HoverHintModeType>) => this.selectHoverHintMode(event.detail.value)}
                 ></cc-radio-button>
             </cc-settings-section>
         `;

@@ -51,7 +51,7 @@ export class NewSectionOverlay extends LitElement {
         }
     }
 
-    private handleClose() {
+    private handleClose = () => {
         activeOverlay.value = null;
     }
 }

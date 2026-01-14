@@ -67,7 +67,7 @@ export class StartPanelHeaderElement extends LitElement {
         `;
     }
 
-    private handleContextMenu(event: MouseEvent) {
+    private handleContextMenu = (event: MouseEvent) => {
         event.preventDefault();
         event.stopPropagation();
         activeContextMenu.value = {

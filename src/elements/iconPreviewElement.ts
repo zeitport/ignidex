@@ -33,10 +33,10 @@ export class IconPreviewElement extends LitElement {
 
         if (changedProperties.has('active')) {
             if (this.active) {
-                window.addEventListener('paste', this.handlePaste);
+                window.addEventListener('paste',this.onPaste);
                 window.addEventListener('click', this.handleWindowClick);
             } else {
-                window.removeEventListener('paste', this.handlePaste);
+                window.removeEventListener('paste', this.onPaste);
                 window.removeEventListener('click', this.handleWindowClick);
             }
         }
@@ -44,7 +44,7 @@ export class IconPreviewElement extends LitElement {
 
     disconnectedCallback(): void {
         super.disconnectedCallback();
-        window.removeEventListener('paste', this.handlePaste);
+        window.removeEventListener('paste', this.onPaste);
         window.removeEventListener('click', this.handleWindowClick);
     }
 
@@ -53,7 +53,7 @@ export class IconPreviewElement extends LitElement {
             <div
                 class="icon-preview ${this.dataUri ? 'has-icon' : ''}"
                 @click=${this.handlePreviewClick}
-                @contextmenu=${this.handleContextMenu}
+                @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}
             >
                 ${this.dataUri
                     ? html`<div class="icon-preview-icon" style="--mask-url: url('${this.dataUri}')"></div>`
@@ -77,12 +77,12 @@ export class IconPreviewElement extends LitElement {
         `;
     }
 
-    private handlePreviewClick() {
+    private handlePreviewClick = () => {
         const fileInput = this.shadowRoot?.getElementById('icon-file') as HTMLInputElement;
         fileInput?.click();
     }
 
-    private handleFileChange(event: Event) {
+    private handleFileChange = (event: Event) => {
         const input = event.target as HTMLInputElement;
         const file = input.files?.[0];
         if (!file) return;
@@ -97,7 +97,9 @@ export class IconPreviewElement extends LitElement {
         input.value = '';
     }
 
-    private handlePaste = async (event: ClipboardEvent) => {
+    private onPaste = (event: ClipboardEvent) => { void this.handlePaste(event)};
+
+    private async handlePaste(event: ClipboardEvent): Promise<void> {
         const target = event.target as HTMLElement;
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
 
@@ -115,12 +117,12 @@ export class IconPreviewElement extends LitElement {
         }
     };
 
-    private handleDeleteClick(event: Event) {
+    private handleDeleteClick = (event: Event) => {
         event.stopPropagation();
         this.emitChange('', '');
     }
 
-    private handleContextMenu(event: MouseEvent) {
+    private handleContextMenu = (event: MouseEvent) => {
         event.preventDefault();
         event.stopPropagation();
 

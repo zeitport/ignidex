@@ -75,7 +75,7 @@ export class SettingsOverlay extends LitElement {
         }
     }
 
-    private handleClose() {
+    private handleClose = () => {
         activeOverlay.value = null;
     }
 }

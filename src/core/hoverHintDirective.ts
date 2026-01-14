@@ -1,4 +1,5 @@
 import {activeHoverHint} from '#state';
+import type {ElementPart} from 'lit';
 import {directive, Directive, PartInfo, PartType} from 'lit/directive.js';
 import {HoverHint} from './hoverHint.ts';
 
@@ -26,7 +27,7 @@ class HoverHintDirective extends Directive {
         return;
     }
 
-    update(part: any, [hint]: [HoverHint | null | undefined]) {
+    update(part: ElementPart, [hint]: [HoverHint | null | undefined]) {
         const el = part.element as HTMLElement;
 
         if (this.el !== el) {

@@ -11,8 +11,8 @@ Ignidex is a local-first personal start page for links and bookmarks. Built with
 ```bash
 npm run dev      # Start dev server on port 3000
 npm run build    # TypeScript check + lint + Vite build
-npm run lint     # Run oxlint
-npm run lint:fix # Run oxlint with auto-fix
+npm run lint     # Run eslint
+npm run lint:fix # Run eslint with auto-fix
 npm run tsc      # TypeScript type-check only
 ```
 
@@ -104,7 +104,7 @@ Web components use `cc-` prefix (e.g., `<cc-start-panel>`, `<cc-card-icon>`).
 
 ## Linting
 
-Oxlint enforces:
+ESLint enforces:
 - No default exports (use named exports)
 - Strict TypeScript rules
 - Import/export conventions

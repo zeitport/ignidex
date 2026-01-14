@@ -34,9 +34,9 @@ export class StorageSettingsPanel extends LitElement {
         }
     `;
 
-    async connectedCallback() {
+    connectedCallback(): void {
         super.connectedCallback();
-        await this.calculateStorageSize();
+        void this.calculateStorageSize();
     }
 
     private async calculateStorageSize() {

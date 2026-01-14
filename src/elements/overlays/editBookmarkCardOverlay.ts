@@ -177,30 +177,30 @@ export class EditBookmarkCardOverlay extends LitElement {
         `;
     }
 
-    private handleNameInput(event: InputEvent) {
+    private handleNameInput = (event: InputEvent) => {
         this.name = (event.target as HTMLInputElement).value;
         if (this.name.trim()) {
             this.nameError = '';
         }
     }
 
-    private handleUrlInput(event: InputEvent) {
+    private handleUrlInput = (event: InputEvent) => {
         this.url = (event.target as HTMLInputElement).value;
         if (this.url.trim()) {
             this.urlError = '';
         }
     }
 
-    private handleDescriptionInput(event: InputEvent) {
+    private handleDescriptionInput = (event: InputEvent) => {
         this.description = (event.target as HTMLInputElement).value;
     }
 
-    private handleIconChange(event: CustomEvent<IconPreviewChangeEvent>) {
+    private handleIconChange = (event: CustomEvent<IconPreviewChangeEvent>) => {
         this.iconDataUri = event.detail.dataUri;
         this.iconUrl = event.detail.source;
     }
 
-    private handleClose() {
+    private handleClose = () => {
         this.name = '';
         this.url = '';
         this.description = '';
@@ -215,7 +215,7 @@ export class EditBookmarkCardOverlay extends LitElement {
         pastedUrl.value = null;
     }
 
-    private async handleSave() {
+    private handleSave = async () => {
         let hasError = false;
         if (!this.name.trim()) {
             this.nameError = 'Title must not be empty.';
