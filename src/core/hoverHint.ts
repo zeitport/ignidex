@@ -5,13 +5,13 @@ import {activeHoverHint} from '../app/state.ts';
  * @see {HoverHintDirective}
  */
 export class HoverHint {
-    text: string;
+    text: string | null;
 
     private static hoverTimeout: ReturnType<typeof setTimeout> | null = null;
     private static clearTimeout: ReturnType<typeof setTimeout> | null = null;
 
-    constructor(init: Partial<HoverHint>) {
-        this.text = init.text ?? '';
+    constructor(init: Partial<HoverHint> = {}) {
+        this.text = init.text ?? null;
     }
 
     static show(hint: HoverHint) {
@@ -19,9 +19,12 @@ export class HoverHint {
             clearTimeout(this.clearTimeout);
             this.clearTimeout = null;
         }
-        this.hoverTimeout = setTimeout(() => {
-            activeHoverHint.value = hint;
-        }, 150);
+
+        if (hint.text) {
+            this.hoverTimeout = setTimeout(() => {
+                activeHoverHint.value = hint;
+            }, 150);
+        }
     }
 
     static clear() {
@@ -29,6 +32,7 @@ export class HoverHint {
             clearTimeout(this.hoverTimeout);
             this.hoverTimeout = null;
         }
+
         this.clearTimeout = setTimeout(() => {
             activeHoverHint.value = null;
         }, 500);

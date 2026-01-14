@@ -40,7 +40,7 @@ export const documentContextMenuItems = [
     new ContextMenuItem({
         icon: mdiCog,
         label: 'Settings',
-        tooltip: 'Open settings',
+        tooltip: '[LMB] or [F1] opens the app settings',
         action: new OpenSettingsAction()
     })
 ];

@@ -1,3 +1,4 @@
+import {activeHoverHint} from '#app/state.ts';
 import {directive, Directive, PartInfo, PartType} from 'lit/directive.js';
 import {HoverHint} from './hoverHint.ts';
 
@@ -41,9 +42,15 @@ class HoverHintDirective extends Directive {
     }
 
     disconnected() {
+        console.warn('Disconnected');
         this.el?.removeEventListener('mouseenter', this.onEnter);
         this.el?.removeEventListener('mouseleave', this.onLeave);
         this.el = undefined;
+
+        // Clear the active hover hint when the directive is disconnected
+        if (activeHoverHint.value === this.hint) {
+           HoverHint.clear()
+        }
     }
 }
 

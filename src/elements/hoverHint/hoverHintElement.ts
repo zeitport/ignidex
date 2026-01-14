@@ -2,7 +2,7 @@ import {activeHoverHint, hoverHintMode} from '#app/state.ts';
 import type {HoverHint} from '#core/hoverHint.ts';
 import {HoverHintMode} from '#models/idb/hoverHintMode.ts';
 import {mdiMouseLeftClickOutline, mdiMouseRightClickOutline, mdiMouseScrollWheel} from '@mdi/js';
-import type {TemplateResult} from 'lit';
+import {nothing, type TemplateResult} from 'lit';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {hoverHintElementStyle} from './hoverHintElementStyle.ts';
@@ -20,14 +20,16 @@ export class HoverHintElement extends LitElement {
         const hint = this.activeHoverHint.value;
         const mode = this.hoverHintMode.value;
 
-        if (!hint || mode === HoverHintMode.Off) {
-            return html``;
+        if (!hint || hint.text === null || mode === HoverHintMode.Off) {
+            return nothing;
         }
 
         return html`<div class="hint ${mode === HoverHintMode.Muted ? 'muted' : ''}">${this.renderHintText(hint)}</div>`;
     }
 
     private renderHintText(hint: HoverHint) {
+        if (!hint.text) return nothing;
+
         const tokens = parseHintTemplate(hint.text);
         return tokens.map((token) => this.renderToken(token));
     }

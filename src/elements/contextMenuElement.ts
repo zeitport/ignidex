@@ -1,4 +1,4 @@
-import {html, LitElement} from 'lit';
+import {html, LitElement, nothing} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {until} from 'lit/directives/until.js';
 import type {ContextMenuItem} from './contextMenuItem.ts';
@@ -40,7 +40,7 @@ export class ContextMenuElement extends LitElement {
     };
 
     render() {
-        if (!this.isOpen) return html``;
+        if (!this.isOpen) return nothing;
 
         const offsetX = -48;
         const offsetY = -20;
@@ -63,6 +63,7 @@ export class ContextMenuElement extends LitElement {
     }
 
     close() {
+        HoverHint.clear();
         this.x = 0;
         this.y = 0;
         this.isOpen = false;
@@ -83,18 +84,25 @@ export class ContextMenuElement extends LitElement {
             isDisabled = await item.action.isDisabled();
         }
 
-        const hintText = item.action?.disabledHint;
-        const disabledHint = isDisabled && hintText ? new HoverHint({text: hintText}) : null;
+        const itemHint = new HoverHint();
 
-        return this.renderMenuItem(item, isDisabled, disabledHint);
+        if (item.tooltip) {
+            itemHint.text = item.tooltip;
+        }
+
+        const hintText = item.action?.disabledHint;
+        if (isDisabled && hintText) {
+            itemHint.text = hintText;
+        }
+
+        return this.renderMenuItem(item, isDisabled, itemHint);
     }
 
-    private renderMenuItem(item: ContextMenuItem, isDisabled: boolean, disabledHint: HoverHint | null) {
+    private renderMenuItem(item: ContextMenuItem, isDisabled: boolean, hint: HoverHint | null) {
         return html`
             <div class="menu-item ${isDisabled ? 'disabled' : ''}"
-                 title="${item.tooltip}"
                  @click=${() => this.handleAction(item, isDisabled)}
-                 ${hoverHint(disabledHint)}>
+                 ${hoverHint(hint)}>
                 ${when(item.icon, icon => this.renderIcon(icon))}
                 <span class="label">${item.label}</span>
             </div>

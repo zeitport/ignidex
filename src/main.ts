@@ -4,7 +4,7 @@ import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {createId} from '#utils/createId.ts';
-import {activeStartPanel, activeOverlay, hoverHintMode} from './app/state.ts';
+import {activeStartPanel, activeOverlay, hoverHintMode, activeContextMenu} from './app/state.ts';
 import {inject} from '#inject';
 import {SwitchPanelBackAction} from './actions/switchPanelBackAction.ts';
 import {SwitchPanelNextAction} from './actions/switchPanelNextAction.ts';
@@ -43,6 +43,7 @@ function registerKeyboardNavigation() {
             event.stopPropagation();
             event.preventDefault();
         } else if (event.key === 'F1') {
+            activeContextMenu.value = null;
             inject(OpenSettingsAction).run();
             event.stopPropagation();
             event.preventDefault();

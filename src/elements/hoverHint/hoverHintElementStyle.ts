@@ -35,12 +35,12 @@ export const hoverHintElementStyle = css`
         background-color: rgba(255, 255, 255, 0.1);
         font-size: 0.8rem;
         vertical-align: middle;
-        margin-inline-end: 0.5rem;
+        margin-inline: 0.5rem;
     }
 
     .separator {
         display: inline-block;
-        margin-inline: 1rem;
+        margin-inline: 0.5rem;
         font-weight: bold;
         background-color: rgba(0, 0, 0, 0.25);
         width: 1px;
