@@ -6,14 +6,17 @@ As a user, I want X to achieve Y.
 
 ## Plan
 
-- Step 1
-- Step 2
+- Ask questions to improve the plan and clarify unclear requirements.
+- Document answers in section [Clarifications]
+- ...
+- Document result in [AI Code Changes]
+
+## Clarifications
 
 ## Validation
 
 - Run `npm run lint` to check for lint errors
 - Run `npm run tsc` to run the TypeScript compiler
 
-## AI Code Generation
+## AI Code Changes
 
-## Comments
