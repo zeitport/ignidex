@@ -25,7 +25,7 @@ export class UISettingsPanel extends LitElement {
     private useUppercase: boolean = true;
 
     @state()
-    private selectedHoverHintMode: HoverHintModeType = HoverHintMode.Highlighted;
+    private selectedHoverHintMode: HoverHintModeType = HoverHintMode.Dark;
 
     static styles = css`
         :host {
@@ -168,8 +168,8 @@ export class UISettingsPanel extends LitElement {
                 <cc-radio-button
                     .options=${[
                         {label: 'Off', value: HoverHintMode.Off},
-                        {label: 'Muted', value: HoverHintMode.Muted},
-                        {label: 'Highlighted', value: HoverHintMode.Highlighted}
+                        {label: 'On (dark)', value: HoverHintMode.Dark},
+                        {label: 'On (accent)', value: HoverHintMode.Highlighted}
                     ]}
                     .value=${this.selectedHoverHintMode}
                     @change=${(event: CustomEventWithValue<HoverHintModeType>) => this.selectHoverHintMode(event.detail.value)}

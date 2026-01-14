@@ -24,7 +24,7 @@ export class HoverHintElement extends LitElement {
             return nothing;
         }
 
-        return html`<div class="hint ${mode === HoverHintMode.Muted ? 'muted' : ''}">${this.renderHintText(hint)}</div>`;
+        return html`<div class="hint ${mode === HoverHintMode.Dark ? 'muted' : ''}">${this.renderHintText(hint)}</div>`;
     }
 
     private renderHintText(hint: HoverHint) {

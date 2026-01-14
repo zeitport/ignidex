@@ -1,6 +1,6 @@
 export const HoverHintMode = {
     Off: 'off',
-    Muted: 'muted',
+    Dark: 'dark',
     Highlighted: 'highlighted',
 } as const;
 
