@@ -1,7 +1,7 @@
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {activeStartPanel} from '../app/state.ts';
+import {activeStartPanel} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 
 export class SwitchPanelBackAction implements ActionInterface {

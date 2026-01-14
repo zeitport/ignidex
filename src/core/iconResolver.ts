@@ -67,9 +67,7 @@ export class IconResolver {
 
         if (iconPath) {
             const svg = this.createSvgFromMdiIconPath(iconPath);
-            console.debug(svg);
             result.dataUri = this.svgToDataUri(svg);
-            console.debug(iconPath);
         } else {
             result.error = `Could not find mdi icon path`;
         }

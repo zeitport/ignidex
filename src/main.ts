@@ -4,7 +4,7 @@ import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {createId} from '#utils/createId.ts';
-import {activeStartPanel, activeOverlay, hoverHintMode, activeContextMenu} from './app/state.ts';
+import {activeStartPanel, activeOverlay, hoverHintMode, activeContextMenu} from '#state';
 import {inject} from '#inject';
 import {SwitchPanelBackAction} from './actions/switchPanelBackAction.ts';
 import {SwitchPanelNextAction} from './actions/switchPanelNextAction.ts';

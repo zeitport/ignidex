@@ -1,4 +1,4 @@
-import {selectedSection, activeOverlay} from '../app/state.ts';
+import {selectedSection, activeOverlay} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';

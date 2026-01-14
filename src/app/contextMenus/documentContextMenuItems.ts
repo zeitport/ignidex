@@ -8,7 +8,7 @@ import {OpenSettingsAction} from '../../actions/openSettingsAction.ts';
 import {ExportToJsonAction} from '../../actions/exportToJsonAction.ts';
 import {NewPanelAction} from '../../actions/newPanelAction.ts';
 import {SwitchPanelAction} from '../../actions/switchPanelAction.ts';
-import {ContextMenuItem} from '../contextMenuItem.ts';
+import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 
 export const documentContextMenuItems = [
     new ContextMenuItem({

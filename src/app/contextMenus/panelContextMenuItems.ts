@@ -8,7 +8,7 @@ import {SwitchPanelAction} from '../../actions/switchPanelAction.ts';
 import {EditPanelAction} from '../../actions/editPanelAction.ts';
 import {DeletePanelAction} from '../../actions/deletePanelAction.ts';
 import {AddSectionAction} from '../../actions/addSectionAction.ts';
-import {ContextMenuItem} from '../contextMenuItem.ts';
+import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 
 export const panelContextMenuItems = [
     new ContextMenuItem({

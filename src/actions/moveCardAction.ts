@@ -1,6 +1,6 @@
 import {Card} from '#models/internal/card.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
-import {selectedCard, activeStartPanel} from '../app/state.ts';
+import {selectedCard, activeStartPanel} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';

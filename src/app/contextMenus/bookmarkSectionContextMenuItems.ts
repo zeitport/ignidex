@@ -1,29 +1,28 @@
 import {
     mdiDelete,
     mdiPencilOutline,
+    mdiShapeCirclePlus,
     mdiArrowUpThin,
-    mdiArrowDownThin,
-    mdiBookmarkOutline
+    mdiArrowDownThin
 } from '@mdi/js';
 import {DeleteSectionAction} from '../../actions/deleteSectionAction.ts';
 import {EditSectionAction} from '../../actions/editSectionAction.ts';
-import {AddCardAction} from '../../actions/addCardAction.ts';
+import {AddGroupAction} from '../../actions/addGroupAction.ts';
 import {MoveSectionAction} from '../../actions/moveSectionAction.ts';
-import {ContextMenuItem} from '../contextMenuItem.ts';
+import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 
-export const highlightSectionContextMenuItems = [
-    new ContextMenuItem({
-        icon: mdiBookmarkOutline,
-        label: 'Add bookmark',
-        tooltip: 'Add new bookmark to section',
-        action: new AddCardAction()
-    }),
-    ContextMenuItem.divider(),
+export const bookmarkSectionContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',
         tooltip: 'Edit section',
         action: new EditSectionAction()
+    }),
+    new ContextMenuItem({
+        icon: mdiShapeCirclePlus,
+        label: 'Add Group',
+        tooltip: 'Add new group to section',
+        action: new AddGroupAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({

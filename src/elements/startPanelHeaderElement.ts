@@ -6,8 +6,8 @@ import {inject} from '#inject';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import type {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {startPanelHeaderElementStyle} from './startPanelHeaderElementStyle.ts';
-import {activeContextMenu} from '../app/state.ts';
-import {panelContextMenuItems} from './contextMenu/panelContextMenuItems.ts';
+import {activeContextMenu} from '#state';
+import {panelContextMenuItems} from '../app/contextMenus/panelContextMenuItems.ts';
 
 @customElement('cc-start-panel-header')
 export class StartPanelHeaderElement extends LitElement {

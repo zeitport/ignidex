@@ -4,12 +4,12 @@ import type {Card} from '#models/internal/card.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {hoverHint} from '#core/hoverHintDirective.ts';
-import {bookmarkHint} from '#app/hints/index.ts';
+import {bookmarkHint} from '#app/hints/bookmarkHint.ts';
 import {groupSectionStyle} from './groupSectionStyle.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#app/state.ts';
-import {bookmarkContextMenuItems} from '../contextMenu/bookmarkContextMenuItems.ts';
-import {bookmarkSectionContextMenuItems} from '../contextMenu/bookmarkSectionContextMenuItems.ts';
-import {groupContextMenuItems} from '../contextMenu/groupContextMenuItems.ts';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#state';
+import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
+import {bookmarkSectionContextMenuItems} from '../../app/contextMenus/bookmarkSectionContextMenuItems.ts';
+import {groupContextMenuItems} from '../../app/contextMenus/groupContextMenuItems.ts';
 
 @customElement('cc-groups-section')
 export class GroupSectionElement extends LitElement {

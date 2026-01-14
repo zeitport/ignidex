@@ -1,4 +1,4 @@
-import {activeAction, activeOverlay, activeStartPanel} from '../app/state.ts';
+import {activeAction, activeOverlay, activeStartPanel} from '#state';
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';

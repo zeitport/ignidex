@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {activeOverlay, selectedSection, selectedGroup, selectedCard, pastedUrl} from '../../app/state.ts';
+import {activeOverlay, selectedSection, selectedGroup, selectedCard, pastedUrl} from '#state';
 import {ListItem} from '#elements';
 import '../overlayElement.ts';
 import '../dialogButton.ts';

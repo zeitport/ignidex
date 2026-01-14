@@ -1,4 +1,4 @@
-import {selectedPanelEntry, panelOrderVersion} from '../app/state.ts';
+import {selectedPanelEntry, panelOrderVersion} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';

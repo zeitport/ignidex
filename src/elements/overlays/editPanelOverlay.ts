@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel} from '../../app/state.ts';
+import {activeOverlay, activeStartPanel} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';

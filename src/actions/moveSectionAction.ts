@@ -1,5 +1,5 @@
 import {StartPanel} from '#models/internal/startPanel.ts';
-import {selectedSection, activeStartPanel} from '../app/state.ts';
+import {selectedSection, activeStartPanel} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';

@@ -1,7 +1,7 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {mdiViewDashboardOutline, mdiViewGridPlusOutline} from '@mdi/js';
-import {activeOverlay} from '../../app/state.ts';
+import {activeOverlay} from '#state';
 import {OverlayType} from './overlayType.ts';
 import {ListItem} from '../listElement.ts';
 import '../overlayElement.ts';

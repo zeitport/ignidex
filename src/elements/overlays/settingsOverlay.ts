@@ -1,6 +1,6 @@
 import {html, LitElement, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay} from '../../app/state.ts';
+import {activeOverlay} from '#state';
 import {ListItem} from '../listElement.ts';
 import {mdiPalette, mdiDatabase, mdiInformationOutline} from '@mdi/js';
 import '../overlayElement.ts';

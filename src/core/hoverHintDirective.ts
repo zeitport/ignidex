@@ -1,4 +1,4 @@
-import {activeHoverHint} from '#app/state.ts';
+import {activeHoverHint} from '#state';
 import {directive, Directive, PartInfo, PartType} from 'lit/directive.js';
 import {HoverHint} from './hoverHint.ts';
 

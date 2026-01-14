@@ -13,7 +13,7 @@ import {MoveCardAction} from '../../actions/moveCardAction.ts';
 import {CopyUrlAction} from '../../actions/copyUrlAction.ts';
 import {OpenInNewTabAction} from '../../actions/openInNewTabAction.ts';
 import {NotImplementedAction} from '../../actions/notImplementedAction.ts';
-import {ContextMenuItem} from '../contextMenuItem.ts';
+import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 
 export const bookmarkContextMenuItems = [
     new ContextMenuItem({

@@ -5,11 +5,11 @@ import {CardSection} from '#models/internal/cardSection.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {hoverHint} from '#core/hoverHintDirective.ts';
-import {bookmarkHint} from '#app/hints/index.ts';
+import {bookmarkHint} from '#app/hints/bookmarkHint.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#app/state.ts';
-import {bookmarkContextMenuItems} from '../contextMenu/bookmarkContextMenuItems.ts';
-import {highlightSectionContextMenuItems} from '../contextMenu/highlightSectionContextMenuItems.ts';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#state';
+import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
+import {highlightSectionContextMenuItems} from '../../app/contextMenus/highlightSectionContextMenuItems.ts';
 
 @customElement('cc-highlight-section')
 export class HighlightSectionElement extends LitElement {

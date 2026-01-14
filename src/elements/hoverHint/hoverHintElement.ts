@@ -1,4 +1,4 @@
-import {activeHoverHint, hoverHintMode} from '#app/state.ts';
+import {activeHoverHint, hoverHintMode} from '#state';
 import type {HoverHint} from '#core/hoverHint.ts';
 import {HoverHintMode} from '#models/idb/hoverHintMode.ts';
 import {mdiMouseLeftClickOutline, mdiMouseRightClickOutline, mdiMouseScrollWheel} from '@mdi/js';

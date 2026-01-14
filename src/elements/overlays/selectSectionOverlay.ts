@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel, selectedSection, selectedGroup, selectedCard, pastedUrl} from '../../app/state.ts';
+import {activeOverlay, activeStartPanel, selectedSection, selectedGroup, selectedCard, pastedUrl} from '#state';
 import {CardSectionType} from '#models/internal/cardSectionType.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';

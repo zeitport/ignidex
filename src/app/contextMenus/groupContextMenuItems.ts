@@ -6,7 +6,7 @@ import {
 import {DeleteGroupAction} from '../../actions/deleteGroupAction.ts';
 import {EditGroupAction} from '../../actions/editGroupAction.ts';
 import {AddCardAction} from '../../actions/addCardAction.ts';
-import {ContextMenuItem} from '../contextMenuItem.ts';
+import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 
 export const groupContextMenuItems = [
     new ContextMenuItem({

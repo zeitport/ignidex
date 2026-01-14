@@ -1,4 +1,4 @@
-import {selectedCard} from '../app/state.ts';
+import {selectedCard} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 
 export class OpenInNewTabAction implements ActionInterface {

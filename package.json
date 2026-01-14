@@ -35,6 +35,7 @@
         "#elements": "./src/elements/index.ts",
         "#inject": "./src/core/injector.ts",
         "#models/*": "./src/models/*",
+        "#state": "./src/app/state.ts",
         "#utils/*": "./src/utils/*"
     },
     "devDependencies": {

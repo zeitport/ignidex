@@ -1,6 +1,6 @@
 import {css, html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {activeOverlay, messageOverlayContent} from '../../app/state.ts';
+import {activeOverlay, messageOverlayContent} from '#state';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
 import {panelOverlayStyle} from './panelOverlayStyle.ts';

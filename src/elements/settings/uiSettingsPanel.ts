@@ -7,7 +7,7 @@ import './settingsHeader.ts';
 import '../radioButtonElement.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
-import {hoverHintMode} from '../../app/state.ts';
+import {hoverHintMode} from '#state';
 
 @customElement('cc-ui-settings-panel')
 export class UISettingsPanel extends LitElement {

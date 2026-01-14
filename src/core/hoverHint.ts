@@ -1,4 +1,4 @@
-import {activeHoverHint} from '../app/state.ts';
+import {activeHoverHint} from '#state';
 
 /**
  * Use the "hoverHint" directive to show a hint when hovering over an element.

@@ -1,7 +1,7 @@
 import {inject} from '#core/injector.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
-import {activeStartPanel} from '../app/state.ts';
+import {activeStartPanel} from '#state';
 import type {ActionInterface} from './actionInterface.ts';
 
 export class ExportToJsonAction implements ActionInterface {

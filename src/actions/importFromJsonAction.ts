@@ -5,7 +5,7 @@ import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {createId} from '#utils/createId.ts';
-import {activeOverlay, activeStartPanel, messageOverlayContent} from '../app/state.ts';
+import {activeOverlay, activeStartPanel, messageOverlayContent} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import type {ActionInterface} from './actionInterface.ts';
 

@@ -1,13 +1,13 @@
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '../../app/state.ts';
+import {activeOverlay, activeStartPanel, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
 import {switchPanelOverlayStyle} from './switchPanelOverlayStyle.ts';
-import {switchPanelContextMenuItems} from '../contextMenu/switchPanelContextMenuItems.ts';
+import {switchPanelContextMenuItems} from '../../app/contextMenus/switchPanelContextMenuItems.ts';
 
 @customElement('cc-switch-panel-overlay')
 export class SwitchPanelOverlay extends LitElement {
