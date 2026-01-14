@@ -1,5 +1,5 @@
-import {panelHeaderHint} from '#app/hints/panelHeaderHint.ts';
 import {hoverHint} from '#core/hoverHintDirective.ts';
+import {i18n} from '#i18n';
 import {LitElement, html, type PropertyValues} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {inject} from '#inject';
@@ -51,7 +51,7 @@ export class StartPanelHeaderElement extends LitElement {
             <div class="header-back"></div>
             <div class="header-stripe"></div>
             <div class="header"
-                 ${hoverHint(panelHeaderHint)}
+                 ${hoverHint(i18n.text.hints.startPanelHeader)}
                  @contextmenu=${this.handleContextMenu}
                 >
                 ${hasIcon ? html`

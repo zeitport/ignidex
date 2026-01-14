@@ -1,3 +1,4 @@
+import {i18n} from '#i18n';
 import {
     mdiCloudDownloadOutline,
     mdiCog,
@@ -14,7 +15,7 @@ export const documentContextMenuItems = [
     new ContextMenuItem({
         icon: mdiSwapHorizontal,
         label: 'Switch panel',
-        tooltip: 'Switch to another panel',
+        tooltip: i18n.text.hints.switchPanel,
         action: new SwitchPanelAction()
     }),
     new ContextMenuItem({

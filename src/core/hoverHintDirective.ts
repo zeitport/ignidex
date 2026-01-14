@@ -5,10 +5,10 @@ import {HoverHint} from './hoverHint.ts';
 
 class HoverHintDirective extends Directive {
     private el?: HTMLElement;
-    private hint?: HoverHint | null;
+    private hint?: string | null;
     private onEnter = () => {
         if (this.hint) {
-            HoverHint.show(this.hint);
+            HoverHint.show(new HoverHint({text: this.hint}));
         }
     };
 
@@ -23,11 +23,11 @@ class HoverHintDirective extends Directive {
         }
     }
 
-    render(_hint: HoverHint | null | undefined) {
+    render(_hint: string | null | undefined) {
         return;
     }
 
-    update(part: ElementPart, [hint]: [HoverHint | null | undefined]) {
+    update(part: ElementPart, [hint]: [string | null | undefined]) {
         const el = part.element as HTMLElement;
 
         if (this.el !== el) {

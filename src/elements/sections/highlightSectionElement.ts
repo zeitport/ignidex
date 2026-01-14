@@ -1,3 +1,4 @@
+import {i18n} from '#i18n';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import type {Card} from '#models/internal/card.ts';
@@ -5,7 +6,6 @@ import {CardSection} from '#models/internal/cardSection.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {hoverHint} from '#core/hoverHintDirective.ts';
-import {bookmarkHint} from '#app/hints/bookmarkHint.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
 import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#state';
 import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
@@ -30,7 +30,7 @@ export class HighlightSectionElement extends LitElement {
                 <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>
                     ${allCards.map(card => html`
                         <div class="bookmark"
-                             ${hoverHint(bookmarkHint)}
+                             ${hoverHint(i18n.text.hints.bookmark)}
                              @click=${(event: MouseEvent) => this.handleAppClick(event, card)}
                              @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
                              >

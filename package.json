@@ -36,7 +36,8 @@
         "#inject": "./src/core/injector.ts",
         "#models/*": "./src/models/*",
         "#state": "./src/app/state.ts",
-        "#utils/*": "./src/utils/*"
+        "#utils/*": "./src/utils/*",
+        "#i18n": "./src/localization/i18n.ts"
     },
     "devDependencies": {
         "@eslint/js": "^9.18.0",

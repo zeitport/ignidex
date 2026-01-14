@@ -84,21 +84,13 @@ export class ContextMenuElement extends LitElement {
             isDisabled = await item.action.isDisabled();
         }
 
-        const itemHint = new HoverHint();
+        const tooltipHintText = item.tooltip;
+        const disabledHintText = isDisabled ? item.action?.disabledHint : null;
 
-        if (item.tooltip) {
-            itemHint.text = item.tooltip;
-        }
-
-        const hintText = item.action?.disabledHint;
-        if (isDisabled && hintText) {
-            itemHint.text = hintText;
-        }
-
-        return this.renderMenuItem(item, isDisabled, itemHint);
+        return this.renderMenuItem(item, isDisabled, tooltipHintText ?? disabledHintText);
     }
 
-    private renderMenuItem(item: ContextMenuItem, isDisabled: boolean, hint: HoverHint | null) {
+    private renderMenuItem(item: ContextMenuItem, isDisabled: boolean, hint: string | null) {
         return html`
             <div class="menu-item ${isDisabled ? 'disabled' : ''}"
                  @click=${() => this.handleAction(item, isDisabled)}
