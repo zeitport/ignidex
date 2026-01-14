@@ -8,6 +8,7 @@ import {activeStartPanel, activeOverlay, hoverHintMode} from './app/state.ts';
 import {inject} from '#inject';
 import {SwitchPanelBackAction} from './actions/switchPanelBackAction.ts';
 import {SwitchPanelNextAction} from './actions/switchPanelNextAction.ts';
+import {OpenSettingsAction} from './actions/openSettingsAction.ts';
 import '#elements';
 
 function registerServiceWorker() {
@@ -39,6 +40,10 @@ function registerKeyboardNavigation() {
             event.preventDefault();
         } else if (event.key === 'ArrowRight') {
             inject(SwitchPanelNextAction).run();
+            event.stopPropagation();
+            event.preventDefault();
+        } else if (event.key === 'F1') {
+            inject(OpenSettingsAction).run();
             event.stopPropagation();
             event.preventDefault();
         }
