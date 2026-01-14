@@ -6,7 +6,7 @@ As a user, I want X to achieve Y.
 
 ## Plan
 
-- Ask questions to improve the plan and clarify unclear requirements.
+- Review this issue and ask questions to improve the plan and clarify unclear requirements.
 - Document answers in section [Clarifications]
 - ...
 - Document result in [AI Code Changes]
