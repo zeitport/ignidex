@@ -5,4 +5,5 @@ export interface ActionInterface {
     confirmation?: ActionConfirmation;
     confirm?(): void | Promise<void>;
     cancel?(): void | Promise<void>;
+    isDisabled?(): boolean | Promise<boolean>;
 }

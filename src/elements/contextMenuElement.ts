@@ -20,6 +20,9 @@ export class ContextMenuElement extends LitElement {
     @property({type: Boolean, reflect: true})
     isOpen: boolean = false;
 
+    @state()
+    private disabledStates: Map<ContextMenuItem, boolean> = new Map();
+
     connectedCallback() {
         super.connectedCallback();
         document.addEventListener('keydown', this.handleKeyDown);
@@ -35,6 +38,28 @@ export class ContextMenuElement extends LitElement {
             this.close();
         }
     };
+
+    async updated(changedProperties: Map<string, unknown>) {
+        if (changedProperties.has('items')) {
+            await this.computeDisabledStates();
+        }
+    }
+
+    private async computeDisabledStates() {
+        const newStates = new Map<ContextMenuItem, boolean>();
+
+        for (const item of this.items) {
+            if (item.divider) continue;
+
+            let isDisabled = false;
+            if (item.action?.isDisabled) {
+                isDisabled = await item.action.isDisabled();
+            }
+            newStates.set(item, isDisabled);
+        }
+
+        this.disabledStates = newStates;
+    }
 
     render() {
         if (!this.isOpen) return html``;
@@ -68,8 +93,9 @@ export class ContextMenuElement extends LitElement {
     private renderItem(item: ContextMenuItem) {
         if (item.divider) return this.renderDivider();
 
+        const isDisabled = this.disabledStates.get(item) ?? false;
         return html`
-            <div class="menu-item ${item.disabled ? 'disabled' : ''}"
+            <div class="menu-item ${isDisabled ? 'disabled' : ''}"
                  title="${item.tooltip}"
                  @click=${() => this.handleAction(item)}>
                 ${when(item.icon, icon => this.renderIcon(icon))}
@@ -87,7 +113,9 @@ export class ContextMenuElement extends LitElement {
     }
 
     private handleAction(item: ContextMenuItem) {
-        if (item.disabled) return;
+        const isDisabled = this.disabledStates.get(item) ?? false;
+        if (isDisabled) return;
+
         this.isOpen = false;
 
         if (item.action) {

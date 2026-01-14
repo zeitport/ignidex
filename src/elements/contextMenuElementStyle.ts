@@ -45,7 +45,7 @@ export const contextMenuElementStyle = css`
         background: var(--context-menu-divider);
     }
 
-    .menu-item:hover {
+    .menu-item:hover:not(.disabled) {
         background: var(--context-menu-hover-bg);
         color: var(--context-menu-hover-text);
 
@@ -56,7 +56,7 @@ export const contextMenuElementStyle = css`
 
     .menu-item.disabled {
         opacity: 0.5;
-        cursor: not-allowed;
+        cursor: var(--not-allowed-cursor);
     }
 
     .icon {
