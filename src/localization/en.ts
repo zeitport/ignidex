@@ -28,7 +28,8 @@ export const tokens = {
         iconPreviewCopy: '[LMB] Copy icon data URI to clipboard',
         iconPreviewDelete: '[LMB] Remove icon',
         iconPreviewNoIcon: 'No icon selected',
-        switchPanelListItem: '[RMB] open menu to move items up/down'
+        switchPanelListItem: '[RMB] open menu to move items up/down',
+        copyShareUrlToClipboard: '[LMB] Copy share URL to clipboard'
     },
     remotePanel: {
         badge: 'Remote',
@@ -36,6 +37,7 @@ export const tokens = {
         copyToLocal: 'Copy as local panel',
         refreshFromRemote: 'Refresh from remote',
         loadError: 'Failed to load remote panel. Please check the URL is accessible and CORS is enabled.',
-        refreshError: 'Failed to refresh from remote source. Please check the URL is accessible.'
+        refreshError: 'Failed to refresh from remote source. Please check the URL is accessible.',
+        copyShareUrlToClipboard: 'Copy share URL'
     }
 };
