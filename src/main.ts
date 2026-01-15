@@ -8,8 +8,12 @@ import {activeStartPanel, activeOverlay, hoverHintMode, activeContextMenu} from 
 import {inject} from '#inject';
 import {SwitchPanelBackAction} from './actions/switchPanelBackAction.ts';
 import {SwitchPanelNextAction} from './actions/switchPanelNextAction.ts';
+import {SwitchPanelAction} from './actions/switchPanelAction.ts';
 import {OpenSettingsAction} from './actions/openSettingsAction.ts';
 import '#elements';
+
+const DOUBLE_SHIFT_TIMEOUT_MS = 300;
+let lastShiftPressTime = 0;
 
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
@@ -34,6 +38,25 @@ async function handleKeyDown(event: KeyboardEvent) {
         || (activeElement instanceof HTMLElement && activeElement.isContentEditable);
 
     if (isInputFocused) {
+        return;
+    }
+
+    if (event.shiftKey) {
+        const now = Date.now();
+
+        if (now - lastShiftPressTime < DOUBLE_SHIFT_TIMEOUT_MS) {
+            const action = inject(SwitchPanelAction);
+
+            if (!await action.isDisabled()) {
+                action.run();
+                event.stopPropagation();
+                event.preventDefault();
+            }
+
+            lastShiftPressTime = 0;
+        } else {
+            lastShiftPressTime = now;
+        }
         return;
     }
 
