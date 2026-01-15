@@ -112,6 +112,7 @@ export default tseslint.config(
             // Import rules
             'import/default': 'error',
             'import/no-default-export': 'error',
+            'import/max-dependencies': ['error', { max: 20 }],
 
             // Unicorn rules
             'unicorn/no-await-in-promise-methods': 'error',

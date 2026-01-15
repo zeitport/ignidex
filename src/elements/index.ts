@@ -1,3 +1,5 @@
+/* eslint-disable import/max-dependencies */
+
 export * from './cardIconElement.ts';
 export * from './iconPreviewElement.ts';
 export * from './startPanelElement.ts';
@@ -12,3 +14,20 @@ export * from './overlays/switchPanelOverlay.ts';
 export * from './switchElement.ts';
 export * from './radioButtonElement.ts';
 export * from './hoverHint/hoverHintElement.ts';
+export * from './overlays/gettingStartedOverlay.ts';
+export * from './overlays/editPanelOverlay.ts';
+export * from './overlays/newSectionOverlay.ts';
+export * from './overlays/editHighlightSectionOverlay.ts';
+export * from './overlays/editGroupsSectionOverlay.ts';
+export * from './overlays/editGroupOverlay.ts';
+export * from './overlays/selectSectionOverlay.ts';
+export * from './overlays/selectGroupOverlay.ts';
+export * from './overlays/confirmationOverlay.ts';
+export * from './overlays/settingsOverlay.ts';
+export * from './overlays/messageOverlay.ts';
+export * from './overlays/dropFileOverlay.ts';
+export * from './hoverHint/hoverHintElement.ts';
+export * from './cardIconElement.ts';
+export * from './startPanelHeaderElement.ts';
+export * from './sections/highlightSectionElement.ts';
+export * from './sections/groupSectionElement.ts';
