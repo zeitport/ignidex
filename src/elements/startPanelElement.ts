@@ -72,6 +72,8 @@ export class StartPanelElement extends LitElement {
             <cc-context-menu id="contextMenu"></cc-context-menu>
 
             <cc-hover-hint></cc-hover-hint>
+
+            <cc-settings-icon></cc-settings-icon>
         `;
     }
 

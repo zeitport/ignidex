@@ -1,4 +1,5 @@
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
+import {SettingsIconStyle, type SettingsIconStyleType} from '#models/idb/settingsIconStyle.ts';
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import type {CheckedCustomEvent} from '../customEvents/checkedCustomEvent.ts';
@@ -9,7 +10,7 @@ import './settingsHeader.ts';
 import '../radioButtonElement.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
-import {hoverHintMode} from '#state';
+import {hoverHintMode, settingsIconStyle} from '#state';
 
 @customElement('cc-ui-settings-panel')
 export class UISettingsPanel extends LitElement {
@@ -26,6 +27,9 @@ export class UISettingsPanel extends LitElement {
 
     @state()
     private selectedHoverHintMode: HoverHintModeType = HoverHintMode.Dark;
+
+    @state()
+    private selectedSettingsIconStyle: SettingsIconStyleType = SettingsIconStyle.Large;
 
     static styles = css`
         :host {
@@ -111,6 +115,7 @@ export class UISettingsPanel extends LitElement {
         this.selectedFontSize = state.baseFontSize;
         this.useUppercase = state.useUppercase;
         this.selectedHoverHintMode = state.hoverHintMode;
+        this.selectedSettingsIconStyle = state.settingsIconStyle;
     }
 
     render() {
@@ -175,6 +180,20 @@ export class UISettingsPanel extends LitElement {
                     @change=${(event: CustomEventWithValue<HoverHintModeType>) => this.selectHoverHintMode(event.detail.value)}
                 ></cc-radio-button>
             </cc-settings-section>
+
+            <cc-settings-section>
+                <span slot="label">Settings Icon</span>
+                <span slot="description">Show a settings icon in the bottom left corner for quick access.</span>
+                <cc-radio-button
+                    .options=${[
+                        {label: 'Off', value: SettingsIconStyle.Off},
+                        {label: 'Small', value: SettingsIconStyle.Small},
+                        {label: 'Large', value: SettingsIconStyle.Large}
+                    ]}
+                    .value=${this.selectedSettingsIconStyle}
+                    @change=${(event: CustomEventWithValue<SettingsIconStyleType>) => this.selectSettingsIconStyle(event.detail.value)}
+                ></cc-radio-button>
+            </cc-settings-section>
         `;
     }
 
@@ -208,6 +227,14 @@ export class UISettingsPanel extends LitElement {
         state.hoverHintMode = mode;
         await this.userStateStore.set(state);
         hoverHintMode.value = mode;
+    }
+
+    private async selectSettingsIconStyle(style: SettingsIconStyleType) {
+        this.selectedSettingsIconStyle = style;
+        const state = await this.userStateStore.getOrCreate();
+        state.settingsIconStyle = style;
+        await this.userStateStore.set(state);
+        settingsIconStyle.value = style;
     }
 }
 

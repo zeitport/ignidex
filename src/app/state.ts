@@ -1,4 +1,5 @@
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
+import {SettingsIconStyle, type SettingsIconStyleType} from '#models/idb/settingsIconStyle.ts';
 import {ObservableProperty} from '#utils/observableProperty.ts';
 import {HoverHint} from '#core/hoverHint.ts';
 import type {Card} from '../models/internal/card.ts';
@@ -33,6 +34,7 @@ export const messageOverlayContent = new ObservableProperty<string | null>(null)
 export const isDraggingFile = new ObservableProperty<boolean>(false);
 export const panelOrderVersion = new ObservableProperty<number>(0);
 export const hoverHintMode = new ObservableProperty<HoverHintModeType>(HoverHintMode.Dark);
+export const settingsIconStyle = new ObservableProperty<SettingsIconStyleType>(SettingsIconStyle.Large);
 
 export interface IconPreviewState {
     dataUri: string;

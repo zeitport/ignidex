@@ -1,4 +1,5 @@
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
+import {SettingsIconStyle, type SettingsIconStyleType} from '#models/idb/settingsIconStyle.ts';
 
 export class UserStateEntry {
     id: string;
@@ -7,6 +8,7 @@ export class UserStateEntry {
     baseFontSize: number = 16;
     useUppercase: boolean = true;
     hoverHintMode: HoverHintModeType = HoverHintMode.Dark;
+    settingsIconStyle: SettingsIconStyleType = SettingsIconStyle.Large;
 
     constructor(init: Partial<UserStateEntry> = {}) {
         this.id = init.id ?? 'default';
@@ -20,6 +22,12 @@ export class UserStateEntry {
         if (!Object.values(HoverHintMode).includes(this.hoverHintMode)) {
             // Fallback to a known value.
             this.hoverHintMode = HoverHintMode.Dark;
+        }
+
+        this.settingsIconStyle = init.settingsIconStyle ?? SettingsIconStyle.Large;
+
+        if (!Object.values(SettingsIconStyle).includes(this.settingsIconStyle)) {
+            this.settingsIconStyle = SettingsIconStyle.Large;
         }
     }
 }

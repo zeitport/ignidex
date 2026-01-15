@@ -27,6 +27,7 @@ export * from './overlays/settingsOverlay.ts';
 export * from './overlays/messageOverlay.ts';
 export * from './overlays/dropFileOverlay.ts';
 export * from './hoverHint/hoverHintElement.ts';
+export * from './settingsIconElement.ts';
 export * from './cardIconElement.ts';
 export * from './startPanelHeaderElement.ts';
 export * from './sections/highlightSectionElement.ts';
