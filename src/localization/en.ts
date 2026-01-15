@@ -15,7 +15,7 @@ export const tokens = {
         deletePanel: '[LMB] + [?] Delete current panel',
         createNewPanel: 'Create a new panel',
         exportJson: 'Export data as JSON file',
-        createLocalPanel: 'Add current panel to my collection of panels (or clone it)',
+        createLocalPanel: '[LMB] Create a copy of the current panel; A remote panel is then a local panel.',
         openSettings: '[LMB] or [F1] opens the app settings',
         editGroup: 'Edit group',
         addBookmarkToGroup: 'Add new bookmark to group',
@@ -29,5 +29,13 @@ export const tokens = {
         iconPreviewDelete: '[LMB] Remove icon',
         iconPreviewNoIcon: 'No icon selected',
         switchPanelListItem: '[RMB] open menu to move items up/down'
+    },
+    remotePanel: {
+        badge: 'Remote',
+        badgeHint: '[RMB] menu; This panel was imported from a remote source; [LOCK] Readonly',
+        copyToLocal: 'Copy as local panel',
+        refreshFromRemote: 'Refresh from remote',
+        loadError: 'Failed to load remote panel. Please check the URL is accessible and CORS is enabled.',
+        refreshError: 'Failed to refresh from remote source. Please check the URL is accessible.'
     }
 };

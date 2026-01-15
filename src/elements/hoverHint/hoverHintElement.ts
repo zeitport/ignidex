@@ -1,7 +1,7 @@
 import {activeHoverHint, hoverHintMode} from '#state';
 import type {HoverHint} from '#core/hoverHint.ts';
 import {HoverHintMode} from '#models/idb/hoverHintMode.ts';
-import {mdiMouseLeftClickOutline, mdiMouseRightClickOutline, mdiMouseScrollWheel} from '@mdi/js';
+import {mdiLockOutline, mdiMouseLeftClickOutline, mdiMouseRightClickOutline, mdiMouseScrollWheel} from '@mdi/js';
 import {nothing, type TemplateResult} from 'lit';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
@@ -44,16 +44,17 @@ export class HoverHintElement extends LitElement {
                 return html`<strong class="plus">+</strong>`;
             case 'key':
                 return html`<span class="key">${token.value}</span>`;
-            case 'mouse':
-                return this.renderMouseIcon(token.value as 'LMB' | 'RMB' | 'MMB');
+            case 'icon':
+                return this.renderIcon(token.value as 'LMB' | 'RMB' | 'MMB');
         }
     }
 
-    private renderMouseIcon(button: 'LMB' | 'RMB' | 'MMB'): TemplateResult {
+    private renderIcon(button: 'LMB' | 'RMB' | 'MMB' | 'LOCK'): TemplateResult {
         const iconPath = {
             LMB: mdiMouseLeftClickOutline,
             RMB: mdiMouseRightClickOutline,
             MMB: mdiMouseScrollWheel,
+            LOCK: mdiLockOutline,
         }[button];
 
         return html`<svg class="mouse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="${iconPath}" /></svg>`;

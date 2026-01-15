@@ -27,7 +27,7 @@ export const startPanelHeaderElementStyle = css`
         position: relative;
         display: grid;
         align-items: center;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: auto 1fr auto;
         gap: 1rem;
     }
 
@@ -68,5 +68,15 @@ export const startPanelHeaderElementStyle = css`
         padding: 0;
         color: var(--muted);
         font-size: 0.8rem;
+    }
+
+    .remote-badge {
+        padding: 0.25rem 0.5rem;
+        background-color: var(--remote-badge-bg);
+        color: var(--remote-badge-color);
+        font-size: 0.8rem;
+        text-transform: var(--text-transform);
+        border-radius: 0.25rem;
+        user-select: none;
     }
 `;

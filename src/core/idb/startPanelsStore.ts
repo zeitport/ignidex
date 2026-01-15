@@ -17,6 +17,10 @@ export class StartPanelsStore {
         return await this.connector.getByIndex<StartPanelEntry>(this.startPanelsStoreName, 'anchor', anchor);
     }
 
+    async getByRemoteUrl(remoteUrl: string): Promise<StartPanelEntry | null> {
+        return await this.connector.getByIndex<StartPanelEntry>(this.startPanelsStoreName, 'remoteUrl', remoteUrl);
+    }
+
     /**
      * Returns all panels sorted by order (ascending).
      * Panels without an order value are placed at the end.

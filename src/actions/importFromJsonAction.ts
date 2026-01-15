@@ -5,7 +5,7 @@ import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {createId} from '#utils/createId.ts';
-import {activeOverlay, activeStartPanel, messageOverlayContent} from '#state';
+import {activeOverlay, activeStartPanel, activeRemoteUrl, messageOverlayContent} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import type {ActionInterface} from './actionInterface.ts';
 
@@ -98,6 +98,7 @@ export class ImportFromJsonAction implements ActionInterface {
         await startPanelsStore.set(entry);
 
         activeStartPanel.value = startPanel;
+        activeRemoteUrl.value = null;  // Imported panels are local
         window.location.hash = startPanel.anchor ?? startPanel.id;
     }
 

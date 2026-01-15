@@ -31,8 +31,9 @@ export function parseHintTemplate(text: string): TemplateToken[] {
                     textBuffer = '';
                 }
                 const inner = text.slice(i + 1, closingIndex);
-                if (inner === 'LMB' || inner === 'RMB' || inner === 'MMB') {
-                    tokens.push({type: 'mouse', value: inner});
+
+                if (inner === 'LMB' || inner === 'RMB' || inner === 'MMB' || inner === 'LOCK') {
+                    tokens.push({type: 'icon', value: inner});
                 } else {
                     tokens.push({type: 'key', value: inner});
                 }

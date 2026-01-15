@@ -4,7 +4,7 @@ import type {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 export class DatabaseConnector {
     private dbPromise: Promise<IDBDatabase> | null = null;
     private readonly dbName: string = 'ignidex';
-    private readonly dbVersion: number = 9;
+    private readonly dbVersion: number = 11;
 
     private readonly startPanelsStoreName = 'startPanels';
     private readonly userStateStoreName = 'userState';
@@ -112,9 +112,10 @@ export class DatabaseConnector {
 
     private upgradeStartPanelsStore(db: IDBDatabase, transaction: IDBTransaction): void {
         if (!db.objectStoreNames.contains(this.startPanelsStoreName)) {
-            console.log(`Creating start panels store with anchor index`);
+            console.log(`Creating start panels store with anchor and remoteUrl indexes`);
             const store = db.createObjectStore(this.startPanelsStoreName, {keyPath: 'id'});
             store.createIndex('anchor', 'anchor', {unique: false});
+            store.createIndex('remoteUrl', 'remoteUrl', {unique: false});
         } else {
             const store = transaction.objectStore(this.startPanelsStoreName);
 
@@ -123,7 +124,13 @@ export class DatabaseConnector {
                 store.createIndex('anchor', 'anchor', {unique: false});
             }
 
+            if (!store.indexNames.contains('remoteUrl')) {
+                console.log(`Creating remoteUrl index.`);
+                store.createIndex('remoteUrl', 'remoteUrl', {unique: false});
+            }
+
             this.migrateStartPanelsOrder(store);
+            this.migrateStartPanelsRemoteUrl(store);
         }
     }
 
@@ -142,6 +149,25 @@ export class DatabaseConnector {
                     entry.order = orderIndex;
                     cursor.update(entry);
                     orderIndex++;
+                }
+                cursor.continue();
+            }
+        };
+    }
+
+    private migrateStartPanelsRemoteUrl(store: IDBObjectStore): void {
+        console.log(`Migrate Start Panels RemoteUrl`);
+        const request = store.openCursor();
+
+        request.onsuccess = () => {
+            const cursor = request.result;
+
+            if (cursor && cursor.value) {
+                const entry = cursor.value as Partial<StartPanelEntry>;
+
+                if (entry.remoteUrl === undefined) {
+                    entry.remoteUrl = null;
+                    cursor.update(entry);
                 }
                 cursor.continue();
             }

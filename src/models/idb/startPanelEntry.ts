@@ -21,12 +21,19 @@ export class StartPanelEntry {
      */
     order: number | null;
 
+    /**
+     * The start panel was created via a remote source.
+     * A remote start panel is only available in read-only mode. It cannot be modified.
+     */
+    remoteUrl: string | null;
+
     startPanel: StartPanel;
 
     constructor(init: Partial<StartPanelEntry> & {id: string, startPanel: StartPanel}) {
         this.id = init.id;
         this.anchor = init.anchor ?? this.id;
         this.order = init.order ?? null;
+        this.remoteUrl = init.remoteUrl ?? null;
         this.startPanel = init.startPanel;
     }
 }

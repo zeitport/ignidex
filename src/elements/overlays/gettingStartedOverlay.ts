@@ -1,7 +1,7 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {mdiFileDocumentOutline, mdiFlask} from '@mdi/js';
-import {activeOverlay, activeStartPanel} from '#state';
+import {activeOverlay, activeStartPanel, activeRemoteUrl} from '#state';
 import {inject} from '#core/injector.ts';
 import {loadDataFromUrl} from '../../core/loadDataFromUrl.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
@@ -57,15 +57,19 @@ export class GettingStartedOverlay extends LitElement {
 
     private async handleStartEmpty() {
         const panel = new StartPanel({header: new StartPanelHeader({title: 'New Panel'})});
-        await this.startPanelsStore.set(new StartPanelEntry({id: panel.id, startPanel: panel}));
+        const entry = new StartPanelEntry({id: panel.id, startPanel: panel});
+        await this.startPanelsStore.set(entry);
         activeStartPanel.value = panel;
+        activeRemoteUrl.value = null;
         this.handleClose();
     }
 
     private async handleLoadTest() {
         const panel = await loadDataFromUrl('/examples/ignidex.json');
-        await this.startPanelsStore.set(new StartPanelEntry({id: panel.id, startPanel: panel}));
+        const entry = new StartPanelEntry({id: panel.id, startPanel: panel});
+        await this.startPanelsStore.set(entry);
         activeStartPanel.value = panel;
+        activeRemoteUrl.value = null;
         this.handleClose();
     }
 

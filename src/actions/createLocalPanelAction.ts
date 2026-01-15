@@ -1,6 +1,6 @@
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {activeStartPanel} from '#state';
+import {activeStartPanel, activeRemoteUrl} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {createId} from '#utils/createId.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
@@ -50,11 +50,13 @@ export class CreateLocalPanelAction implements ActionInterface {
             id: id,
             anchor: newStartPanel.anchor,
             order: nextOrder,
+            remoteUrl: null,  // Ensure local panels have no remoteUrl
             startPanel: newStartPanel
         });
 
         await startPanelsStore.set(newEntry);
         activeStartPanel.value = newStartPanel;
+        activeRemoteUrl.value = null;  // Local panels have no remoteUrl
         console.log(`Copied active panel to local storage with ID: ${id}`);
     }
 }

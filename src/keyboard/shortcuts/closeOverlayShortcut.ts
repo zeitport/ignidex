@@ -2,7 +2,7 @@ import {activeAction, activeOverlay} from '#state';
 import {i18n} from '#i18n';
 import {KeyboardShortcutGroup} from '../KeyboardShortcutGroup.ts';
 import type {KeyboardShortcut} from '../keyboardShortcutInterface.ts';
-import {overlayOpen} from '../preconditions.ts';
+import {overlayOpen} from '#app/preconditions.ts';
 
 export const closeOverlayShortcut: KeyboardShortcut = {
     name: 'closeOverlayShortcut',

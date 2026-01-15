@@ -80,7 +80,13 @@ export class ContextMenuElement extends LitElement {
     private async renderItemWithDisabledState(item: ContextMenuItem) {
         let isDisabled = false;
 
-        if (item.action?.isDisabled) {
+        // Check preconditions first
+        if (item.preconditions.some(fn => !fn())) {
+            isDisabled = true;
+        }
+
+        // Then check action.isDisabled
+        if (!isDisabled && item.action?.isDisabled) {
             isDisabled = await item.action.isDisabled();
         }
 

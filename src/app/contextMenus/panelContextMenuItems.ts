@@ -10,6 +10,7 @@ import {EditPanelAction} from '../../actions/editPanelAction.ts';
 import {DeletePanelAction} from '../../actions/deletePanelAction.ts';
 import {AddSectionAction} from '../../actions/addSectionAction.ts';
 import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
+import {noRemoteUrl} from '../preconditions.ts';
 
 export const panelContextMenuItems = [
     new ContextMenuItem({
@@ -22,13 +23,15 @@ export const panelContextMenuItems = [
         icon: mdiPencil,
         label: 'Edit panel',
         tooltip: i18n.text.hints.editPanel,
-        action: new EditPanelAction()
+        action: new EditPanelAction(),
+        preconditions: [noRemoteUrl]
     }),
     new ContextMenuItem({
         icon: mdiShapeSquarePlus,
         label: 'Add Section',
         tooltip: i18n.text.hints.addSectionToPanel,
-        action: new AddSectionAction()
+        action: new AddSectionAction(),
+        preconditions: [noRemoteUrl]
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({

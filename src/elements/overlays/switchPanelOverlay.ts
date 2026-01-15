@@ -2,7 +2,7 @@ import {hoverHint} from '#core/hoverHintDirective.ts';
 import {i18n} from '#i18n';
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '#state';
+import {activeOverlay, activeStartPanel, activeRemoteUrl, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {IconResolver} from '#core/iconResolver.ts';
@@ -100,6 +100,7 @@ export class SwitchPanelOverlay extends LitElement {
         const entry = this.findPanelEntry(customEvent.detail.id);
         if (entry) {
             activeStartPanel.value = entry.startPanel;
+            activeRemoteUrl.value = entry.remoteUrl ?? null;
             this.handleClose();
         }
     };

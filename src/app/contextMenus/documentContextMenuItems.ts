@@ -33,7 +33,7 @@ export const documentContextMenuItems = [
     }),
     new ContextMenuItem({
         icon: mdiCloudDownloadOutline ,
-        label: 'Create local panel',
+        label: i18n.text.remotePanel.copyToLocal,
         tooltip: i18n.text.hints.createLocalPanel,
         action: new CreateLocalPanelAction()
     }),

@@ -1,5 +1,5 @@
-import {activeOverlay} from '#state';
-import type {PreconditionFn} from './keyboardShortcutInterface.ts';
+import {activeOverlay, activeRemoteUrl} from '#state';
+import type {PreconditionFn} from '../keyboard/keyboardShortcutInterface.ts';
 
 export const noInputFocused: PreconditionFn = () => {
     const activeElement = document.activeElement;
@@ -26,4 +26,8 @@ export const noOverlayOpen: PreconditionFn = () => {
 
 export const overlayOpen: PreconditionFn = () => {
     return activeOverlay.value !== null;
+};
+
+export const noRemoteUrl: PreconditionFn = () => {
+    return activeRemoteUrl.value == null;
 };

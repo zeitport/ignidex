@@ -6,9 +6,9 @@ import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {StartPanel} from '../models/internal/startPanel.ts';
 import {CardSection} from '../models/internal/cardSection.ts';
 import {CardGroup} from '../models/internal/cardGroup.ts';
+import {StartPanelEntry} from '../models/idb/startPanelEntry.ts';
 import {ActionInterface} from '../actions/actionInterface.ts';
 import type {ContextMenuItem} from '../elements/contextMenuItem.ts';
-import type {StartPanelEntry} from '../models/idb/startPanelEntry.ts';
 
 export interface ActiveContextMenu {
     items: ContextMenuItem[];
@@ -17,6 +17,7 @@ export interface ActiveContextMenu {
 }
 
 export const activeStartPanel = new ObservableProperty<StartPanel | null>(null);
+export const activeRemoteUrl = new ObservableProperty<string | null>(null);
 export const activeOverlay = new ObservableProperty<OverlayType | null>(null);
 export const activeHoverHint = new ObservableProperty<HoverHint | null>(null);
 export const activeAction = new ObservableProperty<ActionInterface | null>(null);

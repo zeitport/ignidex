@@ -3,8 +3,10 @@ import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
+import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
-import {activeStartPanel, hoverHintMode} from '#state';
+import {activeStartPanel, activeRemoteUrl, activeOverlay, messageOverlayContent, hoverHintMode} from '#state';
+import {OverlayType} from './elements/overlays/overlayType.ts';
 import {inject} from '#inject';
 import {registerKeyboardInputObserver} from './keyboard/keyboardInputObserver.ts';
 import '#elements';
@@ -58,7 +60,7 @@ async function main() {
     const loadUrl = urlParams.get('load');
 
     if (loadUrl) {
-        activeStartPanel.value = await loadDataFromUrl(loadUrl);
+        await loadRemotePanel(loadUrl, startPanelsStore);
     } else {
         const anchor = window.location.hash.slice(1);
         let panelLoaded = false;
@@ -67,6 +69,7 @@ async function main() {
             const entry = await startPanelsStore.getByAnchor(anchor);
             if (entry) {
                 activeStartPanel.value = new StartPanel(entry.startPanel);
+                activeRemoteUrl.value = entry.remoteUrl ?? null;
                 panelLoaded = true;
             }
         }
@@ -79,6 +82,7 @@ async function main() {
                 const entry = await startPanelsStore.get(lastUsedStartPanelId);
                 if (entry) {
                     activeStartPanel.value = new StartPanel(entry.startPanel);
+                    activeRemoteUrl.value = entry.remoteUrl ?? null;
                     panelLoaded = true;
                 }
             }
@@ -87,6 +91,78 @@ async function main() {
         if (!panelLoaded) {
             await switchToFirstStartPanel();
         }
+    }
+}
+
+async function loadRemotePanel(remoteUrl: string, startPanelsStore: StartPanelsStore): Promise<void> {
+    try {
+        const loadedPanel = await loadDataFromUrl(remoteUrl);
+
+        // Check if a panel with the same remoteUrl already exists
+        const existingEntry = await startPanelsStore.getByRemoteUrl(remoteUrl);
+
+        if (existingEntry) {
+            // Update existing entry with new data
+            const updatedPanel = new StartPanel({
+                ...loadedPanel,
+                id: existingEntry.id,
+                anchor: existingEntry.anchor
+            });
+
+            const updatedEntry = new StartPanelEntry({
+                id: existingEntry.id,
+                anchor: existingEntry.anchor,
+                order: existingEntry.order,
+                remoteUrl: remoteUrl,
+                startPanel: updatedPanel
+            });
+
+            await startPanelsStore.set(updatedEntry);
+            activeStartPanel.value = updatedPanel;
+            activeRemoteUrl.value = remoteUrl;
+        } else {
+            // Create new entry
+            let anchor = loadedPanel.anchor;
+
+            // Check for anchor conflicts
+            if (anchor) {
+                const existingAnchor = await startPanelsStore.getByAnchor(anchor);
+                if (existingAnchor) {
+                    anchor = createId();
+                }
+            } else {
+                anchor = createId();
+            }
+
+            const newPanel = new StartPanel({
+                ...loadedPanel,
+                anchor: anchor
+            });
+
+            const nextOrder = await startPanelsStore.getNextOrder();
+            const newEntry = new StartPanelEntry({
+                id: newPanel.id,
+                anchor: anchor,
+                order: nextOrder,
+                remoteUrl: remoteUrl,
+                startPanel: newPanel
+            });
+
+            await startPanelsStore.set(newEntry);
+            activeStartPanel.value = newPanel;
+            activeRemoteUrl.value = remoteUrl;
+        }
+
+        // Clean URL: replace ?load=... with #anchor
+        const newUrl = `${window.location.pathname}#${activeStartPanel.value?.anchor ?? ''}`;
+        history.replaceState(null, '', newUrl);
+    } catch (error) {
+        console.error('Failed to load remote panel:', error);
+        messageOverlayContent.value = 'Failed to load remote panel. Please check the URL is accessible and CORS is enabled.';
+        activeOverlay.value = OverlayType.message;
+
+        // Fall back to first panel or getting started
+        await switchToFirstStartPanel();
     }
 }
 
@@ -100,6 +176,7 @@ async function handleHashChange() {
             const entry = await startPanelsStore.getByAnchor(anchor);
             if (entry) {
                 activeStartPanel.value = new StartPanel(entry.startPanel);
+                activeRemoteUrl.value = entry.remoteUrl ?? null;
             }
         }
     }

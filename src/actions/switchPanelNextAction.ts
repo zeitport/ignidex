@@ -1,7 +1,7 @@
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {activeStartPanel} from '#state';
+import {activeStartPanel, activeRemoteUrl} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 
 export class SwitchPanelNextAction implements ActionInterface {
@@ -20,5 +20,6 @@ export class SwitchPanelNextAction implements ActionInterface {
         const nextEntry = entries[nextIndex];
 
         activeStartPanel.value = new StartPanel(nextEntry.startPanel);
+        activeRemoteUrl.value = nextEntry.remoteUrl ?? null;
     }
 }

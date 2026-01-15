@@ -14,6 +14,7 @@ import {CopyUrlAction} from '../../actions/copyUrlAction.ts';
 import {OpenInNewTabAction} from '../../actions/openInNewTabAction.ts';
 import {NotImplementedAction} from '../../actions/notImplementedAction.ts';
 import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
+import {noRemoteUrl} from '../preconditions.ts';
 
 export const bookmarkContextMenuItems = [
     new ContextMenuItem({
@@ -35,23 +36,27 @@ export const bookmarkContextMenuItems = [
     new ContextMenuItem({
         icon: mdiArrowUpThin,
         label: 'Move up',
-        action: new MoveCardAction('up')
+        action: new MoveCardAction('up'),
+        preconditions: [noRemoteUrl]
     }),
     new ContextMenuItem({
         icon: mdiArrowDownThin,
         label: 'Move down',
-        action: new MoveCardAction('down')
+        action: new MoveCardAction('down'),
+        preconditions: [noRemoteUrl]
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',
-        action: new EditCardAction()
+        action: new EditCardAction(),
+        preconditions: [noRemoteUrl]
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiDeleteOutline,
         label: 'Delete',
-        action: new DeleteCardAction()
+        action: new DeleteCardAction(),
+        preconditions: [noRemoteUrl]
     })
 ];

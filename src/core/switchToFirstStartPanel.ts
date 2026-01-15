@@ -1,4 +1,4 @@
-import {activeOverlay, activeStartPanel} from '#state';
+import {activeOverlay, activeStartPanel, activeRemoteUrl} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {StartPanelsStore} from './idb/startPanelsStore.ts';
 import {inject} from '#inject';
@@ -13,8 +13,10 @@ export async function switchToFirstStartPanel(): Promise<void> {
 
     if (allPanels.length > 0) {
         activeStartPanel.value = allPanels[0].startPanel;
+        activeRemoteUrl.value = allPanels[0].remoteUrl ?? null;
     } else {
         activeStartPanel.value = null;
+        activeRemoteUrl.value = null;
         activeOverlay.value = OverlayType.gettingStarted;
     }
 }
