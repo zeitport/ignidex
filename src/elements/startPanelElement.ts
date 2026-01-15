@@ -2,7 +2,7 @@ import type {StartPanel} from '#models/internal/startPanel.ts';
 import {LitElement, html, type TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
-import {activeOverlay, activeStartPanel, pastedUrl, isDraggingFile, messageOverlayContent, activeContextMenu} from '#state';
+import {activeOverlay, activeStartPanel, pastedUrl, isDraggingFile, messageOverlayContent, activeContextMenu, activeRemoteUrl} from '#state';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
 import {documentContextMenuItems} from '../app/contextMenus/documentContextMenuItems.ts';
@@ -10,6 +10,13 @@ import type {ContextMenuElement} from './contextMenuElement.ts';
 import {OverlayType} from './overlays/overlayType.ts';
 import {startPanelElementStyle} from './startPanelElementStyle.ts';
 import {ImportFromJsonAction} from '../actions/importFromJsonAction.ts';
+import {inject} from '#inject';
+import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
+import {StartPanel as StartPanelModel} from '#models/internal/startPanel.ts';
+import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {createId} from '#utils/createId.ts';
+import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 
 @customElement('cc-start-panel')
 export class StartPanelElement extends LitElement {
@@ -191,8 +198,108 @@ export class StartPanelElement extends LitElement {
 
         const pastedText = event.clipboardData?.getData('text');
         if (pastedText && (pastedText.startsWith('http://') || pastedText.startsWith('https://') || pastedText.startsWith('localhost'))) {
-            pastedUrl.value = pastedText;
-            activeOverlay.value = OverlayType.selectSection;
+            void this.handlePastedUrl(pastedText);
+        }
+    }
+
+    private async handlePastedUrl(url: string): Promise<void> {
+        try {
+            const response = await fetch(url, {cache: 'no-store'});
+
+            if (!response.ok) {
+                this.openBookmarkOverlay(url);
+                return;
+            }
+
+            const data = await response.json() as Partial<StartPanelDto>;
+
+            if (!data.meta || data.meta.app !== 'ignidex') {
+                this.openBookmarkOverlay(url);
+                return;
+            }
+
+            await this.createRemoteStartPanel(url, data);
+        } catch {
+            this.openBookmarkOverlay(url);
+        }
+    }
+
+    private openBookmarkOverlay(url: string): void {
+        pastedUrl.value = url;
+        activeOverlay.value = OverlayType.selectSection;
+    }
+
+    private async createRemoteStartPanel(remoteUrl: string, data: Partial<StartPanelDto>): Promise<void> {
+        const startPanelsStore = inject(StartPanelsStore);
+        const imageAssetsStore = inject(ImageAssetsStore);
+
+        // Store images if present
+        if (data.images && Array.isArray(data.images)) {
+            for (const image of data.images) {
+                if (image.id && image.dataUri) {
+                    await imageAssetsStore.set(image);
+                }
+            }
+        }
+
+        const loadedPanel = new StartPanelModel(data);
+        const existingEntry = await startPanelsStore.getByRemoteUrl(remoteUrl);
+
+        if (existingEntry) {
+            // Update existing entry with new data
+            const updatedPanel = new StartPanelModel({
+                ...loadedPanel,
+                id: existingEntry.id,
+                anchor: existingEntry.anchor
+            });
+
+            const updatedEntry = new StartPanelEntry({
+                id: existingEntry.id,
+                anchor: existingEntry.anchor,
+                order: existingEntry.order,
+                remoteUrl: remoteUrl,
+                startPanel: updatedPanel
+            });
+
+            await startPanelsStore.set(updatedEntry);
+            activeStartPanel.value = updatedPanel;
+            activeRemoteUrl.value = remoteUrl;
+        } else {
+            // Create new entry
+            let anchor = loadedPanel.anchor;
+
+            // Check for anchor conflicts
+            if (anchor) {
+                const existingAnchor = await startPanelsStore.getByAnchor(anchor);
+                if (existingAnchor) {
+                    anchor = createId();
+                }
+            } else {
+                anchor = createId();
+            }
+
+            const newPanel = new StartPanelModel({
+                ...loadedPanel,
+                anchor: anchor
+            });
+
+            const nextOrder = await startPanelsStore.getNextOrder();
+            const newEntry = new StartPanelEntry({
+                id: newPanel.id,
+                anchor: anchor,
+                order: nextOrder,
+                remoteUrl: remoteUrl,
+                startPanel: newPanel
+            });
+
+            await startPanelsStore.set(newEntry);
+            activeStartPanel.value = newPanel;
+            activeRemoteUrl.value = remoteUrl;
+        }
+
+        // Update URL hash
+        if (activeStartPanel.value?.anchor) {
+            window.location.hash = activeStartPanel.value.anchor;
         }
     }
 
