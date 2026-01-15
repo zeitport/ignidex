@@ -8,6 +8,7 @@ export interface ListItem {
     description?: string;
     icon?: string;
     iconDataUri?: string;
+    badgeText?: string;
 }
 
 @customElement('cc-list')
@@ -31,6 +32,7 @@ export class ListElement extends LitElement {
                         <span class="item-label">${item.label}</span>
                         ${item.description ? html`<span class="item-description">${item.description}</span>` : ''}
                     </div>
+                    ${item.badgeText ? html`<span class="item-badge">${item.badgeText}</span>` : ''}
                 </div>
             `)}
         `;

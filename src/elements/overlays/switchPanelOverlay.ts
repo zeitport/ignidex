@@ -67,7 +67,8 @@ export class SwitchPanelOverlay extends LitElement {
                 id: entry.id,
                 label: entry.startPanel.header?.title || 'Untitled',
                 description: `#${entry.anchor}`,
-                iconDataUri: result.dataUri ?? undefined
+                iconDataUri: result.dataUri ?? undefined,
+                badgeText: entry.remoteUrl ? i18n.token.remotePanel.badge : undefined
             });
         }
 

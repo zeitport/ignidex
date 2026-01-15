@@ -74,4 +74,14 @@ export const listElementStyle = css`
         font-size: 0.8rem;
         color: var(--muted);
     }
+
+    .item-badge {
+        padding: 0.25rem 0.5rem;
+        background-color: var(--list-item-badge-bg);
+        color: var(--list-item-badge-color);
+        font-size: 0.8rem;
+        text-transform: var(--text-transform);
+        border-radius: 0.25rem;
+        user-select: none;
+    }
 `;
