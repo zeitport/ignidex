@@ -49,7 +49,7 @@ export class RefreshFromRemoteAction implements ActionInterface {
             console.log(`Refreshed panel from remote: ${remoteUrl}`);
         } catch (error) {
             console.error('Failed to refresh from remote:', error);
-            messageOverlayContent.value = i18n.text.remotePanel.refreshError;
+            messageOverlayContent.value = i18n.token.remotePanel.refreshError;
             activeOverlay.value = OverlayType.message;
         }
     }

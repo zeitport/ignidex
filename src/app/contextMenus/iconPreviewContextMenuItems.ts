@@ -9,20 +9,20 @@ export const iconPreviewContextMenuItems = [
     new ContextMenuItem({
         icon: mdiClipboardOutline,
         label: 'Paste',
-        tooltip: i18n.text.hints.iconPreviewPaste,
+        tooltip: i18n.token.hints.iconPreviewPaste,
         action: new PasteIconAction()
     }),
     new ContextMenuItem({
         icon: mdiContentCopy,
         label: 'Copy Data URL',
-        tooltip: i18n.text.hints.iconPreviewCopy,
+        tooltip: i18n.token.hints.iconPreviewCopy,
         action: new CopyIconDataUrlAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiDeleteOutline,
         label: 'Delete',
-        tooltip: i18n.text.hints.iconPreviewDelete,
+        tooltip: i18n.token.hints.iconPreviewDelete,
         action: new DeleteIconAction()
     })
 ];

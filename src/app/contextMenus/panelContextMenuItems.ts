@@ -16,20 +16,20 @@ export const panelContextMenuItems = [
     new ContextMenuItem({
         icon: mdiSwapHorizontal,
         label: 'Switch panel',
-        tooltip: i18n.text.hints.switchPanel,
+        tooltip: i18n.token.hints.switchPanel,
         action: new SwitchPanelAction()
     }),
     new ContextMenuItem({
         icon: mdiPencil,
         label: 'Edit panel',
-        tooltip: i18n.text.hints.editPanel,
+        tooltip: i18n.token.hints.editPanel,
         action: new EditPanelAction(),
         preconditions: [noRemoteUrl]
     }),
     new ContextMenuItem({
         icon: mdiShapeSquarePlus,
         label: 'Add Section',
-        tooltip: i18n.text.hints.addSectionToPanel,
+        tooltip: i18n.token.hints.addSectionToPanel,
         action: new AddSectionAction(),
         preconditions: [noRemoteUrl]
     }),
@@ -37,7 +37,7 @@ export const panelContextMenuItems = [
     new ContextMenuItem({
         icon: mdiDeleteOutline,
         label: 'Delete panel',
-        tooltip: i18n.text.hints.deletePanel,
+        tooltip: i18n.token.hints.deletePanel,
         action: new DeletePanelAction()
     }),
 ];

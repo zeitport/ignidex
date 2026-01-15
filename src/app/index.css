@@ -33,6 +33,7 @@
     --context-menu-border: rgba(255, 255, 255, 0.5);
     --context-menu-hover-bg: #2e3e49;
     --context-menu-hover-text: #ffffff;
+    --context-menu-icon-size: 1.25rem;
     --context-menu-icon-color: #737373;
     --context-menu-icon-hover: #c0c0c0;
     --context-menu-divider: rgba(255, 255, 255, 0.25);

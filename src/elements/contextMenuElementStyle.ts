@@ -23,7 +23,7 @@ export const contextMenuElementStyle = css`
         border: 0 solid var(--context-menu-border);
         border-radius: 0.5rem;
         min-width: 160px;
-        padding: 0.5rem 0;
+        padding: 0.5rem 0.5rem;
         display: flex;
         flex-direction: column;
     }
@@ -37,6 +37,7 @@ export const contextMenuElementStyle = css`
         color: var(--context-menu-text);
         user-select: none;
         white-space: nowrap;
+        border-radius: 0.25rem;
     }
 
     .divider {
@@ -60,8 +61,8 @@ export const contextMenuElementStyle = css`
     }
 
     .icon {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: var(--context-menu-icon-size);
+        height: var(--context-menu-icon-size);
         fill: var(--context-menu-icon-color);
     }
 

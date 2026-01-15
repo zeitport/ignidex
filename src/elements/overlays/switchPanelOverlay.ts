@@ -81,7 +81,7 @@ export class SwitchPanelOverlay extends LitElement {
 
                 <cc-list
                     .items=${this.listItems}
-                    ${hoverHint(i18n.text.hints.switchPanelListItem)}
+                    ${hoverHint(i18n.token.hints.switchPanelListItem)}
                     @selected=${this.handleListSelect}
                     @item-contextmenu=${this.handleListContextMenu}>
                 </cc-list>

@@ -30,7 +30,7 @@ export class HighlightSectionElement extends LitElement {
                 <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>
                     ${allCards.map(card => html`
                         <div class="bookmark"
-                             ${hoverHint(i18n.text.hints.bookmark)}
+                             ${hoverHint(i18n.token.hints.bookmark)}
                              @click=${(event: MouseEvent) => this.handleAppClick(event, card)}
                              @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
                              >

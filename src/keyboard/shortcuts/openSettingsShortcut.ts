@@ -9,7 +9,7 @@ export const openSettingsShortcut: KeyboardShortcut = {
     name: 'openSettingsShortcut',
     group: KeyboardShortcutGroup.general,
     keySequence: ['F1'],
-    description: i18n.text.keyboardShortcut.openSettings,
+    description: i18n.token.keyboardShortcut.openSettings,
     preconditions: [noInputFocused, noOverlayOpen],
     getAction: () => inject(OpenSettingsAction)
 };

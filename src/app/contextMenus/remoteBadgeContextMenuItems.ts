@@ -8,21 +8,21 @@ import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 export const remoteBadgeContextMenuItems = [
     new ContextMenuItem({
         icon: mdiCloudDownloadOutline,
-        label: i18n.text.remotePanel.copyToLocal,
-        tooltip: i18n.text.hints.createLocalPanel,
+        label: i18n.token.remotePanel.copyToLocal,
+        tooltip: i18n.token.hints.createLocalPanel,
         action: new CreateLocalPanelAction()
     }),
     new ContextMenuItem({
         icon: mdiRefresh,
-        label: i18n.text.remotePanel.refreshFromRemote,
-        tooltip: i18n.text.remotePanel.refreshFromRemote,
+        label: i18n.token.remotePanel.refreshFromRemote,
+        tooltip: i18n.token.remotePanel.refreshFromRemote,
         action: new RefreshFromRemoteAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiLink,
-        label: i18n.text.remotePanel.copyShareUrlToClipboard,
-        tooltip: i18n.text.hints.copyShareUrlToClipboard,
+        label: i18n.token.remotePanel.copyShareUrlToClipboard,
+        tooltip: i18n.token.hints.copyShareUrlToClipboard,
         action: new CopyShareUrlToClipboardAction()
     }),
 ];

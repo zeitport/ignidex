@@ -17,7 +17,7 @@ export const highlightSectionContextMenuItems = [
     new ContextMenuItem({
         icon: mdiBookmarkOutline,
         label: 'Add bookmark',
-        tooltip: i18n.text.hints.addBookmarkToSection,
+        tooltip: i18n.token.hints.addBookmarkToSection,
         action: new AddCardAction(),
         preconditions: [noRemoteUrl]
     }),
@@ -25,7 +25,7 @@ export const highlightSectionContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',
-        tooltip: i18n.text.hints.editSection,
+        tooltip: i18n.token.hints.editSection,
         action: new EditSectionAction(),
         preconditions: [noRemoteUrl]
     }),
@@ -46,7 +46,7 @@ export const highlightSectionContextMenuItems = [
     new ContextMenuItem({
         icon: mdiDelete,
         label: 'Delete...',
-        tooltip: i18n.text.hints.deleteSection,
+        tooltip: i18n.token.hints.deleteSection,
         action: new DeleteSectionAction(),
         preconditions: [noRemoteUrl]
     })

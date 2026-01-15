@@ -14,14 +14,14 @@ export const groupContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',
-        tooltip: i18n.text.hints.editGroup,
+        tooltip: i18n.token.hints.editGroup,
         action: new EditGroupAction(),
         preconditions: [noRemoteUrl]
     }),
     new ContextMenuItem({
         icon: mdiPlus,
         label: 'Add Bookmark',
-        tooltip: i18n.text.hints.addBookmarkToGroup,
+        tooltip: i18n.token.hints.addBookmarkToGroup,
         action: new AddCardAction(),
         preconditions: [noRemoteUrl]
     }),
@@ -29,7 +29,7 @@ export const groupContextMenuItems = [
     new ContextMenuItem({
         icon: mdiDelete,
         label: 'Delete...',
-        tooltip: i18n.text.hints.deleteGroup,
+        tooltip: i18n.token.hints.deleteGroup,
         action: new DeleteGroupAction(),
         preconditions: [noRemoteUrl]
     })

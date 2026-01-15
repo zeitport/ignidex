@@ -17,14 +17,14 @@ export const bookmarkSectionContextMenuItems = [
     new ContextMenuItem({
         icon: mdiPencilOutline,
         label: 'Edit',
-        tooltip: i18n.text.hints.editSection,
+        tooltip: i18n.token.hints.editSection,
         action: new EditSectionAction(),
         preconditions: [noRemoteUrl]
     }),
     new ContextMenuItem({
         icon: mdiShapeCirclePlus,
         label: 'Add Group',
-        tooltip: i18n.text.hints.addGroupToSection,
+        tooltip: i18n.token.hints.addGroupToSection,
         action: new AddGroupAction(),
         preconditions: [noRemoteUrl]
     }),
@@ -45,7 +45,7 @@ export const bookmarkSectionContextMenuItems = [
     new ContextMenuItem({
         icon: mdiDelete,
         label: 'Delete...',
-        tooltip: i18n.text.hints.deleteSection,
+        tooltip: i18n.token.hints.deleteSection,
         action: new DeleteSectionAction(),
         preconditions: [noRemoteUrl]
     })

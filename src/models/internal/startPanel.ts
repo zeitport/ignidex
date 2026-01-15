@@ -9,7 +9,7 @@ export class StartPanel {
      */
     anchor: string | null;
 
-    header: StartPanelHeader | null;
+    header: StartPanelHeader;
 
     sections: Array<CardSection>;
 

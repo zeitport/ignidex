@@ -15,7 +15,8 @@ export const tokens = {
         deletePanel: '[LMB] + [?] Delete current panel',
         createNewPanel: 'Create a new panel',
         exportJson: 'Export data as JSON file',
-        createLocalPanel: '[LMB] Create a copy of the current panel; A remote panel is then a local panel.',
+        createLocalPanel: '[LMB] Convert the remote panel to an editable local panel',
+        duplicatePanel: '[LMB] Create a copy of the current panel',
         openSettings: '[LMB] or [F1] opens the app settings',
         editGroup: 'Edit group',
         addBookmarkToGroup: 'Add new bookmark to group',
@@ -30,6 +31,10 @@ export const tokens = {
         iconPreviewNoIcon: 'No icon selected',
         switchPanelListItem: '[RMB] open menu to move items up/down',
         copyShareUrlToClipboard: '[LMB] Copy share URL to clipboard'
+    },
+    panel: {
+        duplicatePanel: 'Duplicate panel',
+        copyPrefix: 'Copy: '
     },
     remotePanel: {
         badge: 'Remote',

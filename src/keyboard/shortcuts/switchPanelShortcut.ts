@@ -9,7 +9,7 @@ export const switchPanelShortcut: KeyboardShortcut = {
     name: 'switchPanelShortcut',
     group: KeyboardShortcutGroup.navigation,
     keySequence: ['SHIFT', 'SHIFT'],
-    description: i18n.text.keyboardShortcut.switchPanel,
+    description: i18n.token.keyboardShortcut.switchPanel,
     preconditions: [noInputFocused, noOverlayOpen],
     getAction: () => inject(SwitchPanelAction)
 };

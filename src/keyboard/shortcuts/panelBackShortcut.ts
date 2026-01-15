@@ -9,7 +9,7 @@ export const panelBackShortcut: KeyboardShortcut = {
     name: 'panelBackShortcut',
     group: KeyboardShortcutGroup.navigation,
     keySequence: ['ArrowLeft'],
-    description: i18n.text.keyboardShortcut.panelBack,
+    description: i18n.token.keyboardShortcut.panelBack,
     preconditions: [noInputFocused, noOverlayOpen],
     getAction: () => inject(SwitchPanelBackAction)
 };

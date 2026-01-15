@@ -18,5 +18,5 @@ export class CopyIconDataUrlAction implements ActionInterface {
         return !activeIconPreview.value?.dataUri;
     }
 
-    disabledHint = i18n.text.hints.iconPreviewNoIcon;
+    disabledHint = i18n.token.hints.iconPreviewNoIcon;
 }

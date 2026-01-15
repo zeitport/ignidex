@@ -1,12 +1,13 @@
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {t} from '#i18n';
 import {activeStartPanel, activeRemoteUrl} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {createId} from '#utils/createId.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 
-export class CreateLocalPanelAction implements ActionInterface {
+export class DuplicatePanelAction implements ActionInterface {
     async run() {
         const sourcePanel = activeStartPanel.value;
         if (!sourcePanel) {
@@ -50,20 +51,17 @@ export class CreateLocalPanelAction implements ActionInterface {
             id: id,
             anchor: newPanel.anchor,
             order: nextOrder,
-            remoteUrl: null,  // Ensure local panels have no remoteUrl
+            remoteUrl: null,
             startPanel: newPanel
         });
 
+        const {header} = newEntry.startPanel;
+
+        header.title = `${t.panel.copyPrefix}${header.title ?? ''}`;
 
         await startPanelsStore.set(newEntry);
 
-        // If the sourcePanelEntry is a remote panel, we delete the reference from the store.
-        if (sourcePanelEntry?.remoteUrl) {
-            await startPanelsStore.delete(sourcePanelEntry.id);
-        }
-
         activeStartPanel.value = newPanel;
-        activeRemoteUrl.value = null;  // Local panels have no remoteUrl
-        console.log(`Copied active panel to local storage with ID: ${id}`);
+        activeRemoteUrl.value = null;
     }
 }

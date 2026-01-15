@@ -8,7 +8,7 @@ export const closeOverlayShortcut: KeyboardShortcut = {
     name: 'closeOverlayShortcut',
     group: KeyboardShortcutGroup.general,
     keySequence: ['Escape'],
-    description: i18n.text.keyboardShortcut.closeOverlay,
+    description: i18n.token.keyboardShortcut.closeOverlay,
     preconditions: [overlayOpen],
     getAction: () => ({
         run: () => {

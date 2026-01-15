@@ -1,10 +1,9 @@
 import {i18n} from '#i18n';
 import {
-    mdiCloudDownloadOutline,
-    mdiCog,
+    mdiCog, mdiContentDuplicate,
     mdiExport, mdiPlus, mdiSwapHorizontal
 } from '@mdi/js';
-import {CreateLocalPanelAction} from '../../actions/createLocalPanelAction.ts';
+import {DuplicatePanelAction} from '../../actions/duplicatePanelAction.ts';
 import {OpenSettingsAction} from '../../actions/openSettingsAction.ts';
 import {ExportToJsonAction} from '../../actions/exportToJsonAction.ts';
 import {NewPanelAction} from '../../actions/newPanelAction.ts';
@@ -15,33 +14,33 @@ export const documentContextMenuItems = [
     new ContextMenuItem({
         icon: mdiSwapHorizontal,
         label: 'Switch panel',
-        tooltip: i18n.text.hints.switchPanel,
+        tooltip: i18n.token.hints.switchPanel,
         action: new SwitchPanelAction()
     }),
     new ContextMenuItem({
         icon: mdiPlus,
         label: 'New panel',
-        tooltip: i18n.text.hints.createNewPanel,
+        tooltip: i18n.token.hints.createNewPanel,
         action: new NewPanelAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiExport,
         label: 'Export as JSON',
-        tooltip: i18n.text.hints.exportJson,
+        tooltip: i18n.token.hints.exportJson,
         action: new ExportToJsonAction()
     }),
     new ContextMenuItem({
-        icon: mdiCloudDownloadOutline ,
-        label: i18n.text.remotePanel.copyToLocal,
-        tooltip: i18n.text.hints.createLocalPanel,
-        action: new CreateLocalPanelAction()
+        icon: mdiContentDuplicate ,
+        label: i18n.token.panel.duplicatePanel,
+        tooltip: i18n.token.hints.duplicatePanel,
+        action: new DuplicatePanelAction()
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiCog,
         label: 'Settings',
-        tooltip: i18n.text.hints.openSettings,
+        tooltip: i18n.token.hints.openSettings,
         action: new OpenSettingsAction()
     })
 ];

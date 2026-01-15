@@ -54,7 +54,7 @@ export class StartPanelHeaderElement extends LitElement {
             <div class="header-back"></div>
             <div class="header-stripe"></div>
             <div class="header"
-                 ${hoverHint(i18n.text.hints.startPanelHeader)}
+                 ${hoverHint(i18n.token.hints.startPanelHeader)}
                  @contextmenu=${this.handleContextMenu}
                 >
                 ${hasIcon ? html`
@@ -68,9 +68,9 @@ export class StartPanelHeaderElement extends LitElement {
                 </div>
                 ${remoteUrl ? html`
                     <div class="remote-badge"
-                         ${hoverHint(i18n.text.remotePanel.badgeHint)}
+                         ${hoverHint(i18n.token.remotePanel.badgeHint)}
                          @contextmenu=${this.handleBadgeContextMenu}>
-                        ${i18n.text.remotePanel.badge}
+                        ${i18n.token.remotePanel.badge}
                     </div>
                 ` : ''}
             </div>
