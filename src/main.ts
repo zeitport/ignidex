@@ -4,16 +4,10 @@ import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {createId} from '#utils/createId.ts';
-import {activeStartPanel, activeOverlay, hoverHintMode, activeContextMenu} from '#state';
+import {activeStartPanel, hoverHintMode} from '#state';
 import {inject} from '#inject';
-import {SwitchPanelBackAction} from './actions/switchPanelBackAction.ts';
-import {SwitchPanelNextAction} from './actions/switchPanelNextAction.ts';
-import {SwitchPanelAction} from './actions/switchPanelAction.ts';
-import {OpenSettingsAction} from './actions/openSettingsAction.ts';
+import {registerKeyboardInputObserver} from './keyboard/keyboardInputObserver.ts';
 import '#elements';
-
-const DOUBLE_SHIFT_TIMEOUT_MS = 300;
-let lastShiftPressTime = 0;
 
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
@@ -23,62 +17,9 @@ function registerServiceWorker() {
     }
 }
 
-function registerKeyboardNavigation() {
-    document.addEventListener('keydown', (event: KeyboardEvent) =>  void handleKeyDown(event));
-}
-
-async function handleKeyDown(event: KeyboardEvent) {
-    if (activeOverlay.value !== null) {
-        return;
-    }
-
-    const activeElement = document.activeElement;
-    const isInputFocused = activeElement instanceof HTMLInputElement
-        || activeElement instanceof HTMLTextAreaElement
-        || (activeElement instanceof HTMLElement && activeElement.isContentEditable);
-
-    if (isInputFocused) {
-        return;
-    }
-
-    if (event.shiftKey) {
-        const now = Date.now();
-
-        if (now - lastShiftPressTime < DOUBLE_SHIFT_TIMEOUT_MS) {
-            const action = inject(SwitchPanelAction);
-
-            if (!await action.isDisabled()) {
-                action.run();
-                event.stopPropagation();
-                event.preventDefault();
-            }
-
-            lastShiftPressTime = 0;
-        } else {
-            lastShiftPressTime = now;
-        }
-        return;
-    }
-
-    if (event.key === 'ArrowLeft') {
-        await inject(SwitchPanelBackAction).run();
-        event.stopPropagation();
-        event.preventDefault();
-    } else if (event.key === 'ArrowRight') {
-        await inject(SwitchPanelNextAction).run();
-        event.stopPropagation();
-        event.preventDefault();
-    } else if (event.key === 'F1') {
-        activeContextMenu.value = null;
-        inject(OpenSettingsAction).run();
-        event.stopPropagation();
-        event.preventDefault();
-    }
-}
-
 async function main() {
     registerServiceWorker();
-    registerKeyboardNavigation();
+    registerKeyboardInputObserver();
     console.log('Starting application...');
     console.log(createId());
 

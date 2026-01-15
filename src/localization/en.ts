@@ -1,4 +1,11 @@
 export const tokens = {
+    keyboardShortcut: {
+        switchPanel: 'Open panel switcher',
+        panelBack: 'Go to previous panel',
+        panelNext: 'Go to next panel',
+        openSettings: 'Open settings',
+        closeOverlay: 'Close overlay'
+    },
     hints: {
         bookmark: '[LMB] open; [CTRL] + [LMB] open in new tab; [RMB] bookmark menu',
         startPanelHeader: '[RMB] panel menu; [🠜] go back; [🠞] go forward',
