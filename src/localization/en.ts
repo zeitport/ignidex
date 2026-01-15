@@ -33,8 +33,8 @@ export const tokens = {
         copyShareUrlToClipboard: '[LMB] Copy share URL to clipboard'
     },
     panel: {
-        duplicatePanel: 'Duplicate panel',
-        copyPrefix: 'Copy: '
+
+        copyPrefix: 'Copy: ',
     },
     remotePanel: {
         badge: 'Remote',
@@ -44,5 +44,13 @@ export const tokens = {
         loadError: 'Failed to load remote panel. Please check the URL is accessible and CORS is enabled.',
         refreshError: 'Failed to refresh from remote source. Please check the URL is accessible.',
         copyShareUrlToClipboard: 'Copy share URL'
+    },
+    contextMenu: {
+        switchPanel: 'Switch panel',
+        editPanel: 'Edit panel',
+        addSection: 'Add Section',
+        exportAsJson: 'Export as JSON',
+        duplicatePanel: 'Duplicate panel',
+        deletePanel: 'Delete panel'
     }
 };

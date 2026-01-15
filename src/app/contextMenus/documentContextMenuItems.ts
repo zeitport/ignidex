@@ -1,4 +1,4 @@
-import {i18n} from '#i18n';
+import {i18n, t} from '#i18n';
 import {
     mdiCog, mdiContentDuplicate,
     mdiExport, mdiPlus, mdiSwapHorizontal
@@ -13,10 +13,11 @@ import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 export const documentContextMenuItems = [
     new ContextMenuItem({
         icon: mdiSwapHorizontal,
-        label: 'Switch panel',
+        label: t.contextMenu.switchPanel,
         tooltip: i18n.token.hints.switchPanel,
         action: new SwitchPanelAction()
     }),
+    ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiPlus,
         label: 'New panel',
@@ -32,7 +33,7 @@ export const documentContextMenuItems = [
     }),
     new ContextMenuItem({
         icon: mdiContentDuplicate ,
-        label: i18n.token.panel.duplicatePanel,
+        label: t.contextMenu.duplicatePanel,
         tooltip: i18n.token.hints.duplicatePanel,
         action: new DuplicatePanelAction()
     }),

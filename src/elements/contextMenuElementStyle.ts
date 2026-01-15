@@ -41,9 +41,9 @@ export const contextMenuElementStyle = css`
     }
 
     .divider {
-        height: 1px;
-        margin: 0.5rem 0;
-        background: var(--context-menu-divider);
+        height: 0;
+        border-block-start: 1px solid var(--context-menu-divider);
+        margin: 0.5rem -0.5rem;
     }
 
     .menu-item:hover:not(.disabled) {
