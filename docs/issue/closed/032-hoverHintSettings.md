@@ -9,8 +9,8 @@ As a user, I want to customize the hover hint settings to improve my personal ap
 - Add a new "Hover Hint" settings section to the "UI settings panel"
 - Provide 3 options: Off, Muted, Highlighted
 - Do not use a drop down box.
-- Create a new cc-radio-button element with multiple options
-- Use the cc-radio-button element to display the options
+- Create a new cc-radio-button-group element with multiple options
+- Use the cc-radio-button-group element to display the options
 - Option: Off - Do not show hover hints
 - Option: Muted - show hover hints with dark/black background
 - Option: Highlighted - show hover hints with accent color background

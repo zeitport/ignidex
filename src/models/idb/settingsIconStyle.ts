@@ -4,4 +4,4 @@ export const SettingsIconStyle = {
     Large: 'large',
 } as const;
 
-export type SettingsIconStyleType = typeof SettingsIconStyle[keyof typeof SettingsIconStyle];
+export type SettingsIconStyle = typeof SettingsIconStyle[keyof typeof SettingsIconStyle];

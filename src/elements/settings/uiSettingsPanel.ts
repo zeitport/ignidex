@@ -1,16 +1,21 @@
+import {getCornerActionFromPosition} from '#app/cornerAction/getCornerActionFromPosition.ts';
+import {mdiCancel, mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
+import {CornerActionType} from '#models/idb/cornerActionType.ts';
+import {CornerPosition} from '#models/idb/cornerPosition.ts';
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
-import {SettingsIconStyle, type SettingsIconStyleType} from '#models/idb/settingsIconStyle.ts';
-import {html, LitElement, css} from 'lit';
+import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
+import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
+import {when} from 'lit/directives/when.js';
 import type {CheckedCustomEvent} from '../customEvents/checkedCustomEvent.ts';
 import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts';
+import {OverlayType} from '../overlays/overlayType.ts';
+import type {RadioOption} from '../radioButton/radioOption.ts';
 import {colorPalette} from './colorPalette.ts';
-import './settingsSection.ts';
-import './settingsHeader.ts';
-import '../radioButtonElement.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
-import {hoverHintMode, settingsIconStyle} from '#state';
+import {activeOverlay, cornerActions, hoverHintMode, selectedCornerPosition} from '#state';
+import {uiSettingsPanelStyle} from './uiSettingsPanelStyle.ts';
 
 @customElement('cc-ui-settings-panel')
 export class UISettingsPanel extends LitElement {
@@ -28,81 +33,12 @@ export class UISettingsPanel extends LitElement {
     @state()
     private selectedHoverHintMode: HoverHintModeType = HoverHintMode.Dark;
 
-    @state()
-    private selectedSettingsIconStyle: SettingsIconStyleType = SettingsIconStyle.Large;
+    constructor() {
+        super();
+        cornerActions.watch(this);
+    }
 
-    static styles = css`
-        :host {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 1.5rem);
-            gap: 0.75rem;
-        }
-
-        .color-square {
-            width: 1.5rem;
-            height: 1.5rem;
-            cursor: pointer;
-            border-radius: 4px;
-            border: 2px solid transparent;
-            transition: transform 0.1s ease-in-out, border-color 0.1s ease-in-out;
-        }
-
-        .color-square:hover {
-            transform: scale(1.1);
-        }
-
-        .color-square.selected {
-            border-color: var(--text);
-            transform: scale(1.1);
-        }
-
-        .font-size-grid {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .font-size-square {
-            position: relative;
-            width: 2rem;
-            height: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            z-index: 1;
-        }
-
-        .font-size-square::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--input-bg);
-            border: 2px solid var(--input-border-color);
-            border-radius: 4px;
-            transition: transform 0.1s ease-in-out, border-color 0.1s ease-in-out;
-            z-index: -1;
-        }
-
-        .font-size-square:hover::before {
-            transform: scale(1.1);
-        }
-
-        .font-size-square.selected::before {
-            border-color: var(--text);
-            transform: scale(1.1);
-        }
-    `;
+    static styles = uiSettingsPanelStyle;
 
     connectedCallback(): void {
         super.connectedCallback();
@@ -115,7 +51,7 @@ export class UISettingsPanel extends LitElement {
         this.selectedFontSize = state.baseFontSize;
         this.useUppercase = state.useUppercase;
         this.selectedHoverHintMode = state.hoverHintMode;
-        this.selectedSettingsIconStyle = state.settingsIconStyle;
+        cornerActions.value = state.cornerActions;
     }
 
     render() {
@@ -170,7 +106,7 @@ export class UISettingsPanel extends LitElement {
             <cc-settings-section>
                 <span slot="label">Hover Hints</span>
                 <span slot="description">Select how to display hover hints for elements.</span>
-                <cc-radio-button
+                <cc-radio-button-group
                     .options=${[
                         {label: 'Off', value: HoverHintMode.Off},
                         {label: 'On (dark)', value: HoverHintMode.Dark},
@@ -178,21 +114,40 @@ export class UISettingsPanel extends LitElement {
                     ]}
                     .value=${this.selectedHoverHintMode}
                     @change=${(event: CustomEventWithValue<HoverHintModeType>) => this.selectHoverHintMode(event.detail.value)}
-                ></cc-radio-button>
+                ></cc-radio-button-group>
             </cc-settings-section>
 
+            ${this.renderCornerActionSizeSection()}
+            ${when(cornerActions.value.size !== SettingsIconStyle.Off, () => this.renderCornerActionsSection())}
+        `;
+    }
+
+    private renderCornerActionSizeSection() {
+        return html`
             <cc-settings-section>
-                <span slot="label">Settings Icon</span>
-                <span slot="description">Show a settings icon in the bottom left corner for quick access.</span>
-                <cc-radio-button
-                    .options=${[
-                        {label: 'Off', value: SettingsIconStyle.Off},
-                        {label: 'Small', value: SettingsIconStyle.Small},
-                        {label: 'Large', value: SettingsIconStyle.Large}
-                    ]}
-                    .value=${this.selectedSettingsIconStyle}
-                    @change=${(event: CustomEventWithValue<SettingsIconStyleType>) => this.selectSettingsIconStyle(event.detail.value)}
-                ></cc-radio-button>
+                <span slot="label">Corner Action Size</span>
+                <span slot="description">Configure corner action icon size.</span>
+                <div class="corner-icons-size">
+                    <cc-radio-button-group
+                        .options=${[
+                            {label: 'Off', value: SettingsIconStyle.Off},
+                            {label: 'Small', value: SettingsIconStyle.Small},
+                            {label: 'Large', value: SettingsIconStyle.Large}
+                        ]}
+                        .value=${cornerActions.value.size}
+                        @change=${(event: CustomEventWithValue<SettingsIconStyle>) => this.selectCornerIconSize(event.detail.value)}
+                    ></cc-radio-button-group>
+                </div>
+            </cc-settings-section>
+        `;
+    }
+
+    private renderCornerActionsSection() {
+        return html`
+            <cc-settings-section>
+                <span slot="label">Corner Actions</span>
+                <span slot="description">Configure corner actions for quick access to your favorite actions.</span>
+                ${this.renderCornerRadioButtons()}
             </cc-settings-section>
         `;
     }
@@ -229,12 +184,77 @@ export class UISettingsPanel extends LitElement {
         hoverHintMode.value = mode;
     }
 
-    private async selectSettingsIconStyle(style: SettingsIconStyleType) {
-        this.selectedSettingsIconStyle = style;
+    private getCornerIconPath(iconType: CornerActionType): string | null {
+        const iconMap: Record<CornerActionType, string | null> = {
+            [CornerActionType.Off]: mdiCancel,
+            [CornerActionType.Settings]: mdiCog,
+            [CornerActionType.Home]: mdiGithub,
+            [CornerActionType.SwitchPanel]: mdiSwapHorizontal,
+            [CornerActionType.Export]: mdiExport,
+        };
+        return iconMap[iconType];
+    }
+
+    private renderCornerRadioButtons() {
+        const items: RadioOption[] = [
+            this.createCornerRadioOption(CornerPosition.TopLeft),
+            this.createCornerRadioOption(CornerPosition.TopRight),
+            this.createCornerRadioOption(CornerPosition.BottomLeft),
+            this.createCornerRadioOption(CornerPosition.BottomRight),
+        ];
+
+        return html`
+            <cc-radio-button-group
+                class="corner-action-slot"
+                .options=${items}
+                 @change=${(event: CustomEventWithValue<CornerPosition>) => this.openCornerIconSelector(event.detail.value)}>
+            </cc-radio-button-group>
+        `;
+    }
+
+    private createCornerRadioOption(position: CornerPosition): RadioOption {
+        const iconType = getCornerActionFromPosition(cornerActions.value, position);
+
+        const indicator = document.createElement('div');
+        indicator.classList.add('corner-icon-indicator');
+        indicator.setAttribute('position', position);
+        indicator.style.position = 'absolute';
+        indicator.style.borderRadius = '100%';
+        indicator.style.backgroundColor = 'var(--accent)';
+        indicator.style.width = '0.375rem';
+        indicator.style.height = '0.375rem';
+
+        const margin = '0.375rem';
+
+        const positionSetters = new Map<CornerPosition, () => void>([
+            [CornerPosition.TopLeft, () => { indicator.style.top = indicator.style.left = margin; }],
+            [CornerPosition.TopRight, () => { indicator.style.top = indicator.style.right = margin; }],
+            [CornerPosition.BottomLeft, () => { indicator.style.bottom = indicator.style.left = margin; }],
+            [CornerPosition.BottomRight, () => { indicator.style.bottom = indicator.style.right = margin; }]
+        ]);
+
+        positionSetters.get(position)?.();
+
+        return {
+            label: indicator,
+            value: position,
+            iconPath:  this.getCornerIconPath(iconType) ?? null
+        };
+    }
+
+    private openCornerIconSelector(position: CornerPosition) {
+        selectedCornerPosition.value = position;
+        activeOverlay.value = OverlayType.selectCornerAction;
+    }
+
+    private async selectCornerIconSize(size: SettingsIconStyle) {
+        const newConfig = {...cornerActions.value, size};
+        cornerActions.value = newConfig;
+
         const state = await this.userStateStore.getOrCreate();
-        state.settingsIconStyle = style;
+        state.cornerActions = newConfig;
+
         await this.userStateStore.set(state);
-        settingsIconStyle.value = style;
     }
 }
 

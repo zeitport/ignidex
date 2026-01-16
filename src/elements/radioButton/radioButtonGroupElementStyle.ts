@@ -1,6 +1,6 @@
 import {css} from 'lit';
 
-export const radioButtonElementStyle = css`
+export const radioButtonGroupElementStyle = css`
     :host {
         display: inline-block;
     }
@@ -12,7 +12,7 @@ export const radioButtonElementStyle = css`
 
     .radio-option {
         position: relative;
-        min-width: 3rem;
+        min-width: 2rem;
         height: 2rem;
         display: flex;
         align-items: center;
@@ -39,6 +39,16 @@ export const radioButtonElementStyle = css`
 
     .radio-option:hover::before {
         inset: -0.25rem;
+    }
+
+    .radio-option:hover .radio-icon{
+        fill: var(--icon-color-hover);
+    }
+
+    .radio-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: var(--icon-color);
     }
 
     .radio-option.selected::before {

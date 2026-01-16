@@ -1,5 +1,8 @@
+import {createDefaultCornerActions} from '#models/idb/createDefaultCornerActions.ts';
+import {type CornerActions} from '#models/idb/cornerActions.ts';
+import {CornerActionType} from '#models/idb/cornerActionType.ts';
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
-import {SettingsIconStyle, type SettingsIconStyleType} from '#models/idb/settingsIconStyle.ts';
+import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
 
 export class UserStateEntry {
     id: string;
@@ -8,7 +11,8 @@ export class UserStateEntry {
     baseFontSize: number = 16;
     useUppercase: boolean = true;
     hoverHintMode: HoverHintModeType = HoverHintMode.Dark;
-    settingsIconStyle: SettingsIconStyleType = SettingsIconStyle.Large;
+    settingsIconStyle: SettingsIconStyle = SettingsIconStyle.Large;
+    cornerActions: CornerActions = createDefaultCornerActions();
 
     constructor(init: Partial<UserStateEntry> = {}) {
         this.id = init.id ?? 'default';
@@ -29,5 +33,26 @@ export class UserStateEntry {
         if (!Object.values(SettingsIconStyle).includes(this.settingsIconStyle)) {
             this.settingsIconStyle = SettingsIconStyle.Large;
         }
+
+        this.cornerActions = this.initCornerIcons(init.cornerActions);
+    }
+
+    private initCornerIcons(actions?: CornerActions): CornerActions {
+        const defaultConfig = createDefaultCornerActions();
+
+        if (!actions) {
+            return defaultConfig;
+        }
+
+        const validIconTypes = Object.values(CornerActionType);
+        const validSizes = Object.values(SettingsIconStyle);
+
+        return {
+            size: validSizes.includes(actions.size) ? actions.size : defaultConfig.size,
+            topLeft: validIconTypes.includes(actions.topLeft) ? actions.topLeft : defaultConfig.topLeft,
+            topRight: validIconTypes.includes(actions.topRight) ? actions.topRight : defaultConfig.topRight,
+            bottomLeft: validIconTypes.includes(actions.bottomLeft) ? actions.bottomLeft : defaultConfig.bottomLeft,
+            bottomRight: validIconTypes.includes(actions.bottomRight) ? actions.bottomRight : defaultConfig.bottomRight,
+        };
     }
 }

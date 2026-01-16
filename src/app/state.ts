@@ -1,5 +1,8 @@
+import {type CornerActions} from '#models/idb/cornerActions.ts';
+import {type CornerPosition} from '#models/idb/cornerPosition.ts';
+import {createDefaultCornerActions} from '#models/idb/createDefaultCornerActions.ts';
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
-import {SettingsIconStyle, type SettingsIconStyleType} from '#models/idb/settingsIconStyle.ts';
+import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
 import {ObservableProperty} from '#utils/observableProperty.ts';
 import {HoverHint} from '#core/hoverHint.ts';
 import type {Card} from '../models/internal/card.ts';
@@ -28,13 +31,15 @@ export const selectedCard = new ObservableProperty<Card | null>(null);
 export const selectedSection = new ObservableProperty<CardSection | null>(null);
 export const selectedGroup = new ObservableProperty<CardGroup | null>(null);
 export const selectedPanelEntry = new ObservableProperty<StartPanelEntry | null>(null);
+export const selectedCornerPosition = new ObservableProperty<CornerPosition | null>(null);
 
 export const pastedUrl = new ObservableProperty<string | null>(null);
 export const messageOverlayContent = new ObservableProperty<string | null>(null);
 export const isDraggingFile = new ObservableProperty<boolean>(false);
 export const panelOrderVersion = new ObservableProperty<number>(0);
 export const hoverHintMode = new ObservableProperty<HoverHintModeType>(HoverHintMode.Dark);
-export const settingsIconStyle = new ObservableProperty<SettingsIconStyleType>(SettingsIconStyle.Large);
+export const settingsIconStyle = new ObservableProperty<SettingsIconStyle>(SettingsIconStyle.Large);
+export const cornerActions = new ObservableProperty<CornerActions>(createDefaultCornerActions());
 
 export interface IconPreviewState {
     dataUri: string;

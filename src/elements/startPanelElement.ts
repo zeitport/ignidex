@@ -73,7 +73,10 @@ export class StartPanelElement extends LitElement {
 
             <cc-hover-hint></cc-hover-hint>
 
-            <cc-settings-icon></cc-settings-icon>
+            <cc-corner-action position="topLeft"></cc-corner-action>
+            <cc-corner-action position="topRight"></cc-corner-action>
+            <cc-corner-action position="bottomLeft"></cc-corner-action>
+            <cc-corner-action position="bottomRight"></cc-corner-action>
         `;
     }
 
@@ -156,6 +159,10 @@ export class StartPanelElement extends LitElement {
 
             if (this.activeOverlay.value === OverlayType.message) {
                 return html`<cc-message-overlay isOpen></cc-message-overlay>`;
+            }
+
+            if (this.activeOverlay.value === OverlayType.selectCornerAction) {
+                return html`<cc-select-corner-action-overlay isOpen></cc-select-corner-action-overlay>`;
             }
         }
 

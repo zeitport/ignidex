@@ -12,6 +12,8 @@ export class UserStateStore {
 
     async getOrCreate(): Promise<UserStateEntry> {
         const entry = await this.connector.get<UserStateEntry>(this.userStateStoreName, this.defaultId);
+        console.log('Fetched user state entry', entry);
+
         return new UserStateEntry(entry ?? {id: this.defaultId});
     }
 }

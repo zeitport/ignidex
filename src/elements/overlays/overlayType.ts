@@ -13,7 +13,8 @@ export const OverlayType = {
     confirmation: 'confirmation',
     selectSection: 'selectSection',
     selectGroup: 'selectGroup',
-    message: 'message'
+    message: 'message',
+    selectCornerAction: 'selectCornerAction'
 } as const;
 
 export type OverlayType = typeof OverlayType[keyof typeof OverlayType];

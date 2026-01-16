@@ -15,7 +15,7 @@ As a user, I want to discover the settings menu in the bottom left corner of the
 - Add a setting in Settings → UI to enable/disable the settings icon.
 - Store it as `settingsIconStyle` (off, small, large) large = default. 
 - small = 1.25rem, large = 2rem
-- The settings ui panel shall use the cc-radio-button element for the options.
+- The settings ui panel shall use the cc-radio-button-group element for the options.
 - Document a brief summary in [AI Code Changes] (no sub headlines)
 
 ## Clarifications
@@ -27,4 +27,4 @@ As a user, I want to discover the settings menu in the bottom left corner of the
 
 ## AI Code Changes
 
-Added a fixed-position settings icon in the bottom left corner that opens the settings overlay on click. Created `settingsIconStyle.ts` type definition with options (off, small, large). Added `settingsIconStyle` property to `UserStateEntry` with validation and default value of 'large'. Created `cc-settings-icon` component using `mdiCog` icon with hover hint, opacity transition, and rotation effect on hover. Added settings icon to `cc-start-panel` render output. Added UI settings section with `cc-radio-button` for controlling the settings icon style (Off/Small/Large). Added i18n token for the tooltip. Updated `main.ts` to initialize settingsIconStyle from stored user state on app startup.
+Added a fixed-position settings icon in the bottom left corner that opens the settings overlay on click. Created `settingsIconStyle.ts` type definition with options (off, small, large). Added `settingsIconStyle` property to `UserStateEntry` with validation and default value of 'large'. Created `cc-settings-icon` component using `mdiCog` icon with hover hint, opacity transition, and rotation effect on hover. Added settings icon to `cc-start-panel` render output. Added UI settings section with `cc-radio-button-group` for controlling the settings icon style (Off/Small/Large). Added i18n token for the tooltip. Updated `main.ts` to initialize settingsIconStyle from stored user state on app startup.

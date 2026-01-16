@@ -5,7 +5,10 @@ import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
-import {activeStartPanel, activeRemoteUrl, activeOverlay, messageOverlayContent, hoverHintMode, settingsIconStyle} from '#state';
+import {
+    activeStartPanel, activeRemoteUrl, activeOverlay, messageOverlayContent, hoverHintMode, settingsIconStyle,
+    cornerActions
+} from '#state';
 import {OverlayType} from './elements/overlays/overlayType.ts';
 import {inject} from '#inject';
 import {registerKeyboardInputObserver} from './keyboard/keyboardInputObserver.ts';
@@ -29,15 +32,19 @@ async function main() {
     const startPanelsStore = inject(StartPanelsStore);
 
     const state = await userStateStore.getOrCreate();
+
     if (state.accentColor) {
         document.documentElement.style.setProperty('--accent', state.accentColor);
     }
+
     if (state.baseFontSize) {
         document.documentElement.style.setProperty('--base-font-size', `${state.baseFontSize}px`);
     }
+
     document.documentElement.style.setProperty('--text-transform', state.useUppercase ? 'uppercase' : 'none');
     hoverHintMode.value = state.hoverHintMode;
     settingsIconStyle.value = state.settingsIconStyle;
+    cornerActions.value = state.cornerActions;
 
     activeStartPanel.observe(async (panel) => {
         if (panel) {
