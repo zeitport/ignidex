@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel} from '#state';
+import {activeStartPanel} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
@@ -8,6 +8,7 @@ import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import type {IconPreviewChangeEvent} from '../iconPreviewElement.ts';
 import {editPanelOverlayStyle} from './editPanelOverlayStyle.ts';
 
@@ -46,14 +47,6 @@ export class EditPanelOverlay extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         this.resetFields();
-    }
-
-    protected updated(changedProperties: Map<PropertyKey, unknown>): void {
-        super.updated(changedProperties);
-
-        if (changedProperties.has('isOpen')) {
-            this.resetFields();
-        }
     }
 
     private async resetFields(): Promise<void> {
@@ -184,17 +177,6 @@ export class EditPanelOverlay extends LitElement {
         this.iconUrl = event.detail.source;
     }
 
-    private handleClose = () => {
-        this.name = '';
-        this.anchor = '';
-        this.description = '';
-        this.nameError = '';
-        this.iconDataUri = '';
-        this.iconUrl = '';
-        this.isAnchorManuallyEdited = false;
-        activeOverlay.value = null;
-    }
-
     private slugify(text: string): string {
         return text
             .toLowerCase()
@@ -209,6 +191,8 @@ export class EditPanelOverlay extends LitElement {
             this.nameError = 'Name must not be empty.';
             return;
         }
+
+        inject(CloseOverlayAction).run();
 
         const currentPanel = this.watchActiveStartPanel.value;
         const isCreating = this.isCreateMode || !currentPanel;
@@ -260,8 +244,6 @@ export class EditPanelOverlay extends LitElement {
 
         await this.startPanelsStore.set(newEntry);
         activeStartPanel.value = newStartPanel;
-
-        this.handleClose();
     }
 
     private async updatePanel(currentPanel: StartPanel) {
@@ -302,8 +284,6 @@ export class EditPanelOverlay extends LitElement {
 
         await this.startPanelsStore.set(updatedEntry);
         activeStartPanel.value = updatedStartPanel;
-
-        this.handleClose();
     }
 }
 

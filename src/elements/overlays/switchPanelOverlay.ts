@@ -9,9 +9,6 @@ import {IconResolver} from '#core/iconResolver.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {type ListItem} from '../listElement.ts';
-import '../overlayElement.ts';
-import '../dialogButton.ts';
-import '../listElement.ts';
 import {switchPanelOverlayStyle} from './switchPanelOverlayStyle.ts';
 import {switchPanelContextMenuItems} from '../../app/contextMenus/switchPanelContextMenuItems.ts';
 
@@ -39,12 +36,6 @@ export class SwitchPanelOverlay extends LitElement {
     disconnectedCallback() {
         super.disconnectedCallback();
         this.panelOrderSubscription?.unsubscribe();
-    }
-
-    updated(changedProperties: Map<string, unknown>): void {
-        if (changedProperties.has('isOpen')) {
-            void this.loadPanels();
-        }
     }
 
     private async loadPanels() {

@@ -1,5 +1,5 @@
 import {StartPanel} from '#models/internal/startPanel.ts';
-import {selectedGroup, activeAction, activeOverlay, activeStartPanel, activeSubOverlay} from '#state';
+import {selectedGroup, activeAction, activeStartPanel, activeSubOverlay} from '#state';
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';

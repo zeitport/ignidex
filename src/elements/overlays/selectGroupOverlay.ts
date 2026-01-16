@@ -1,6 +1,6 @@
 import type {CardGroup} from '#models/internal/cardGroup.ts';
 import {html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {activeOverlay, selectedSection, selectedGroup, selectedCard, pastedUrl} from '#state';
 import {ListItem} from '#elements';
 import '../overlayElement.ts';
@@ -12,9 +12,6 @@ import {OverlayType} from './overlayType.ts';
 @customElement('cc-select-group-overlay')
 export class SelectGroupOverlay extends LitElement {
     static styles = switchPanelOverlayStyle;
-
-    @property({type: Boolean})
-    isOpen = false;
 
     private selectedSection = selectedSection.watch(this);
     private pastedUrl = pastedUrl.watch(this);

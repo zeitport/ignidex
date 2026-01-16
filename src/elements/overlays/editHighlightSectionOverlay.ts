@@ -7,6 +7,7 @@ import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {CardSectionType} from '#models/internal/cardSectionType.ts';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {panelOverlayStyle} from './panelOverlayStyle.ts';
 
 @customElement('cc-edit-highlight-section-overlay')
@@ -23,12 +24,9 @@ export class EditHighlightSectionOverlay extends LitElement {
 
     private watchSelectedSection = selectedSection.watch(this);
 
-    protected updated(changedProperties: Map<PropertyKey, unknown>): void {
-        super.updated(changedProperties);
-
-        if (changedProperties.has('isOpen')) {
-            this.resetFields();
-        }
+    connectedCallback() {
+        super.connectedCallback();
+        this.resetFields();
     }
 
     private resetFields() {
@@ -76,9 +74,12 @@ export class EditHighlightSectionOverlay extends LitElement {
     }
 
     private handleClose = () => {
-        this.name = '';
-        this.nameError = '';
         selectedSection.value = null;
+    }
+
+    private close() {
+        selectedSection.value = null;
+        inject(CloseOverlayAction).run();
     }
 
     private handleSave = async() => {
@@ -89,7 +90,7 @@ export class EditHighlightSectionOverlay extends LitElement {
 
         const currentPanel = activeStartPanel.value;
         if (!currentPanel) {
-            this.handleClose();
+            this.close();
             return;
         }
 
@@ -128,7 +129,7 @@ export class EditHighlightSectionOverlay extends LitElement {
         await this.startPanelsStore.set(updatedEntry);
         activeStartPanel.value = updatedStartPanel;
 
-        this.handleClose();
+        this.close();
     }
 }
 
