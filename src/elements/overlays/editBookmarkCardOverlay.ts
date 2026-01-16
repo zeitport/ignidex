@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
-import {activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl} from '#state';
+import {activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl, activeIconPreview} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
@@ -12,7 +12,6 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {Card} from '#models/internal/card.ts';
 import {createId} from '#utils/createId.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
-import type {IconPreviewChangeEvent} from '../iconPreviewElement.ts';
 import {editBookmarkCardOverlayStyle} from './editBookmarkCardOverlayStyle.ts';
 
 @customElement('cc-edit-bookmark-card-overlay')
@@ -33,15 +32,6 @@ export class EditBookmarkCardOverlay extends LitElement {
 
     @state()
     private urlError = '';
-
-    @state()
-    private iconDataUri = '';
-
-    @state()
-    private iconUrl = '';
-
-    @state()
-    private iconAssetId: string | undefined = undefined;
 
     private startPanelsStore = inject(StartPanelsStore);
     private imageAssetsStore = inject(ImageAssetsStore);
@@ -68,9 +58,6 @@ export class EditBookmarkCardOverlay extends LitElement {
             this.url = this.pastedUrl.value ?? '';
             this.name = this.extractDomain(this.url);
             this.description = '';
-            this.iconDataUri = '';
-            this.iconUrl = '';
-            this.iconAssetId = undefined;
         }
         this.nameError = '';
         this.urlError = '';
@@ -78,21 +65,17 @@ export class EditBookmarkCardOverlay extends LitElement {
 
     private async loadExistingIcon(iconId: string | null) {
         if (!iconId) {
-            this.iconDataUri = '';
-            this.iconUrl = '';
-            this.iconAssetId = undefined;
+            activeIconPreview.value = null;
             return;
         }
 
         const entry = await this.imageAssetsStore.get(iconId);
-        if (entry?.dataUri) {
-            this.iconDataUri = entry.dataUri;
-            this.iconUrl = entry.source ?? '';
-            this.iconAssetId = iconId;
-        } else {
-            this.iconDataUri = '';
-            this.iconUrl = '';
-            this.iconAssetId = undefined;
+        if (entry) {
+            activeIconPreview.value = {
+                dataUri: entry.dataUri ?? null,
+                source: entry.source ?? null,
+                assetId: iconId,
+            }
         }
     }
 
@@ -120,12 +103,7 @@ export class EditBookmarkCardOverlay extends LitElement {
                 <div class="form-layout">
                     <div class="icon-column">
                         <label>Icon</label>
-                        <cc-icon-preview
-                            .dataUri=${this.iconDataUri}
-                            .source=${this.iconUrl}
-                            .active=${true}
-                            @icon-change=${this.handleIconChange}
-                        ></cc-icon-preview>
+                        <cc-icon-preview></cc-icon-preview>
                     </div>
 
                     <div class="details-column">
@@ -194,12 +172,6 @@ export class EditBookmarkCardOverlay extends LitElement {
         this.description = (event.target as HTMLInputElement).value;
     }
 
-    private handleIconChange = (event: CustomEvent<IconPreviewChangeEvent>) => {
-        this.iconDataUri = event.detail.dataUri;
-        this.iconUrl = event.detail.source;
-        this.iconAssetId = event.detail.assetId;
-    }
-
     private handleClose = () => {
         selectedCard.value = null;
         selectedSection.value = null;
@@ -237,19 +209,14 @@ export class EditBookmarkCardOverlay extends LitElement {
             return;
         }
 
-        // Determine icon ID
-        let iconId: string | null = null;
-        if (this.iconAssetId) {
-            // Use existing asset ID (shared icon)
-            iconId = this.iconAssetId;
-        } else if (this.iconDataUri) {
-            // Create or update icon asset
-            iconId = cardToEdit?.icon ?? createId();
+        const activeIcon = activeIconPreview.value;
+
+        if (activeIcon) {
             await this.imageAssetsStore.set({
-                id: iconId,
+                id: activeIcon.assetId ?? createId(),
                 type: ImageAssetType.icon,
-                source: this.iconUrl || null,
-                dataUri: this.iconDataUri
+                source: activeIcon.source ?? null,
+                dataUri: activeIcon.dataUri ?? null
             });
         }
 
@@ -277,7 +244,7 @@ export class EditBookmarkCardOverlay extends LitElement {
                                 name: this.name.trim(),
                                 url: this.url.trim(),
                                 description: this.description.trim(),
-                                icon: iconId
+                                icon: activeIconPreview.value?.assetId ?? null,
                             })]
                         });
                     });
@@ -288,7 +255,7 @@ export class EditBookmarkCardOverlay extends LitElement {
                             name: this.name.trim(),
                             url: this.url.trim(),
                             description: this.description.trim(),
-                            icon: iconId
+                            icon: activeIconPreview.value?.assetId ?? null,
                         })]
                     })];
                 }
@@ -312,7 +279,7 @@ export class EditBookmarkCardOverlay extends LitElement {
                                         name: this.name.trim(),
                                         url: this.url.trim(),
                                         description: this.description.trim(),
-                                        icon: iconId
+                                        icon: activeIconPreview.value?.assetId ?? null,
                                     });
                                 }
                                 return card;

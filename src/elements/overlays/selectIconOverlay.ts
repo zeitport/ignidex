@@ -1,14 +1,12 @@
 import {inject} from '#inject';
-import {html, LitElement, css} from 'lit';
-import {customElement} from 'lit/decorators.js';
-import {activeIconPreview} from '#state';
-import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
 import type {ImageAssetEntry} from '#models/idb/imageAssetEntry.ts';
+import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
+import {activeIconPreview} from '#state';
+import {createId} from '#utils/createId.ts';
+import {css, html, LitElement} from 'lit';
+import {customElement} from 'lit/decorators.js';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import type {ImageAssetSelectEvent} from '../imageAssetViewer/imageAssetSelectEvent.ts';
-import '../overlayElement.ts';
-import '../dialogButton.ts';
-import '../imageAssetViewer/imageAssetViewerElement.ts';
 
 @customElement('cc-select-icon-overlay')
 export class SelectIconOverlay extends LitElement {
@@ -40,10 +38,10 @@ export class SelectIconOverlay extends LitElement {
         const asset: ImageAssetEntry = event.detail.asset;
 
         activeIconPreview.value = {
-            dataUri: asset.dataUri ?? '',
-            source: asset.source ?? '',
-            assetId: asset.id
-        };
+            dataUri: asset.dataUri,
+            source: asset.source ?? null,
+            assetId: asset.id ?? createId()
+        }
 
         inject(CloseOverlayAction).run();
     }

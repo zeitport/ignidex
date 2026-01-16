@@ -4,7 +4,7 @@ import {i18n} from '#i18n';
 
 export class DeleteIconAction implements ActionInterface {
     run() {
-        activeIconPreview.value = {dataUri: '', source: ''};
+        activeIconPreview.value = null;
     }
 
     isDisabled(): boolean {

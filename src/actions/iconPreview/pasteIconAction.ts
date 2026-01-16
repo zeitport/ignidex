@@ -1,3 +1,4 @@
+import {createId} from '#utils/createId.ts';
 import type {ActionInterface} from '../actionInterface.ts';
 import {fetchIconFromUrl} from '#utils/fetchIconFromUrl.ts';
 import {svgToDataUri} from '#utils/svgToDataUri.ts';
@@ -62,6 +63,10 @@ export class PasteIconAction implements ActionInterface {
     }
 
     private applyChange(dataUri: string, source: string) {
-        activeIconPreview.value = {dataUri, source};
+        activeIconPreview.value = {
+            assetId: createId(),
+            dataUri,
+            source
+        };
     }
 }

@@ -1,5 +1,5 @@
 import type {ActiveContextMenu} from '#app/activeContextMenu.ts';
-import type {IconPreviewState} from '#app/iconPreviewState.ts';
+import type {ActiveIconPreview} from '#app/activeIconPreview.ts';
 import type {ImageAssetSelection} from '#app/imageAssetSelection.ts';
 import {HoverHint} from '#core/hoverHint.ts';
 import {type CornerActions} from '#models/idb/cornerActions.ts';
@@ -23,7 +23,7 @@ export const activeSubOverlay = new ObservableProperty<OverlayType | null>(null)
 export const activeHoverHint = new ObservableProperty<HoverHint | null>(null);
 export const activeAction = new ObservableProperty<ActionInterface | null>(null);
 export const activeContextMenu = new ObservableProperty<ActiveContextMenu | null>(null);
-export const activeIconPreview = new ObservableProperty<IconPreviewState | null>(null);
+export const activeIconPreview = new ObservableProperty<ActiveIconPreview | null>(null);
 
 export const selectedCard = new ObservableProperty<Card | null>(null);
 export const selectedSection = new ObservableProperty<CardSection | null>(null);

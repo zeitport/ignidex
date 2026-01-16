@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {activeStartPanel} from '#state';
+import {activeIconPreview, activeStartPanel} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
@@ -9,7 +9,6 @@ import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
-import type {IconPreviewChangeEvent} from '../iconPreviewElement.ts';
 import {editPanelOverlayStyle} from './editPanelOverlayStyle.ts';
 
 @customElement('cc-edit-panel-overlay')
@@ -30,12 +29,6 @@ export class EditPanelOverlay extends LitElement {
 
     @state()
     private nameError = '';
-
-    @state()
-    private iconDataUri = '';
-
-    @state()
-    private iconUrl = '';
 
     private isAnchorManuallyEdited = false;
 
@@ -61,8 +54,6 @@ export class EditPanelOverlay extends LitElement {
             this.name = '';
             this.anchor = '';
             this.description = '';
-            this.iconDataUri = '';
-            this.iconUrl = '';
         }
         this.nameError = '';
         this.isAnchorManuallyEdited = false;
@@ -70,19 +61,15 @@ export class EditPanelOverlay extends LitElement {
 
     private async loadExistingIcon(iconId: string | null) {
         if (!iconId) {
-            this.iconDataUri = '';
-            this.iconUrl = '';
             return;
         }
 
         const entry = await this.imageAssetsStore.get(iconId);
-        if (entry?.dataUri) {
-            this.iconDataUri = entry.dataUri;
-            this.iconUrl = entry.source ?? '';
-        } else {
-            this.iconDataUri = '';
-            this.iconUrl = '';
-        }
+        activeIconPreview.value = {
+            assetId: iconId,
+            dataUri: entry?.dataUri ?? null,
+            source: entry?.source ?? '',
+        };
     }
 
     render() {
@@ -95,12 +82,7 @@ export class EditPanelOverlay extends LitElement {
                 <div class="form-layout">
                     <div class="icon-column">
                         <label>Icon</label>
-                        <cc-icon-preview
-                            .dataUri=${this.iconDataUri}
-                            .source=${this.iconUrl}
-                            .active=${true}
-                            @icon-change=${this.handleIconChange}
-                        ></cc-icon-preview>
+                        <cc-icon-preview></cc-icon-preview>
                     </div>
 
                     <div class="details-column">
@@ -172,11 +154,6 @@ export class EditPanelOverlay extends LitElement {
         this.isAnchorManuallyEdited = true;
     }
 
-    private handleIconChange = (event: CustomEvent<IconPreviewChangeEvent>) => {
-        this.iconDataUri = event.detail.dataUri;
-        this.iconUrl = event.detail.source;
-    }
-
     private slugify(text: string): string {
         return text
             .toLowerCase()
@@ -213,13 +190,13 @@ export class EditPanelOverlay extends LitElement {
             anchor = id;
         }
 
-        let iconId: string | null = null;
-        if (this.iconDataUri) {
-            iconId = createId();
+        const iconPreview = activeIconPreview.value;
+
+        if (iconPreview && iconPreview.assetId) {
             await this.imageAssetsStore.set({
-                id: iconId,
-                source: this.iconUrl || null,
-                dataUri: this.iconDataUri
+                id: iconPreview.assetId,
+                source: iconPreview.source ?? null,
+                dataUri: iconPreview.dataUri ?? null,
             });
         }
 
@@ -228,7 +205,7 @@ export class EditPanelOverlay extends LitElement {
             anchor: anchor,
             header: new StartPanelHeader({
                 title: this.name.trim(),
-                icon: iconId,
+                icon: iconPreview?.assetId ?? null,
                 description: this.description.trim() || null
             }),
             sections: []
@@ -256,13 +233,13 @@ export class EditPanelOverlay extends LitElement {
             }
         }
 
-        let iconId: string | null = null;
-        if (this.iconDataUri) {
-            iconId = currentPanel.header?.icon ?? createId();
+        const iconPreview = activeIconPreview.value;
+
+        if (iconPreview && iconPreview.assetId) {
             await this.imageAssetsStore.set({
-                id: iconId,
-                source: this.iconUrl || null,
-                dataUri: this.iconDataUri
+                id: iconPreview.assetId,
+                source: iconPreview.source ?? null,
+                dataUri: iconPreview.dataUri ?? null,
             });
         }
 
@@ -271,7 +248,7 @@ export class EditPanelOverlay extends LitElement {
             anchor: updatedAnchor,
             header: new StartPanelHeader({
                 title: this.name.trim(),
-                icon: iconId,
+                icon: iconPreview?.assetId ?? null,
                 description: this.description.trim() || null
             })
         });
