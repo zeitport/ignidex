@@ -26,10 +26,22 @@ export const highlightSectionStyles = css`
 
     .bookmarks {
         display: grid;
-        grid-template-columns:repeat(4, minmax(0, 1fr));
-        gap: 18px 56px;
-        padding-top: 6px;
-        margin-bottom: 30px;
+        grid-template-columns:repeat(4, minmax(10rem, 1fr));
+        gap: 1rem 4rem;
+        padding-top: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+        .bookmarks {
+            gap: 1rem 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .bookmarks {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 
     .bookmark {
@@ -49,6 +61,12 @@ export const highlightSectionStyles = css`
         opacity: 0;
     }
 
+    .bookmark-card {
+        position: relative;
+        width: 100%;
+        margin: 0;
+    }
+
     .bookmark:hover {
         --icon-color: var(--icon-color-hover);
 
@@ -60,23 +78,12 @@ export const highlightSectionStyles = css`
         }
     }
 
-    cc-card-icon,
-    .meta {
+    cc-card-icon {
         position: relative;
     }
 
-    .app-icon {
-        width: 26px;
-        height: 26px;
-        display: grid;
-        place-items: center;
-        color: #cdd4db;
-        opacity: .95;
-        margin-top: 2px;
-        font-size: 18px;
-    }
-
-    .meta{
+    .meta {
+        position: relative;
         line-height:1.15;
     }
 
@@ -86,5 +93,12 @@ export const highlightSectionStyles = css`
         color: var(--accent);
         text-transform: var(--text-transform);
         text-decoration: none;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .name {
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 `;

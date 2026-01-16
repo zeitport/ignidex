@@ -7,10 +7,16 @@ export const startPanelElementStyle = css`
     }
 
     .wrap {
-        max-width: 1220px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 44px 56px 64px;
+        padding: 4rem;
         position: relative;
+    }
+
+    @media (max-width: 1024px) {
+        .wrap {
+            padding: 2rem;
+        }
     }
 
     .toprow {

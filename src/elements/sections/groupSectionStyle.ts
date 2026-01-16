@@ -7,6 +7,18 @@ export const groupSectionStyle = css`
         gap: 1.5rem 4rem;
     }
 
+    @media (max-width: 1024px) {
+        .grid {
+            gap: 1rem 3rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
     .section-title {
         margin: 1.5rem 0 1rem;
         font-size: 0.8rem;

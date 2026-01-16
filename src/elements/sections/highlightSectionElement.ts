@@ -28,20 +28,26 @@ export class HighlightSectionElement extends LitElement {
                 <div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>${this.section.name}</div>
 
                 <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>
-                    ${allCards.map(card => html`
-                        <div class="bookmark"
-                             ${hoverHint(i18n.token.hints.bookmark)}
-                             @click=${(event: MouseEvent) => this.handleAppClick(event, card)}
-                             @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
-                             >
-                            <div class="bookmark-background"></div>
-                            <cc-card-icon .card="${card}" style="--icon-size: 1.75rem"></cc-card-icon>
-                            <div class="meta">
-                                <div class="name">${card.name ?? ''}</div>
-                                ${when(card.description, description => html`<div class="url">${description}</div>`)}
-                            </div>
-                        </div>
-                    `)}
+                    ${allCards.map(card => this.renderCard(card))}
+                </div>
+            </div>
+        `;
+    }
+
+    private renderCard(card: Card) {
+        return html`
+            <div class="bookmark-card">
+                <div class="bookmark"
+                     ${hoverHint(i18n.token.hints.bookmark)}
+                     @click=${(event: MouseEvent) => this.handleAppClick(event, card)}
+                     @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
+                     >
+                    <div class="bookmark-background"></div>
+                    <cc-card-icon .card="${card}" style="--icon-size: 1.75rem"></cc-card-icon>
+                    <div class="meta">
+                        <div class="name">${card.name ?? ''}</div>
+                        ${when(card.description, description => html`<div class="url">${description}</div>`)}
+                    </div>
                 </div>
             </div>
         `;
