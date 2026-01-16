@@ -12,8 +12,10 @@ export class ObservableProperty<T> {
     }
 
     set value(value: T) {
-        this.propertyValue = value;
-        this.update();
+        if (this.propertyValue !== value) {
+            this.propertyValue = value;
+            this.update();
+        }
     }
 
     get value() {

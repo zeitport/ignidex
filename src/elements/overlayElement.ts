@@ -1,7 +1,8 @@
-import {activeOverlay, activeSubOverlay} from '#state';
+import {inject} from '#inject';
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
+import {CloseOverlayAction} from '../actions/closeOverlayAction.ts';
 import {overlayElementStyle} from './overlayElementStyle.ts';
 
 @customElement('cc-overlay')
@@ -14,13 +15,6 @@ export class OverlayElement extends LitElement {
     @state()
     private hasHeader = false;
 
-    private handleBackdropClick = (event: MouseEvent) => {
-        if (this.isCancelEnabled && event.target === event.currentTarget) {
-            // #TODO: Decide whether to close the overlay or not.
-            // this.close();
-        }
-    }
-
     private handleHeaderSlotChange = (event: Event) => {
         const slot = event.target as HTMLSlotElement;
         this.hasHeader = slot.assignedNodes({flatten: true}).length > 0;
@@ -28,7 +22,6 @@ export class OverlayElement extends LitElement {
 
     render() {
         return html`
-            <div class="overlay-backdrop" @click=${this.handleBackdropClick}></div>
             <div class="overlay-container">
                 <div class="overlay-header" ?hidden=${!this.hasHeader}>
                     <slot name="header" @slotchange=${this.handleHeaderSlotChange}></slot>
@@ -59,12 +52,7 @@ export class OverlayElement extends LitElement {
     }
 
     private close() {
-        if (activeSubOverlay.value !== null) {
-            activeSubOverlay.value = null;
-        } else {
-            activeOverlay.value = null;
-        }
-
+        inject(CloseOverlayAction).run();
         this.dispatchEvent(new CustomEvent('close'));
     }
 }
