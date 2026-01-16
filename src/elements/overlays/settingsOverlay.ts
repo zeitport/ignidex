@@ -1,27 +1,25 @@
 import {html, LitElement, css} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay} from '#state';
+import {customElement, state} from 'lit/decorators.js';
 import {ListItem} from '../listElement.ts';
-import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard} from '@mdi/js';
+import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline} from '@mdi/js';
 import '../overlayElement.ts';
 import '../listElement.ts';
 import '../settings/uiSettingsPanel.ts';
 import '../settings/storageSettingsPanel.ts';
 import '../settings/aboutSettingsPanel.ts';
 import '../settings/keyboardShortcutsSettingsPanel.ts';
+import '../settings/imageGallerySettingsPanel.ts';
 import '../dialogButton.ts';
 
 @customElement('cc-settings-overlay')
 export class SettingsOverlay extends LitElement {
-    @property({type: Boolean})
-    isOpen = false;
-
     @state()
     private activePanelId: string = 'ui';
 
     private panels: ListItem[] = [
         {id: 'ui', label: 'UI', icon: mdiPalette},
         {id: 'keyboard', label: 'Keyboard', icon: mdiKeyboard},
+        {id: 'gallery', label: 'Image Gallery', icon: mdiImageMultipleOutline},
         {id: 'storage', label: 'Storage', icon: mdiDatabase},
         {id: 'about', label: 'About', icon: mdiInformationOutline},
     ];
@@ -45,7 +43,7 @@ export class SettingsOverlay extends LitElement {
 
     render() {
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
+            <cc-overlay>
                 <div class="settings-container">
                     <div class="settings-sidebar">
                         <cc-list
@@ -58,8 +56,6 @@ export class SettingsOverlay extends LitElement {
                         ${this.renderActivePanel()}
                     </div>
                 </div>
-
-                <cc-dialog-button slot="footer" @click=${this.handleClose}>Close</cc-dialog-button>
             </cc-overlay>
         `;
     }
@@ -70,6 +66,8 @@ export class SettingsOverlay extends LitElement {
                 return html`<cc-ui-settings-panel></cc-ui-settings-panel>`;
             case 'keyboard':
                 return html`<cc-keyboard-shortcuts-settings-panel></cc-keyboard-shortcuts-settings-panel>`;
+            case 'gallery':
+                return html`<cc-image-gallery-settings-panel></cc-image-gallery-settings-panel>`;
             case 'storage':
                 return html`<cc-storage-settings-panel></cc-storage-settings-panel>`;
             case 'about':
@@ -77,10 +75,6 @@ export class SettingsOverlay extends LitElement {
             default:
                 return html``;
         }
-    }
-
-    private handleClose = () => {
-        activeOverlay.value = null;
     }
 }
 

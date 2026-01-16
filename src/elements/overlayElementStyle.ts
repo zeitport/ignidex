@@ -2,7 +2,7 @@ import {css} from 'lit';
 
 export const overlayElementStyle = css`
     :host {
-        display: none;
+        display: flex;
         position: fixed;
         top: 0;
         left: 0;
@@ -14,12 +14,6 @@ export const overlayElementStyle = css`
         align-items: center;
         justify-content: center;
         padding: 1rem;
-        opacity: 0;
-    }
-
-    :host([isOpen]) {
-        display: flex;
-        opacity: 1;
         animation: fade-in 0.2s ease-out;
     }
 
@@ -35,7 +29,9 @@ export const overlayElementStyle = css`
     }
 
     .overlay-backdrop {
-        display: contents;
+        display: block;
+        position: absolute;
+        inset: 0;
     }
 
     .overlay-container {

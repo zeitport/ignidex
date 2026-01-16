@@ -1,8 +1,6 @@
 import {css, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {activeAction} from '#state';
-import '../overlayElement.ts';
-import '../dialogButton.ts';
 import {panelOverlayStyle} from './panelOverlayStyle.ts';
 
 @customElement('cc-confirmation-overlay')
@@ -16,9 +14,6 @@ export class ConfirmationOverlay extends LitElement {
         `
     ];
 
-    @property({type: Boolean})
-    isOpen = false;
-
     private activeAction = activeAction.watch(this);
 
     render() {
@@ -27,12 +22,11 @@ export class ConfirmationOverlay extends LitElement {
         if (!action) return html``;
 
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleCancel}>
+            <cc-overlay @close=${this.handleClose}>
                 <div>
                     ${action.confirmation?.message}
                 </div>
 
-                <cc-dialog-button slot="footer" @click=${this.handleCancel}>Cancel</cc-dialog-button>
                 <cc-dialog-button slot="footer" primary @click=${this.handleConfirm}>
                     ${action.confirmation?.buttonLabel}
                 </cc-dialog-button>
@@ -42,10 +36,12 @@ export class ConfirmationOverlay extends LitElement {
 
     private handleConfirm = async () => {
         await this.activeAction.value?.confirm?.();
+        this.activeAction.value = null;
     }
 
-    private handleCancel = async () => {
+    private handleClose = async () => {
         await this.activeAction.value?.cancel?.();
+        this.activeAction.value = null;
     }
 }
 

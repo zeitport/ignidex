@@ -23,7 +23,7 @@ export default tseslint.config(
             // Core ESLint rules
             'constructor-super': 'error',
             'for-direction': 'error',
-            'id-length': ['error', { min: 2, exceptions: ['T', 'a', 'x', 'y', 'z', 'i'] }],
+            'id-length': ['error', { min: 2, exceptions: ['T', 'a', 'b', 'x', 'y', 'z', 'i'] }],
             'no-async-promise-executor': 'error',
             'no-caller': 'error',
             'no-class-assign': 'error',

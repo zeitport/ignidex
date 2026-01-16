@@ -1,5 +1,5 @@
 import {html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {activeOverlay, activeStartPanel, selectedSection, selectedGroup, selectedCard, pastedUrl} from '#state';
 import {CardSectionType} from '#models/internal/cardSectionType.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
@@ -15,9 +15,6 @@ import {OverlayType} from './overlayType.ts';
 export class SelectSectionOverlay extends LitElement {
     static styles = switchPanelOverlayStyle;
 
-    @property({type: Boolean})
-    isOpen = false;
-
     private activeStartPanel = activeStartPanel.watch(this);
     private pastedUrl = pastedUrl.watch(this);
 
@@ -29,7 +26,7 @@ export class SelectSectionOverlay extends LitElement {
         }));
 
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
+            <cc-overlay @close=${this.handleClose}>
                 <div slot="header">
                     <h2>Select Section</h2>
                     ${this.pastedUrl.value ? html`<div class="info-text">Select a section to create a bookmark for: <span class="info-url">${this.pastedUrl.value}</span></div>` : ''}
@@ -37,8 +34,6 @@ export class SelectSectionOverlay extends LitElement {
 
                 <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail, sections)}></cc-list>
                 ${sections.length === 0 ? html`<div>No sections found.</div>` : ''}
-
-                <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
             </cc-overlay>
         `;
     }
@@ -48,6 +43,7 @@ export class SelectSectionOverlay extends LitElement {
         if (!section) return;
 
         selectedSection.value = section;
+
         if (section.type === CardSectionType.Highlight) {
             selectedGroup.value = section.groups[0] ?? new CardGroup({name: 'Group'});
             selectedCard.value = null;
@@ -62,7 +58,6 @@ export class SelectSectionOverlay extends LitElement {
     }
 
     private handleClose = () => {
-        activeOverlay.value = null;
         selectedSection.value = null;
         pastedUrl.value = null;
     }

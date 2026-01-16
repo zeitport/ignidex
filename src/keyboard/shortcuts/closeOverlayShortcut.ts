@@ -1,5 +1,6 @@
-import {activeAction, activeOverlay} from '#state';
+import {inject} from '#inject';
 import {i18n} from '#i18n';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {KeyboardShortcutGroup} from '../KeyboardShortcutGroup.ts';
 import type {KeyboardShortcut} from '../keyboardShortcutInterface.ts';
 import {overlayOpen} from '#app/preconditions.ts';
@@ -10,14 +11,5 @@ export const closeOverlayShortcut: KeyboardShortcut = {
     keySequence: ['Escape'],
     description: i18n.token.keyboardShortcut.closeOverlay,
     preconditions: [overlayOpen],
-    getAction: () => ({
-        run: () => {
-            const action = activeAction.value;
-            if (action?.cancel) {
-                action.cancel();
-            } else {
-                activeOverlay.value = null;
-            }
-        }
-    })
+    getAction: () => inject(CloseOverlayAction)
 };

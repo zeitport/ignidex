@@ -2,7 +2,16 @@ import type {StartPanel} from '#models/internal/startPanel.ts';
 import {LitElement, html, type TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
-import {activeOverlay, activeStartPanel, pastedUrl, isDraggingFile, messageOverlayContent, activeContextMenu, activeRemoteUrl} from '#state';
+import {
+    activeOverlay,
+    activeStartPanel,
+    pastedUrl,
+    isDraggingFile,
+    messageOverlayContent,
+    activeContextMenu,
+    activeRemoteUrl,
+    activeSubOverlay
+} from '#state';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
 import {documentContextMenuItems} from '../app/contextMenus/documentContextMenuItems.ts';
@@ -23,6 +32,7 @@ export class StartPanelElement extends LitElement {
     static styles = startPanelElementStyle;
 
     private activeOverlay = activeOverlay.watch(this);
+    private activeSubOverlay = activeSubOverlay.watch(this);
     private activeStartPanel = activeStartPanel.watch(this);
     private isDraggingFile = isDraggingFile.watch(this);
     private activeContextMenu = activeContextMenu.watch(this);
@@ -65,9 +75,10 @@ export class StartPanelElement extends LitElement {
         return html`
             ${when(startPanel, panel => this.renderStartPanel(panel))}
 
-            ${this.renderOverlay()}
+            ${this.renderOverlay(this.activeOverlay.value)}
+            ${this.renderOverlay(this.activeSubOverlay.value)}
 
-            <cc-drop-file-overlay ?isOpen=${this.isDraggingFile.value}></cc-drop-file-overlay>
+            ${when(this.isDraggingFile.value, () => html`<cc-drop-file-overlay></cc-drop-file-overlay>`)}
 
             <cc-context-menu id="contextMenu"></cc-context-menu>
 
@@ -103,66 +114,72 @@ export class StartPanelElement extends LitElement {
         }
     }
 
-    private renderOverlay() {
-        if (this.activeOverlay.value) {
-            if (this.activeOverlay.value === OverlayType.editBookmark) {
-                return html`<cc-edit-bookmark-card-overlay isOpen></cc-edit-bookmark-card-overlay>`;
+    private renderOverlay(overlayType: OverlayType | null) {
+        console.warn('Rendering overlay', overlayType);
+
+        if (overlayType) {
+            if (overlayType === OverlayType.editBookmark) {
+                return html`<cc-edit-bookmark-card-overlay></cc-edit-bookmark-card-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.switchPanel) {
-                return html`<cc-switch-panel-overlay isOpen></cc-switch-panel-overlay>`;
+            if (overlayType === OverlayType.switchPanel) {
+                return html`<cc-switch-panel-overlay></cc-switch-panel-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.editSettings) {
-                return html`<cc-settings-overlay isOpen></cc-settings-overlay>`;
+            if (overlayType === OverlayType.editSettings) {
+                return html`<cc-settings-overlay></cc-settings-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.newPanel) {
-                return html`<cc-edit-panel-overlay isOpen isCreateMode></cc-edit-panel-overlay>`;
+            if (overlayType === OverlayType.newPanel) {
+                return html`<cc-edit-panel-overlay isCreateMode></cc-edit-panel-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.editPanel) {
-                return html`<cc-edit-panel-overlay isOpen></cc-edit-panel-overlay>`;
+            if (overlayType === OverlayType.editPanel) {
+                return html`<cc-edit-panel-overlay></cc-edit-panel-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.newSection) {
-                return html`<cc-new-section-overlay isOpen></cc-new-section-overlay>`;
+            if (overlayType === OverlayType.newSection) {
+                return html`<cc-new-section-overlay></cc-new-section-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.editHighlightSection) {
-                return html`<cc-edit-highlight-section-overlay isOpen></cc-edit-highlight-section-overlay>`;
+            if (overlayType === OverlayType.editHighlightSection) {
+                return html`<cc-edit-highlight-section-overlay></cc-edit-highlight-section-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.editGroupsSection) {
-                return html`<cc-edit-groups-section-overlay isOpen></cc-edit-groups-section-overlay>`;
+            if (overlayType === OverlayType.editGroupsSection) {
+                return html`<cc-edit-groups-section-overlay></cc-edit-groups-section-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.editGroup) {
-                return html`<cc-edit-group-overlay isOpen></cc-edit-group-overlay>`;
+            if (overlayType === OverlayType.editGroup) {
+                return html`<cc-edit-group-overlay></cc-edit-group-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.gettingStarted) {
-                return html`<cc-getting-started-overlay isOpen></cc-getting-started-overlay>`;
+            if (overlayType === OverlayType.gettingStarted) {
+                return html`<cc-getting-started-overlay></cc-getting-started-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.confirmation) {
-                return html`<cc-confirmation-overlay isOpen></cc-confirmation-overlay>`;
+            if (overlayType === OverlayType.confirmation) {
+                return html`<cc-confirmation-overlay></cc-confirmation-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.selectSection) {
-                return html`<cc-select-section-overlay isOpen></cc-select-section-overlay>`;
+            if (overlayType === OverlayType.selectSection) {
+                return html`<cc-select-section-overlay></cc-select-section-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.selectGroup) {
-                return html`<cc-select-group-overlay isOpen></cc-select-group-overlay>`;
+            if (overlayType === OverlayType.selectGroup) {
+                return html`<cc-select-group-overlay></cc-select-group-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.message) {
-                return html`<cc-message-overlay isOpen></cc-message-overlay>`;
+            if (overlayType === OverlayType.message) {
+                return html`<cc-message-overlay></cc-message-overlay>`;
             }
 
-            if (this.activeOverlay.value === OverlayType.selectCornerAction) {
-                return html`<cc-select-corner-action-overlay isOpen></cc-select-corner-action-overlay>`;
+            if (overlayType === OverlayType.selectCornerAction) {
+                return html`<cc-select-corner-action-overlay></cc-select-corner-action-overlay>`;
+            }
+
+            if (overlayType === OverlayType.selectIcon) {
+                return html`<cc-select-icon-overlay></cc-select-icon-overlay>`;
             }
         }
 

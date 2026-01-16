@@ -1,8 +1,6 @@
 import {css, html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {activeOverlay, messageOverlayContent} from '#state';
-import '../overlayElement.ts';
-import '../dialogButton.ts';
+import {customElement} from 'lit/decorators.js';
+import {messageOverlayContent} from '#state';
 import {panelOverlayStyle} from './panelOverlayStyle.ts';
 
 @customElement('cc-message-overlay')
@@ -20,9 +18,6 @@ export class MessageOverlay extends LitElement {
         `
     ];
 
-    @property({type: Boolean})
-    isOpen = false;
-
     private messageContent = messageOverlayContent.watch(this);
 
     render() {
@@ -31,19 +26,12 @@ export class MessageOverlay extends LitElement {
         if (!message) return html``;
 
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
+            <cc-overlay>
                 <div class="message">
                     ${message}
                 </div>
-
-                <cc-dialog-button slot="footer" primary @click=${this.handleClose}>OK</cc-dialog-button>
             </cc-overlay>
         `;
-    }
-
-    private handleClose = () => {
-        activeOverlay.value = null;
-        messageOverlayContent.value = null;
     }
 }
 

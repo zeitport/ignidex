@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl} from '#state';
+import {customElement, state} from 'lit/decorators.js';
+import {activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
@@ -11,18 +11,13 @@ import {CardSection} from '#models/internal/cardSection.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {Card} from '#models/internal/card.ts';
 import {createId} from '#utils/createId.ts';
-import '../overlayElement.ts';
-import '../dialogButton.ts';
-import '../iconPreviewElement.ts';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import type {IconPreviewChangeEvent} from '../iconPreviewElement.ts';
 import {editBookmarkCardOverlayStyle} from './editBookmarkCardOverlayStyle.ts';
 
 @customElement('cc-edit-bookmark-card-overlay')
 export class EditBookmarkCardOverlay extends LitElement {
     static styles = editBookmarkCardOverlayStyle;
-
-    @property({type: Boolean})
-    isOpen = false;
 
     @state()
     private name = '';
@@ -45,6 +40,9 @@ export class EditBookmarkCardOverlay extends LitElement {
     @state()
     private iconUrl = '';
 
+    @state()
+    private iconAssetId: string | undefined = undefined;
+
     private startPanelsStore = inject(StartPanelsStore);
     private imageAssetsStore = inject(ImageAssetsStore);
 
@@ -53,12 +51,9 @@ export class EditBookmarkCardOverlay extends LitElement {
     private selectedGroup = selectedGroup.watch(this);
     private pastedUrl = pastedUrl.watch(this);
 
-    protected updated(changedProperties: Map<PropertyKey, unknown>): void {
-        super.updated(changedProperties);
-
-        if (changedProperties.has('isOpen') && this.isOpen) {
-            this.resetFields();
-        }
+    connectedCallback(): void {
+        super.connectedCallback();
+        void this.resetFields();
     }
 
     private async resetFields() {
@@ -75,6 +70,7 @@ export class EditBookmarkCardOverlay extends LitElement {
             this.description = '';
             this.iconDataUri = '';
             this.iconUrl = '';
+            this.iconAssetId = undefined;
         }
         this.nameError = '';
         this.urlError = '';
@@ -84,6 +80,7 @@ export class EditBookmarkCardOverlay extends LitElement {
         if (!iconId) {
             this.iconDataUri = '';
             this.iconUrl = '';
+            this.iconAssetId = undefined;
             return;
         }
 
@@ -91,9 +88,11 @@ export class EditBookmarkCardOverlay extends LitElement {
         if (entry?.dataUri) {
             this.iconDataUri = entry.dataUri;
             this.iconUrl = entry.source ?? '';
+            this.iconAssetId = iconId;
         } else {
             this.iconDataUri = '';
             this.iconUrl = '';
+            this.iconAssetId = undefined;
         }
     }
 
@@ -115,7 +114,7 @@ export class EditBookmarkCardOverlay extends LitElement {
         const card = this.selectedCard.value;
 
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
+            <cc-overlay @close=${this.handleClose}>
                 <h2 slot="header">${card ? 'Edit Bookmark' : 'Add Bookmark'}</h2>
 
                 <div class="form-layout">
@@ -124,7 +123,7 @@ export class EditBookmarkCardOverlay extends LitElement {
                         <cc-icon-preview
                             .dataUri=${this.iconDataUri}
                             .source=${this.iconUrl}
-                            .active=${this.isOpen}
+                            .active=${true}
                             @icon-change=${this.handleIconChange}
                         ></cc-icon-preview>
                     </div>
@@ -172,7 +171,6 @@ export class EditBookmarkCardOverlay extends LitElement {
                     </div>
                 </div>
 
-                <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
                 <cc-dialog-button slot="footer" primary @click=${this.handleSave}>Save</cc-dialog-button>
             </cc-overlay>
         `;
@@ -199,21 +197,18 @@ export class EditBookmarkCardOverlay extends LitElement {
     private handleIconChange = (event: CustomEvent<IconPreviewChangeEvent>) => {
         this.iconDataUri = event.detail.dataUri;
         this.iconUrl = event.detail.source;
+        this.iconAssetId = event.detail.assetId;
     }
 
     private handleClose = () => {
-        this.name = '';
-        this.url = '';
-        this.description = '';
-        this.nameError = '';
-        this.urlError = '';
-        this.iconDataUri = '';
-        this.iconUrl = '';
-        activeOverlay.value = null;
         selectedCard.value = null;
         selectedSection.value = null;
         selectedGroup.value = null;
         pastedUrl.value = null;
+    }
+
+    private close() {
+        inject(CloseOverlayAction).run();
     }
 
     private handleSave = async () => {
@@ -238,13 +233,17 @@ export class EditBookmarkCardOverlay extends LitElement {
         const targetGroup = this.selectedGroup.value;
 
         if (!currentPanel) {
-            this.handleClose();
+            this.close();
             return;
         }
 
-        // Store icon if provided
+        // Determine icon ID
         let iconId: string | null = null;
-        if (this.iconDataUri) {
+        if (this.iconAssetId) {
+            // Use existing asset ID (shared icon)
+            iconId = this.iconAssetId;
+        } else if (this.iconDataUri) {
+            // Create or update icon asset
             iconId = cardToEdit?.icon ?? createId();
             await this.imageAssetsStore.set({
                 id: iconId,
@@ -258,7 +257,7 @@ export class EditBookmarkCardOverlay extends LitElement {
 
         if (!cardToEdit) {
             if (!targetSection || !targetGroup) {
-                this.handleClose();
+                this.close();
                 return;
             }
 
@@ -338,7 +337,7 @@ export class EditBookmarkCardOverlay extends LitElement {
         await this.startPanelsStore.set(updatedEntry);
         activeStartPanel.value = updatedStartPanel;
 
-        this.handleClose();
+        this.close();
     }
 }
 

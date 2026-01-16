@@ -12,6 +12,7 @@ import {iconPreviewElementStyle} from './iconPreviewElementStyle.ts';
 export interface IconPreviewChangeEvent {
     dataUri: string;
     source: string;
+    assetId?: string;
 }
 
 @customElement('cc-icon-preview')
@@ -101,7 +102,7 @@ export class IconPreviewElement extends LitElement {
         if (!state) return;
 
         if (state.dataUri !== this.dataUri || state.source !== this.source) {
-            this.emitChange(state.dataUri, state.source);
+            this.emitChange(state.dataUri, state.source, state.assetId);
         }
     }
 
@@ -161,9 +162,9 @@ export class IconPreviewElement extends LitElement {
         contextMenu?.close();
     };
 
-    private emitChange(dataUri: string, source: string) {
+    private emitChange(dataUri: string, source: string, assetId?: string) {
         this.dispatchEvent(new CustomEvent<IconPreviewChangeEvent>('icon-change', {
-            detail: {dataUri, source},
+            detail: {dataUri, source, assetId},
             bubbles: true,
             composed: true
         }));

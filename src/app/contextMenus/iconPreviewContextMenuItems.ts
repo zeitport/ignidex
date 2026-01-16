@@ -1,8 +1,9 @@
-import {mdiClipboardOutline, mdiContentCopy, mdiDeleteOutline} from '@mdi/js';
+import {mdiClipboardOutline, mdiContentCopy, mdiDeleteOutline, mdiImageMultipleOutline} from '@mdi/js';
 import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 import {PasteIconAction} from '../../actions/iconPreview/pasteIconAction.ts';
 import {CopyIconDataUrlAction} from '../../actions/iconPreview/copyIconDataUrlAction.ts';
 import {DeleteIconAction} from '../../actions/iconPreview/deleteIconAction.ts';
+import {SelectExistingIconAction} from '../../actions/iconPreview/selectExistingIconAction.ts';
 import {i18n} from '../../localization/i18n.ts';
 
 export const iconPreviewContextMenuItems = [
@@ -11,6 +12,12 @@ export const iconPreviewContextMenuItems = [
         label: 'Paste',
         tooltip: i18n.token.hints.iconPreviewPaste,
         action: new PasteIconAction()
+    }),
+    new ContextMenuItem({
+        icon: mdiImageMultipleOutline,
+        label: 'Select existing icon',
+        tooltip: i18n.token.hints.iconPreviewSelectExisting,
+        action: new SelectExistingIconAction()
     }),
     new ContextMenuItem({
         icon: mdiContentCopy,

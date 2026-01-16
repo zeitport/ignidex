@@ -1,0 +1,56 @@
+import {inject} from '#inject';
+import {html, LitElement, css} from 'lit';
+import {customElement} from 'lit/decorators.js';
+import {activeIconPreview} from '#state';
+import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
+import type {ImageAssetEntry} from '#models/idb/imageAssetEntry.ts';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
+import type {ImageAssetSelectEvent} from '../imageAssetViewer/imageAssetSelectEvent.ts';
+import '../overlayElement.ts';
+import '../dialogButton.ts';
+import '../imageAssetViewer/imageAssetViewerElement.ts';
+
+@customElement('cc-select-icon-overlay')
+export class SelectIconOverlay extends LitElement {
+    static styles = css`
+        .icon-viewer-container {
+            min-width: 20rem;
+            min-height: 10rem;
+        }
+    `;
+
+    render() {
+        return html`
+            <cc-overlay>
+                <div slot="header">
+                    <h2>Select an existing icon</h2>
+                </div>
+
+                <div class="icon-viewer-container">
+                    <cc-image-asset-viewer
+                        type=${ImageAssetType.icon}
+                        @select=${this.handleSelect}
+                    ></cc-image-asset-viewer>
+                </div>
+            </cc-overlay>
+        `;
+    }
+
+    private handleSelect = (event: CustomEvent<ImageAssetSelectEvent>) => {
+        const asset: ImageAssetEntry = event.detail.asset;
+
+        activeIconPreview.value = {
+            dataUri: asset.dataUri ?? '',
+            source: asset.source ?? '',
+            assetId: asset.id
+        };
+
+        inject(CloseOverlayAction).run();
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'cc-select-icon-overlay': SelectIconOverlay;
+    }
+}

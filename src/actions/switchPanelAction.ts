@@ -1,6 +1,6 @@
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {activeOverlay} from '#state';
+import {activeOverlay, activeSubOverlay} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {ActionInterface} from './actionInterface.ts';
 
@@ -10,6 +10,7 @@ export class SwitchPanelAction implements ActionInterface {
 
     run() {
         activeOverlay.value = OverlayType.switchPanel;
+        activeSubOverlay.value = null;
     }
 
     async isDisabled(): Promise<boolean> {

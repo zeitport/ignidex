@@ -8,18 +8,12 @@ import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
-import '../overlayElement.ts';
-import '../dialogButton.ts';
-import '../iconPreviewElement.ts';
 import type {IconPreviewChangeEvent} from '../iconPreviewElement.ts';
 import {editPanelOverlayStyle} from './editPanelOverlayStyle.ts';
 
 @customElement('cc-edit-panel-overlay')
 export class EditPanelOverlay extends LitElement {
     static styles = editPanelOverlayStyle;
-
-    @property({type: Boolean})
-    isOpen = false;
 
     @property({type: Boolean})
     isCreateMode = false;
@@ -57,7 +51,7 @@ export class EditPanelOverlay extends LitElement {
     protected updated(changedProperties: Map<PropertyKey, unknown>): void {
         super.updated(changedProperties);
 
-        if (changedProperties.has('isOpen') && this.isOpen) {
+        if (changedProperties.has('isOpen')) {
             this.resetFields();
         }
     }
@@ -102,7 +96,7 @@ export class EditPanelOverlay extends LitElement {
         const isCreating = this.isCreateMode || !this.watchActiveStartPanel.value;
 
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
+            <cc-overlay>
                 <h2 slot="header">${isCreating ? 'New Panel' : 'Edit Panel'}</h2>
 
                 <div class="form-layout">
@@ -111,7 +105,7 @@ export class EditPanelOverlay extends LitElement {
                         <cc-icon-preview
                             .dataUri=${this.iconDataUri}
                             .source=${this.iconUrl}
-                            .active=${this.isOpen}
+                            .active=${true}
                             @icon-change=${this.handleIconChange}
                         ></cc-icon-preview>
                     </div>
@@ -160,7 +154,6 @@ export class EditPanelOverlay extends LitElement {
                     </div>
                 </div>
 
-                <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
                 <cc-dialog-button slot="footer" primary @click=${this.handleSave}>${isCreating ? 'Create' : 'Save'}</cc-dialog-button>
             </cc-overlay>
         `;

@@ -1,12 +1,13 @@
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {i18n} from '#i18n';
 import {html, LitElement} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
-import {activeOverlay, activeStartPanel, activeRemoteUrl, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '#state';
+import {customElement, state} from 'lit/decorators.js';
+import {activeStartPanel, activeRemoteUrl, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {IconResolver} from '#core/iconResolver.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {type ListItem} from '../listElement.ts';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
@@ -17,9 +18,6 @@ import {switchPanelContextMenuItems} from '../../app/contextMenus/switchPanelCon
 @customElement('cc-switch-panel-overlay')
 export class SwitchPanelOverlay extends LitElement {
     static styles = switchPanelOverlayStyle;
-
-    @property({type: Boolean})
-    isOpen = false;
 
     @state()
     private panels: Array<StartPanelEntry> = [];
@@ -34,9 +32,7 @@ export class SwitchPanelOverlay extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         this.panelOrderSubscription = panelOrderVersion.observe(() => {
-            if (this.isOpen) {
-                this.loadPanels();
-            }
+            this.loadPanels();
         });
     }
 
@@ -46,7 +42,7 @@ export class SwitchPanelOverlay extends LitElement {
     }
 
     updated(changedProperties: Map<string, unknown>): void {
-        if (changedProperties.has('isOpen') && this.isOpen) {
+        if (changedProperties.has('isOpen')) {
             void this.loadPanels();
         }
     }
@@ -77,7 +73,7 @@ export class SwitchPanelOverlay extends LitElement {
 
     render() {
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
+            <cc-overlay>
                 <h2 slot="header">Switch Panel</h2>
 
                 <cc-list
@@ -86,9 +82,8 @@ export class SwitchPanelOverlay extends LitElement {
                     @selected=${this.handleListSelect}
                     @item-contextmenu=${this.handleListContextMenu}>
                 </cc-list>
-                ${this.panels.length === 0 ? html`<div>No local panels found.</div>` : ''}
 
-                <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
+                ${this.panels.length === 0 ? html`<div>No local panels found.</div>` : ''}
             </cc-overlay>
         `;
     }
@@ -99,10 +94,11 @@ export class SwitchPanelOverlay extends LitElement {
 
     private handleListSelect = (customEvent: CustomEvent<ListItem>) => {
         const entry = this.findPanelEntry(customEvent.detail.id);
+
         if (entry) {
             activeStartPanel.value = entry.startPanel;
             activeRemoteUrl.value = entry.remoteUrl ?? null;
-            this.handleClose();
+            inject(CloseOverlayAction).run();
         }
     };
 
@@ -121,10 +117,6 @@ export class SwitchPanelOverlay extends LitElement {
             };
         }
     };
-
-    private handleClose = () => {
-        activeOverlay.value = null;
-    }
 }
 
 declare global {

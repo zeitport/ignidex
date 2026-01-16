@@ -24,6 +24,7 @@ export const hints = {
     deleteSection: 'Delete section',
     addBookmarkToSection: 'Add new bookmark to section',
     iconPreviewPaste: '[LMB] or [CTRL] + [V] Paste icon from clipboard (SVG, URL, or data URI)',
+    iconPreviewSelectExisting: '[LMB] Select an existing icon from the gallery',
     iconPreviewCopy: '[LMB] Copy icon data URI to clipboard',
     iconPreviewDelete: '[LMB] Remove icon',
     iconPreviewNoIcon: 'No icon selected',

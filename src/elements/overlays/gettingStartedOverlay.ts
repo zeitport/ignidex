@@ -1,24 +1,20 @@
 import {html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {mdiFileDocumentOutline, mdiFlask} from '@mdi/js';
-import {activeOverlay, activeStartPanel, activeRemoteUrl} from '#state';
+import {activeStartPanel, activeRemoteUrl} from '#state';
 import {inject} from '#core/injector.ts';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {loadDataFromUrl} from '../../core/loadDataFromUrl.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {StartPanelEntry} from '../../models/idb/startPanelEntry.ts';
 import {StartPanel} from '../../models/internal/startPanel.ts';
 import {StartPanelHeader} from '../../models/internal/startPanelHeader.ts';
 import {ListItem} from '../listElement.ts';
-import '../overlayElement.ts';
-import '../listElement.ts';
 import {gettingStartedOverlayStyle} from './gettingStartedOverlayStyle.ts';
 
 @customElement('cc-getting-started-overlay')
 export class GettingStartedOverlay extends LitElement {
     static styles = gettingStartedOverlayStyle;
-
-    @property({type: Boolean})
-    isOpen = false;
 
     private startPanelsStore = inject(StartPanelsStore);
 
@@ -39,7 +35,7 @@ export class GettingStartedOverlay extends LitElement {
         ];
 
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} .canBeClosed=${false}>
+            <cc-overlay .isCancelEnabled=${false}>
                 <h2 slot="header">Getting Started</h2>
 
                 <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail)}></cc-list>
@@ -61,7 +57,7 @@ export class GettingStartedOverlay extends LitElement {
         await this.startPanelsStore.set(entry);
         activeStartPanel.value = panel;
         activeRemoteUrl.value = null;
-        this.handleClose();
+        inject(CloseOverlayAction).run();
     }
 
     private async handleLoadTest() {
@@ -70,11 +66,7 @@ export class GettingStartedOverlay extends LitElement {
         await this.startPanelsStore.set(entry);
         activeStartPanel.value = panel;
         activeRemoteUrl.value = null;
-        this.handleClose();
-    }
-
-    private handleClose() {
-        activeOverlay.value = null;
+        inject(CloseOverlayAction).run();
     }
 }
 

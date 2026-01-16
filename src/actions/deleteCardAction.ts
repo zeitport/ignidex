@@ -30,7 +30,6 @@ export class DeleteCardAction implements ActionInterface {
         const startPanel = activeStartPanel.value;
 
         if (!card || !startPanel) {
-            this.cancel();
             return;
         }
 
@@ -61,12 +60,5 @@ export class DeleteCardAction implements ActionInterface {
             await this.startPanelsStore.set(updatedEntry);
             activeStartPanel.value = clonedPanel;
         }
-
-        this.cancel();
-    }
-
-    cancel() {
-        activeAction.value = null;
-        activeOverlay.value = null;
     }
 }

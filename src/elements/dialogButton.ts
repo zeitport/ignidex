@@ -1,5 +1,7 @@
+import {inject} from '#inject';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {CloseOverlayAction} from '../actions/closeOverlayAction.ts';
 import {dialogButtonStyle} from './dialogButtonStyle.ts';
 
 @customElement('cc-dialog-button')
@@ -9,13 +11,20 @@ export class DialogButton extends LitElement {
     @property({type: Boolean, reflect: true})
     primary = false;
 
+    @property({type: Boolean, reflect: true})
+    cancel = false;
+
     render() {
         return html`
-            <button>
+            <button @click=${this.handleClick}>
                 <slot></slot>
             </button>
         `;
     }
+
+    private handleClick = () =>  {
+        inject(CloseOverlayAction).run();
+    };
 }
 
 declare global {

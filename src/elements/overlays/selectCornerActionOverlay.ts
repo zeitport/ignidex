@@ -1,16 +1,14 @@
 import {setCornerIconType} from '#app/cornerAction/setCornerIconType.ts';
 import {mdiCancel, mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
 import {html, LitElement} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {activeOverlay, cornerActions, selectedCornerPosition} from '#state';
+import {customElement} from 'lit/decorators.js';
+import {cornerActions, selectedCornerPosition} from '#state';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
 import {CornerPosition} from '#models/idb/cornerPosition.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
 import type {ListItem} from '#elements';
-import '../overlayElement.ts';
-import '../dialogButton.ts';
-import '../listElement.ts';
+import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {switchPanelOverlayStyle} from './switchPanelOverlayStyle.ts';
 
 interface CornerActionItem {
@@ -40,9 +38,6 @@ export class SelectCornerActionOverlay extends LitElement {
 
     private userStateStore = inject(UserStateStore);
 
-    @property({type: Boolean})
-    isOpen = false;
-
     constructor() {
         super();
         cornerActions.watch(this);
@@ -60,15 +55,13 @@ export class SelectCornerActionOverlay extends LitElement {
         }));
 
         return html`
-            <cc-overlay ?isOpen=${this.isOpen} @close=${this.handleClose}>
+            <cc-overlay @close=${this.handleClose}>
                 <div slot="header">
                     <h2>Select Corner Action</h2>
                     <div class="info-text">Position: ${positionLabel}</div>
                 </div>
 
                 <cc-list .items=${items} @selected=${(event: CustomEvent<ListItem>) => this.handleSelect(event.detail.id as CornerActionType)}></cc-list>
-
-                <cc-dialog-button slot="footer" @click=${this.handleClose}>Cancel</cc-dialog-button>
             </cc-overlay>
         `;
     }
@@ -87,10 +80,10 @@ export class SelectCornerActionOverlay extends LitElement {
         await this.userStateStore.set(state);
 
         this.handleClose();
+        inject(CloseOverlayAction).run();
     }
 
     private handleClose = () => {
-        activeOverlay.value = null;
         selectedCornerPosition.value = null;
     }
 }
