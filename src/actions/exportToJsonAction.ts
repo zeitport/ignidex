@@ -3,6 +3,7 @@ import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import type {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
+import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
 import {activeStartPanel} from '#state';
 import type {ActionInterface} from './actionInterface.ts';
 
@@ -36,6 +37,7 @@ export class ExportToJsonAction implements ActionInterface {
             sections: startPanel.sections,
             images: images.map(icon => ({
                 id: icon.id,
+                type: icon.type ?? ImageAssetType.icon,
                 source: icon.source,
                 dataUri: icon.dataUri,
             }))

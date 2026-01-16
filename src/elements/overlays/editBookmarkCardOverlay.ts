@@ -4,6 +4,7 @@ import {activeOverlay, activeStartPanel, selectedCard, selectedSection, selected
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
@@ -247,6 +248,7 @@ export class EditBookmarkCardOverlay extends LitElement {
             iconId = cardToEdit?.icon ?? createId();
             await this.imageAssetsStore.set({
                 id: iconId,
+                type: ImageAssetType.icon,
                 source: this.iconUrl || null,
                 dataUri: this.iconDataUri
             });
