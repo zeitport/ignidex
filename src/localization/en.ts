@@ -20,6 +20,8 @@ export const tokens = {
         openSettings: '[LMB] or [F1] opens the app settings',
         editGroup: 'Edit group',
         addBookmarkToGroup: 'Add new bookmark to group',
+        moveGroupLeft: '[LMB] Move group left',
+        moveGroupRight: '[LMB] Move group right',
         deleteGroup: '[LMB] + [?] Delete group',
         editSection: 'Edit section',
         addGroupToSection: 'Add new group to section',
@@ -51,6 +53,12 @@ export const tokens = {
         addSection: 'Add Section',
         exportAsJson: 'Export as JSON',
         duplicatePanel: 'Duplicate panel',
-        deletePanel: 'Delete panel'
+        deletePanel: 'Delete panel',
+        moveRight: 'Move Right',
+        moveLeft: 'Move Left',
+        delete: 'Delete...',
+        addBookmark: 'Add Bookmark',
+        editBookmark: 'Edit',
+        editGroup: 'Edit',
     }
 };

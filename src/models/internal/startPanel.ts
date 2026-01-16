@@ -1,3 +1,4 @@
+import type {CardGroup} from '#models/internal/cardGroup.ts';
 import {createId} from '#utils/createId.ts';
 import {CardSection} from './cardSection.ts';
 import {StartPanelHeader} from './startPanelHeader.ts';
@@ -22,5 +23,11 @@ export class StartPanel {
 
     static clone(startPanel: StartPanel) {
         return new StartPanel(structuredClone(startPanel));
+    }
+
+    findSectionWithGroup(groupId: string): CardSection | undefined {
+        const filterGroupId = (item: CardGroup) => item.id === groupId;
+
+        return this.sections.find((section: CardSection) => section.groups.find(filterGroupId));
     }
 }

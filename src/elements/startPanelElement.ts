@@ -354,8 +354,12 @@ export class StartPanelElement extends LitElement {
             return;
         }
 
-        const action = new ImportFromJsonAction(file);
-        action.run();
+        try {
+            const action = new ImportFromJsonAction(file);
+            void action.run();
+        } catch (error) {
+            console.warn(error);
+        }
     }
 }
 

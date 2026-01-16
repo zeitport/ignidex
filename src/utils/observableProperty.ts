@@ -20,6 +20,15 @@ export class ObservableProperty<T> {
         return this.propertyValue;
     }
 
+    get nonNullableValue(): NonNullable<T> {
+        // Does not use the strict equal (===) here to also catch undefined
+        if (this.propertyValue == null) {
+            throw new Error(`${this.constructor.name} Expected property value not to be null/undefined.`);
+        }
+
+        return this.propertyValue;
+    }
+
     observe(callback: (value: T) => void | Promise<void>) {
         this.subscribers.add(callback);
         callback(this.propertyValue);
