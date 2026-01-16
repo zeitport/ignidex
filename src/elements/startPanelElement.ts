@@ -115,8 +115,6 @@ export class StartPanelElement extends LitElement {
     }
 
     private renderOverlay(overlayType: OverlayType | null) {
-        console.warn('Rendering overlay', overlayType);
-
         if (overlayType) {
             if (overlayType === OverlayType.editBookmark) {
                 return html`<cc-edit-bookmark-card-overlay></cc-edit-bookmark-card-overlay>`;

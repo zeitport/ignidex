@@ -26,6 +26,8 @@ export class DeleteCardAction implements ActionInterface {
     }
 
     async confirm() {
+        console.log('Confirming delete card action');
+
         const card = selectedCard.value;
         const startPanel = activeStartPanel.value;
 

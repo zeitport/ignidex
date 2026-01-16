@@ -22,8 +22,13 @@ export class DialogButton extends LitElement {
         `;
     }
 
-    private handleClick = () =>  {
-        inject(CloseOverlayAction).run();
+    private handleClick = (event: MouseEvent) =>  {
+        if (this.cancel) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            inject(CloseOverlayAction).run();
+        }
     };
 }
 

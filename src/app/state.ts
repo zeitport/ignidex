@@ -28,6 +28,9 @@ export const activeIconPreview = new ObservableProperty<IconPreviewState | null>
 export const selectedCard = new ObservableProperty<Card | null>(null);
 export const selectedSection = new ObservableProperty<CardSection | null>(null);
 export const selectedGroup = new ObservableProperty<CardGroup | null>(null);
+
+selectedGroup.debug({label: 'selectedGroup'});
+
 export const selectedPanelEntry = new ObservableProperty<StartPanelEntry | null>(null);
 export const selectedCornerPosition = new ObservableProperty<CornerPosition | null>(null);
 export const selectedImageAsset = new ObservableProperty<ImageAssetSelection | null>(null);

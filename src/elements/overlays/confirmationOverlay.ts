@@ -35,6 +35,7 @@ export class ConfirmationOverlay extends LitElement {
     }
 
     private handleConfirm = async () => {
+        console.log('Confirming action', {action: this.activeAction.value});
         await this.activeAction.value?.confirm?.();
         this.activeAction.value = null;
     }

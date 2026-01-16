@@ -1,5 +1,5 @@
 import {StartPanel} from '#models/internal/startPanel.ts';
-import {selectedGroup, activeAction, activeOverlay, activeStartPanel} from '#state';
+import {selectedGroup, activeAction, activeOverlay, activeStartPanel, activeSubOverlay} from '#state';
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
@@ -14,6 +14,7 @@ export class DeleteGroupAction implements ActionInterface {
 
     run() {
         const group = selectedGroup.value;
+
         if (!group) {
             return;
         }
@@ -21,10 +22,12 @@ export class DeleteGroupAction implements ActionInterface {
         this.confirmation.message = `Do you want to delete group "${group.name ?? 'Untitled'}"?`;
 
         activeAction.value = this;
-        activeOverlay.value = OverlayType.confirmation;
+        activeSubOverlay.value = OverlayType.confirmation;
     }
 
     async confirm() {
+        console.log('Confirming DeleteGroupAction');
+
         const group = selectedGroup.value;
         const startPanel = activeStartPanel.value;
 
@@ -58,12 +61,10 @@ export class DeleteGroupAction implements ActionInterface {
             activeStartPanel.value = clonedPanel;
         }
 
-        this.cancel();
+        selectedGroup.value = null;
     }
 
     cancel() {
-        activeAction.value = null;
-        activeOverlay.value = null;
         selectedGroup.value = null;
     }
 }
