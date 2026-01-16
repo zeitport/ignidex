@@ -14,7 +14,7 @@ import type {RadioOption} from '../radioButton/radioOption.ts';
 import {colorPalette} from './colorPalette.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
-import {activeOverlay, cornerActions, hoverHintMode, selectedCornerPosition} from '#state';
+import {activeSubOverlay, cornerActions, hoverHintMode, selectedCornerPosition} from '#state';
 import {uiSettingsPanelStyle} from './uiSettingsPanelStyle.ts';
 
 @customElement('cc-ui-settings-panel')
@@ -244,7 +244,7 @@ export class UISettingsPanel extends LitElement {
 
     private openCornerIconSelector(position: CornerPosition) {
         selectedCornerPosition.value = position;
-        activeOverlay.value = OverlayType.selectCornerAction;
+        activeSubOverlay.value = OverlayType.selectCornerAction;
     }
 
     private async selectCornerIconSize(size: SettingsIconStyle) {
