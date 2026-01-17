@@ -26,29 +26,49 @@ export const cornerActionElementStyle = css`
             right: 1rem;
         }
 
-        .corner-icon {
+        .corner-button {
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             opacity: 0.2;
             transition: opacity 0.15s ease-in-out;
+            /* button reset */
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font: inherit;
+            color: inherit;
         }
 
-        .corner-icon:hover {
+        .corner-button:hover,
+        .corner-button:focus-visible {
             opacity: 1;
         }
 
-        .corner-icon svg {
+        .corner-button:focus {
+            outline: none;
+        }
+
+        .corner-button:focus-visible::before {
+            content: "";
+            position: absolute;
+            inset: -0.5rem;
+            border: 2px solid var(--accent);
+            border-radius: 100%;
+        }
+
+        .corner-button svg {
             fill: var(--text);
         }
 
-        .corner-icon[data-size=small] svg {
+        .corner-button[data-size=small] svg {
             width: 1.25rem;
             height: 1.25rem;
         }
 
-        .corner-icon[data-size=large] svg {
+        .corner-button[data-size=large] svg {
             width: 2rem;
             height: 2rem;
         }

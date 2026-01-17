@@ -63,16 +63,18 @@ export class CornerActionElement extends LitElement {
         const hint = i18n.token.cornerActionType[iconType] ?? '';
 
         return html`
-            <div
-                class="corner-icon"
+            <button
+                type="button"
+                class="corner-button"
                 data-size="${actions.size}"
+                id="corner-button-${this.position}"
                 ${hoverHint(hint)}
                 @click=${() => this.handleClick(iconType)}
             >
-                <svg viewBox="0 0 24 24">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="${iconPath}"></path>
                 </svg>
-            </div>
+            </button>
         `;
     }
 
