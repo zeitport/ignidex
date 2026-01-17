@@ -21,7 +21,7 @@ describe('Create screenshots for ./docs', async () => {
 
     test('Ignidex start panel loaded', async () => {
         await expect(page.getByRole('heading', {name: 'Ignidex'})).toBeVisible();
-        await page.pause();
+        // await page.pause();
     });
 
     test('Create screenshot of start panel', async () => {

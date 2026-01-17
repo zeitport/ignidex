@@ -13,6 +13,7 @@
         "mcp": "node --experimental-strip-types ./ai/mcp/server.ts",
         "icons": "node scripts/generate-icons.js",
         "sync-sw": "node scripts/sync-sw-version.js",
+        "screenshots": "vitest ./test/screenshots/",
         "test": "vitest ./test/units/",
         "test:all": "vitest",
         "test:units": "vitest ./test/units/",
