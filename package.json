@@ -13,7 +13,11 @@
         "mcp": "node --experimental-strip-types ./ai/mcp/server.ts",
         "icons": "node scripts/generate-icons.js",
         "sync-sw": "node scripts/sync-sw-version.js",
-        "test": "vitest"
+        "test": "vitest ./test/units/",
+        "test:all": "vitest",
+        "test:units": "vitest ./test/units/",
+        "test:playwright": "vitest ./test/playwright/",
+        "test:ui": "vitest --ui"
     },
     "author": "Chris Zeitport <chris@zeitport.com>",
     "homepage": "https://github.com/zeitport/ignidex",
@@ -47,6 +51,7 @@
         "@modelcontextprotocol/sdk": "^1.0.0",
         "@playwright/test": "^1.57.0",
         "@types/node": "^24.0.0",
+        "@vitest/ui": "^4.0.17",
         "eslint": "^9.18.0",
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-unicorn": "^57.0.0",

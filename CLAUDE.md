@@ -37,7 +37,9 @@ Use the package.json import aliases:
 - `src/elements/` - Lit web components
 - `src/actions/` - User interaction commands implementing `ActionInterface`
 - `src/utils/` - Observable property system, ID generation
-
+- `test/playwright` - browser tests using playwright
+- `test/units` - unit/code tests
+- 
 ### MCP Tools
 
 The local `ignidex-mcp` server provides project-specific tools:
@@ -110,3 +112,8 @@ ESLint enforces:
 - No default exports (use named exports)
 - Strict TypeScript rules
 - Import/export conventions
+
+## Tests
+
+All tests are written in TypeScript using vitest. File structure:
+
