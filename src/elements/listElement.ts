@@ -24,9 +24,12 @@ export class ListElement extends LitElement {
     render() {
         return html`
             ${this.items.map(item => html`
-                <div class="list-item ${this.selectedId === item.id ? 'selected' : ''}"
-                     @click=${() => this.handleItemClick(item)}
-                     @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event, item)}>
+                <div
+                    role="listitem"
+                    aria-label="${item.label}"
+                    class="list-item ${this.selectedId === item.id ? 'selected' : ''}"
+                    @click=${() => this.handleItemClick(item)}
+                    @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event, item)}>
                     ${this.renderIcon(item)}
                     <div class="item-info">
                         <span class="item-label">${item.label}</span>

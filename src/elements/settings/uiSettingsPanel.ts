@@ -99,7 +99,11 @@ export class UISettingsPanel extends LitElement {
                 <span slot="label">Text Transform</span>
                 <span slot="description">Enable uppercase text for a modern look.</span>
                 <div>
-                    <cc-switch .checked=${this.useUppercase} @change=${(event: CheckedCustomEvent) => this.toggleTextTransform(event.detail.checked)}></cc-switch>
+                    <cc-switch
+                        aria-label="Text Transform"
+                        .checked=${this.useUppercase}
+                        @change=${(event: CheckedCustomEvent) => this.toggleTextTransform(event.detail.checked)}>
+                    </cc-switch>
                 </div>
             </cc-settings-section>
 
@@ -107,6 +111,7 @@ export class UISettingsPanel extends LitElement {
                 <span slot="label">Hover Hints</span>
                 <span slot="description">Select how to display hover hints for elements.</span>
                 <cc-radio-button-group
+                    aria-label="Hover Hint Style"
                     .options=${[
                         {label: 'Off', value: HoverHintMode.Off},
                         {label: 'On (dark)', value: HoverHintMode.Dark},
@@ -129,6 +134,7 @@ export class UISettingsPanel extends LitElement {
                 <span slot="description">Configure corner action icon size.</span>
                 <div class="corner-icons-size">
                     <cc-radio-button-group
+                        aria-label="Corner Action Style"
                         .options=${[
                             {label: 'Off', value: SettingsIconStyle.Off},
                             {label: 'Small', value: SettingsIconStyle.Small},
@@ -206,6 +212,7 @@ export class UISettingsPanel extends LitElement {
         return html`
             <cc-radio-button-group
                 class="corner-action-slot"
+                aria-label="Corner Action"
                 .options=${items}
                  @change=${(event: CustomEventWithValue<CornerPosition>) => this.openCornerIconSelector(event.detail.value)}>
             </cc-radio-button-group>

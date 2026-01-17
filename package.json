@@ -44,7 +44,8 @@
         "#models/*": "./src/models/*",
         "#state": "./src/app/state.ts",
         "#utils/*": "./src/utils/*",
-        "#i18n": "./src/localization/i18n.ts"
+        "#i18n": "./src/localization/i18n.ts",
+        "#test/*": "./test/*"
     },
     "devDependencies": {
         "@eslint/js": "^9.18.0",

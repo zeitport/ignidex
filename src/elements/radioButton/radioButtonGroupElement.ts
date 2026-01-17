@@ -30,6 +30,7 @@ export class RadioButtonGroupElement extends LitElement {
                     <div
                         class="radio-option ${this.value === option.value ? 'selected' : ''}"
                         role="radio"
+                        aria-label="${option.value}"
                         aria-checked="${this.value === option.value}"
                         data-value="${option.value}"
                         tabindex="0"

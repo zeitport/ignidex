@@ -25,6 +25,12 @@ export class SettingsOverlay extends LitElement {
     ];
 
     static styles = css`
+        :host {
+            display: block;
+            position: absolute;
+            inset: 0;
+        }
+
         .settings-container {
             display: flex;
             min-height: 60vh;
@@ -44,9 +50,10 @@ export class SettingsOverlay extends LitElement {
     render() {
         return html`
             <cc-overlay>
-                <div class="settings-container">
+                <div class="settings-container" role="dialog" aria-label="Settings">
                     <div class="settings-sidebar">
                         <cc-list
+                            aria-label="Settings Panels"
                             .items=${this.panels}
                             .selectedId=${this.activePanelId}
                             @selected=${(event: CustomEvent<ListItem>) => this.activePanelId = event.detail.id}
