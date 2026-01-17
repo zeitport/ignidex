@@ -24,7 +24,6 @@ Ignidex is a local-first page you open *before* everything else. A calm, fast in
 
 **It is not a dashboard. It is not a productivity system.**
 
-
 ---
 
 ## 🔥 What Ignidex Does
@@ -63,12 +62,12 @@ If no `load` parameter is provided, it defaults to `/store/test.json`.
 ## 👎 What Ignidex Doesn't Do
 
 Ignidex intentionally avoids:
-- Charts, analytics, or dashboards
+- Charts, analytics, or dashboard widgets
 - Project management or task tracking
 - Accounts, sync, or external services
 - Automation or scheduled jobs
 
-If you need these, use a different tool. Ignidex is for **starting**, not managing.
+If you need these, use a different tool. Ignidex is for **starting**.
 
 ---
 
@@ -76,8 +75,7 @@ If you need these, use a different tool. Ignidex is for **starting**, not managi
 
 - **Local-first**: Data stays on your machine. No accounts. No tracking.
 - **Minimal**: Few concepts. Clear behavior. Low configuration surface.
-- **Stable**: Feature-complete is a valid end state. Maintenance is low.
-- **Calm**: Works quietly. Easy to use, easy to ignore.
+- **Calm UI**: Works quietly. Easy to use, easy to ignore.
 
 See [PHILOSOPHY.md](./PHILOSOPHY.md) for the full design rationale.
 
@@ -85,29 +83,15 @@ See [PHILOSOPHY.md](./PHILOSOPHY.md) for the full design rationale.
 
 ## 👤 Who This Is For
 
+- Anyone who wants a clean start page without complexity
 - Developers and engineers
 - Self-hosters
-- Anyone who wants a clean start page without complexity
 
 ---
 
 ## ✅ Status
 
-Ignidex is in early development. Expect breaking changes.
-
----
-
-## 🎯 Roadmap
-
-### Core (now):
-- Cards with links, icons, labels
-- Section-based layout
-- JSON import/export
-
-### Planned:
-- Webhook triggers
-- Checkbox mode (session-scoped, not persistent task management)
-- Theme support
+Ignidex is in development.
 
 ---
 
@@ -116,6 +100,5 @@ Ignidex is in early development. Expect breaking changes.
 Most start page projects become dashboards.
 They add features, frameworks, build steps, and dependencies. Then they get abandoned when the maintainer burns out.
 
-Ignidex is intentionally small. No framework. No build step. Minimal dependencies. You can read the entire codebase in an afternoon.
+Ignidex is intentionally small.
 
-If it works today, it should work in five years
