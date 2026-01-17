@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "npm run sync-sw && tsc && npm run lint && vite build",
+        "build": "npm run sync-sw && tsc && npm run lint && npm run test && vite build",
         "preview": "vite preview",
         "lint": "eslint src",
         "lint:fix": "eslint src --fix",
@@ -14,7 +14,8 @@
         "icons": "node scripts/generate-icons.js",
         "sync-sw": "node scripts/sync-sw-version.js",
         "screenshots": "vitest ./test/screenshots/",
-        "test": "vitest ./test/units/",
+        "test": "vitest ./test/units/ --run",
+        "test:watch": "vitest ./test/units/",
         "test:all": "vitest",
         "test:units": "vitest ./test/units/",
         "test:playwright": "vitest ./test/playwright/",
