@@ -1,10 +1,29 @@
-# Ignidex
+<h1>
+<picture>
+    <source srcset="./public/favicon.svg">
+    <img alt="Ignidex Logo" src="./public/favicon.svg" height="48" width="48"> 
+</picture>
+Ignidex
+</h1>
 
 **A personal start page for links, actions, and small checklists.**
 
 Ignidex is a local-first page you open *before* everything else. A calm, fast index for the things you access frequently.
 
-It is not a dashboard. It is not a productivity system.
+<br>
+<br>
+<a href="https://ignidex.eu" target="_blank" rel="noopener noreferrer">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./docs/screenshots/start-panel.png">
+  <source media="(prefers-color-scheme: light)" srcset="./docs/screenshots/start-panel.png">
+  <img alt="Ignidex Screenshot" src="./docs/screenshots/start-panel.png">
+</picture>
+</a>
+<br>
+<br>
+
+**It is not a dashboard. It is not a productivity system.**
+
 
 ---
 
