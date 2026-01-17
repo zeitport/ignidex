@@ -29,7 +29,8 @@ export const hints = {
     iconPreviewDelete: '[LMB] Remove icon',
     iconPreviewNoIcon: 'No icon selected',
     switchPanelListItem: '[RMB] open menu to move items up/down',
-    copyShareUrlToClipboard: '[LMB] Copy share URL to clipboard'
+    copyShareUrlToClipboard: '[LMB] Copy share URL to clipboard',
+    featureRightClick: '[RMB] Try me'
 }
 
 export const tokens = {

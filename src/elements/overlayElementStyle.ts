@@ -60,11 +60,20 @@ export const overlayElementStyle = css`
     }
 
     .overlay-footer {
-        padding: var(--overlay-footer-padding, 1rem);
+        //padding: var(--overlay-footer-padding, 1rem);
         background: var(--overlay-footer-bg);
         display: flex;
         justify-content: flex-end;
         gap: 0.5rem;
+        align-items: center;
+        padding-inline-end: 1rem;
+    }
+
+    .overlay-footer {
+        cc-dialog-button {
+            margin-block: 1rem;
+            margin-inline-start: 1rem;
+        }
     }
 
     .overlay-footer[hidden],

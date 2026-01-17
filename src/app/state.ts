@@ -35,6 +35,8 @@ export const selectedPanelEntry = new ObservableProperty<StartPanelEntry | null>
 export const selectedCornerPosition = new ObservableProperty<CornerPosition | null>(null);
 export const selectedImageAsset = new ObservableProperty<ImageAssetSelection | null>(null);
 
+export const diceRollResult = new ObservableProperty<number | null>(null);
+
 export const hoverHintMode = new ObservableProperty<HoverHintModeType>(HoverHintMode.Dark);
 
 export const pastedUrl = new ObservableProperty<string | null>(null);

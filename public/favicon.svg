@@ -3,15 +3,17 @@
 <svg width="100%" height="100%" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;">
     <path d="M12,2c0.667,2.667 2,4.833 4,6.5c2,1.667 3,3.5 3,5.5c0,3.84 -3.16,7 -7,7c-3.84,0 -7,-3.16 -7,-7c0,-1.082 0.351,-2.135 1,-3c0,1.371 1.129,2.5 2.5,2.5c1.371,0 2.5,-1.129 2.5,-2.5c0,-2 -1.5,-3 -1.5,-5c0,-1.333 0.833,-2.667 2.5,-4" style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:4px;"/>
     <path d="M12,2c0.667,2.667 2,4.833 4,6.5c2,1.667 3,3.5 3,5.5c0,3.84 -3.16,7 -7,7c-3.84,0 -7,-3.16 -7,-7c0,-1.082 0.351,-2.135 1,-3c0,1.371 1.129,2.5 2.5,2.5c1.371,0 2.5,-1.129 2.5,-2.5c0,-2 -1.5,-3 -1.5,-5c0,-1.333 0.833,-2.667 2.5,-4" style="fill:none;fill-rule:nonzero;"/>
-    <clipPath id="_clip1">
-        <path d="M12,2c0.667,2.667 2,4.833 4,6.5c2,1.667 3,3.5 3,5.5c0,3.84 -3.16,7 -7,7c-3.84,0 -7,-3.16 -7,-7c0,-1.082 0.351,-2.135 1,-3c0,1.371 1.129,2.5 2.5,2.5c1.371,0 2.5,-1.129 2.5,-2.5c0,-2 -1.5,-3 -1.5,-5c0,-1.333 0.833,-2.667 2.5,-4" clip-rule="nonzero"/>
-    </clipPath>
-    <g clip-path="url(#_clip1)">
-        <rect x="0" y="17" width="24" height="3" style="fill:#ba68c8;"/>
-        <rect x="0" y="14" width="24" height="3" style="fill:#64b5f6;"/>
-        <rect x="0" y="11" width="24" height="3" style="fill:#4dd0e1;"/>
-        <rect x="0" y="8" width="24" height="3" style="fill:#aed581;"/>
-        <rect x="0" y="3" width="24" height="5" style="fill:#fff176;"/>
+    <g>
+        <clipPath id="_clip1">
+            <path d="M12,2c0.667,2.667 2,4.833 4,6.5c2,1.667 3,3.5 3,5.5c0,3.84 -3.16,7 -7,7c-3.84,0 -7,-3.16 -7,-7c0,-1.082 0.351,-2.135 1,-3c0,1.371 1.129,2.5 2.5,2.5c1.371,0 2.5,-1.129 2.5,-2.5c0,-2 -1.5,-3 -1.5,-5c0,-1.333 0.833,-2.667 2.5,-4"/>
+        </clipPath>
+        <g clip-path="url(#_clip1)">
+            <rect x="0" y="16" width="24" height="5" style="fill:#ba68c8;"/>
+            <rect x="0" y="13" width="24" height="4" style="fill:#64b5f6;"/>
+            <rect x="0" y="10" width="24" height="4" style="fill:#4dd0e1;"/>
+            <rect x="0" y="7" width="24" height="4" style="fill:#aed581;"/>
+            <rect x="0" y="3" width="24" height="5" style="fill:#fff176;"/>
+        </g>
     </g>
     <path d="M12,2c0.667,2.667 2,4.833 4,6.5c2,1.667 3,3.5 3,5.5c0,3.84 -3.16,7 -7,7c-3.84,0 -7,-3.16 -7,-7c0,-1.082 0.351,-2.135 1,-3c0,1.371 1.129,2.5 2.5,2.5c1.371,0 2.5,-1.129 2.5,-2.5c0,-2 -1.5,-3 -1.5,-5c0,-1.333 0.833,-2.667 2.5,-4" style="fill:none;fill-rule:nonzero;stroke:#000;stroke-width:2px;"/>
 </svg>

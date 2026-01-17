@@ -3,6 +3,11 @@ import type {ElementPart} from 'lit';
 import {directive, Directive, PartInfo, PartType} from 'lit/directive.js';
 import {HoverHint} from './hoverHint.ts';
 
+/**
+ * Use hoverHint on an element to show a hover hint when the element is hovered.
+ * Example:
+ * <cc-button ${hoverHint('This is a button')}>Click me</cc-button>
+ */
 class HoverHintDirective extends Directive {
     private el?: HTMLElement;
     private hint?: string | null;
