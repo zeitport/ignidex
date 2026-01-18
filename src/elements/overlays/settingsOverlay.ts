@@ -2,6 +2,8 @@ import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {ListItem} from '../listElement.ts';
 import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline} from '@mdi/js';
+import {Coffee} from 'lucide';
+import {lucideIconToDataUri} from '#utils/lucideIconToDataUri.ts';
 import '../overlayElement.ts';
 import '../listElement.ts';
 import '../settings/uiSettingsPanel.ts';
@@ -9,6 +11,7 @@ import '../settings/storageSettingsPanel.ts';
 import '../settings/aboutSettingsPanel.ts';
 import '../settings/keyboardShortcutsSettingsPanel.ts';
 import '../settings/imageGallerySettingsPanel.ts';
+import '../settings/coffeeSettingsPanel.ts';
 import '../dialogButton.ts';
 
 @customElement('cc-settings-overlay')
@@ -21,7 +24,8 @@ export class SettingsOverlay extends LitElement {
         {id: 'keyboard', label: 'Keyboard', icon: mdiKeyboard},
         {id: 'gallery', label: 'Image Gallery', icon: mdiImageMultipleOutline},
         {id: 'storage', label: 'Storage', icon: mdiDatabase},
-        {id: 'about', label: 'About', icon: mdiInformationOutline},
+        {id: 'coffee', label: 'Coffee', iconDataUri: lucideIconToDataUri(Coffee)},
+        {id: 'about', label: 'About', icon: mdiInformationOutline}
     ];
 
     static styles = css`
@@ -79,6 +83,8 @@ export class SettingsOverlay extends LitElement {
                 return html`<cc-storage-settings-panel></cc-storage-settings-panel>`;
             case 'about':
                 return html`<cc-about-settings-panel></cc-about-settings-panel>`;
+            case 'coffee':
+                return html`<cc-coffee-settings-panel></cc-coffee-settings-panel>`;
             default:
                 return html``;
         }
