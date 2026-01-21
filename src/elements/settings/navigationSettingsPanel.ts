@@ -5,6 +5,7 @@ import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
 import {bookmarkOnClickAction} from '#state';
+import {t} from '#i18n';
 
 @customElement('cc-navigation-settings-panel')
 export class NavigationSettingsPanel extends LitElement {
@@ -33,16 +34,16 @@ export class NavigationSettingsPanel extends LitElement {
 
     render() {
         return html`
-            <cc-settings-header>Navigation Settings</cc-settings-header>
+            <cc-settings-header>${t.settingsPanel.navigationHeader}</cc-settings-header>
 
             <cc-settings-section>
-                <span slot="label">Bookmark on Click</span>
-                <span slot="description">Choose what happens when you click on a bookmark.</span>
+                <span slot="label">${t.settingsPanel.navigationBookmarkOnClickLabel}</span>
+                <span slot="description">${t.settingsPanel.navigationBookmarkOnClickDescription}</span>
                 <cc-radio-button-group
-                    aria-label="Bookmark on Click Action"
+                    aria-label="${t.settingsPanel.navigationBookmarkOnClickLabel}"
                     .options=${[
-                        {label: 'Open', value: BookmarkOnClickAction.open},
-                        {label: 'Open in new tab', value: BookmarkOnClickAction.openInNewTab}
+                        {label: t.settingsPanel.navigationBookmarkOpen, value: BookmarkOnClickAction.open},
+                        {label: t.settingsPanel.navigationBookmarkOpenNewTab, value: BookmarkOnClickAction.openInNewTab}
                     ]}
                     .value=${this.selectedBookmarkOnClickAction}
                     @change=${(event: CustomEventWithValue<BookmarkOnClickActionType>) => this.selectBookmarkOnClickAction(event.detail.value)}

@@ -16,6 +16,7 @@ import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
 import {activeSubOverlay, cornerActions, hoverHintMode, selectedCornerPosition} from '#state';
 import {uiSettingsPanelStyle} from './uiSettingsPanelStyle.ts';
+import {t} from '#i18n';
 
 @customElement('cc-ui-settings-panel')
 export class UISettingsPanel extends LitElement {
@@ -56,17 +57,17 @@ export class UISettingsPanel extends LitElement {
 
     render() {
         const fontSizeOptions = [
-            {label: 'S', size: 14, tooltip: 'small'},
-            {label: 'M', size: 16, tooltip: 'medium (default)'},
-            {label: 'L', size: 20, tooltip: 'large'},
+            {label: 'S', size: 14, tooltip: t.settingsPanel.uiFontSizeSmall},
+            {label: 'M', size: 16, tooltip: t.settingsPanel.uiFontSizeMedium},
+            {label: 'L', size: 20, tooltip: t.settingsPanel.uiFontSizeLarge},
         ];
 
         return html`
-            <cc-settings-header>UI Settings</cc-settings-header>
+            <cc-settings-header>${t.settingsPanel.uiHeader}</cc-settings-header>
 
             <cc-settings-section>
-                <span slot="label">Base Font Size</span>
-                <span slot="description">Adjust the default text size for better readability.</span>
+                <span slot="label">${t.settingsPanel.uiFontSizeLabel}</span>
+                <span slot="description">${t.settingsPanel.uiFontSizeDescription}</span>
                 <div class="font-size-grid">
                     ${fontSizeOptions.map(option => html`
                         <div
@@ -81,8 +82,8 @@ export class UISettingsPanel extends LitElement {
             </cc-settings-section>
 
             <cc-settings-section>
-                <span slot="label">Accent Color</span>
-                <span slot="description">Choose a color to personalize buttons, highlights, and interactive elements.</span>
+                <span slot="label">${t.settingsPanel.uiAccentColorLabel}</span>
+                <span slot="description">${t.settingsPanel.uiAccentColorDescription}</span>
                 <div class="color-grid">
                     ${colorPalette.map(color => html`
                         <div
@@ -96,11 +97,11 @@ export class UISettingsPanel extends LitElement {
             </cc-settings-section>
 
             <cc-settings-section>
-                <span slot="label">Text Transform</span>
-                <span slot="description">Enable uppercase text for a modern look.</span>
+                <span slot="label">${t.settingsPanel.uiTextTransformLabel}</span>
+                <span slot="description">${t.settingsPanel.uiTextTransformDescription}</span>
                 <div>
                     <cc-switch
-                        aria-label="Text Transform"
+                        aria-label="${t.settingsPanel.uiTextTransformLabel}"
                         .checked=${this.useUppercase}
                         @change=${(event: CheckedCustomEvent) => this.toggleTextTransform(event.detail.checked)}>
                     </cc-switch>
@@ -108,14 +109,14 @@ export class UISettingsPanel extends LitElement {
             </cc-settings-section>
 
             <cc-settings-section>
-                <span slot="label">Hover Hints</span>
-                <span slot="description">Select how to display hover hints for elements.</span>
+                <span slot="label">${t.settingsPanel.uiHoverHintsLabel}</span>
+                <span slot="description">${t.settingsPanel.uiHoverHintsDescription}</span>
                 <cc-radio-button-group
-                    aria-label="Hover Hint Style"
+                    aria-label="${t.settingsPanel.uiHoverHintsLabel}"
                     .options=${[
-                        {label: 'Off', value: HoverHintMode.Off},
-                        {label: 'On (dark)', value: HoverHintMode.Dark},
-                        {label: 'On (accent)', value: HoverHintMode.Highlighted}
+                        {label: t.settingsPanel.optionOff, value: HoverHintMode.Off},
+                        {label: t.settingsPanel.uiHoverHintsOnDark, value: HoverHintMode.Dark},
+                        {label: t.settingsPanel.uiHoverHintsOnAccent, value: HoverHintMode.Highlighted}
                     ]}
                     .value=${this.selectedHoverHintMode}
                     @change=${(event: CustomEventWithValue<HoverHintModeType>) => this.selectHoverHintMode(event.detail.value)}
@@ -130,15 +131,15 @@ export class UISettingsPanel extends LitElement {
     private renderCornerActionSizeSection() {
         return html`
             <cc-settings-section>
-                <span slot="label">Corner Action Size</span>
-                <span slot="description">Configure corner action icon size.</span>
+                <span slot="label">${t.settingsPanel.uiCornerActionSizeLabel}</span>
+                <span slot="description">${t.settingsPanel.uiCornerActionSizeDescription}</span>
                 <div class="corner-icons-size">
                     <cc-radio-button-group
-                        aria-label="Corner Action Style"
+                        aria-label="${t.settingsPanel.uiCornerActionSizeLabel}"
                         .options=${[
-                            {label: 'Off', value: SettingsIconStyle.Off},
-                            {label: 'Small', value: SettingsIconStyle.Small},
-                            {label: 'Large', value: SettingsIconStyle.Large}
+                            {label: t.settingsPanel.optionOff, value: SettingsIconStyle.Off},
+                            {label: t.settingsPanel.optionSmall, value: SettingsIconStyle.Small},
+                            {label: t.settingsPanel.optionLarge, value: SettingsIconStyle.Large}
                         ]}
                         .value=${cornerActions.value.size}
                         @change=${(event: CustomEventWithValue<SettingsIconStyle>) => this.selectCornerIconSize(event.detail.value)}
@@ -151,8 +152,8 @@ export class UISettingsPanel extends LitElement {
     private renderCornerActionsSection() {
         return html`
             <cc-settings-section>
-                <span slot="label">Corner Actions</span>
-                <span slot="description">Configure corner actions for quick access to your favorite actions.</span>
+                <span slot="label">${t.settingsPanel.uiCornerActionsLabel}</span>
+                <span slot="description">${t.settingsPanel.uiCornerActionsDescription}</span>
                 ${this.renderCornerRadioButtons()}
             </cc-settings-section>
         `;

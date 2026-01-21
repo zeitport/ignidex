@@ -3,6 +3,7 @@ import {customElement} from 'lit/decorators.js';
 import {getKeyboardShortcuts} from '../../keyboard/keyboardShortcuts.ts';
 import './settingsSection.ts';
 import './settingsHeader.ts';
+import {t} from '#i18n';
 
 @customElement('cc-keyboard-shortcuts-settings-panel')
 export class KeyboardShortcutsSettingsPanel extends LitElement {
@@ -63,11 +64,11 @@ export class KeyboardShortcutsSettingsPanel extends LitElement {
         const shortcuts = getKeyboardShortcuts();
 
         return html`
-            <cc-settings-header>Keyboard Shortcuts</cc-settings-header>
+            <cc-settings-header>${t.settingsPanel.keyboardHeader}</cc-settings-header>
 
             <cc-settings-section>
-                <span slot="label">Available Shortcuts</span>
-                <span slot="description">Overview of all keyboard shortcuts.</span>
+                <span slot="label">${t.settingsPanel.keyboardAvailableLabel}</span>
+                <span slot="description">${t.settingsPanel.keyboardAvailableDescription}</span>
                 <div class="shortcuts-list">
                     ${shortcuts.map(shortcut => html`
                         <div class="shortcut-row">

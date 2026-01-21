@@ -4,6 +4,7 @@ import './settingsSection.ts';
 import './settingsHeader.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {inject} from '#inject';
+import {t} from '#i18n';
 
 @customElement('cc-storage-settings-panel')
 export class StorageSettingsPanel extends LitElement {
@@ -55,15 +56,15 @@ export class StorageSettingsPanel extends LitElement {
 
     render() {
         return html`
-            <cc-settings-header>Storage Settings</cc-settings-header>
+            <cc-settings-header>${t.settingsPanel.storageHeader}</cc-settings-header>
 
             <cc-settings-section>
-                <span slot="label">Icon Assets Cache</span>
+                <span slot="label">${t.settingsPanel.storageIconCacheLabel}</span>
                 <div class="storage-info">
                     ${this.storageSizeMB} MB
                 </div>
                 <div slot="description" class="storage-details">
-                    ${this.iconCount} icons stored locally.
+                    ${t.settingsPanel.storageIconCount(this.iconCount)}
                 </div>
             </cc-settings-section>
         `;

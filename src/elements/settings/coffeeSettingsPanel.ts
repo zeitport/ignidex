@@ -2,6 +2,7 @@ import {html, LitElement, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import './settingsSection.ts';
 import './settingsHeader.ts';
+import {t} from '#i18n';
 
 @customElement('cc-coffee-settings-panel')
 export class CoffeeSettingsPanel extends LitElement {
@@ -15,11 +16,11 @@ export class CoffeeSettingsPanel extends LitElement {
 
     render() {
         return html`
-            <cc-settings-header>Coffee</cc-settings-header>
+            <cc-settings-header>${t.settingsPanel.coffeeHeader}</cc-settings-header>
 
             <cc-settings-section>
-                <span slot="label">Support the developer</span>
-                <span slot="description">Coming soon...</span>
+                <span slot="label">${t.settingsPanel.coffeeSupportLabel}</span>
+                <span slot="description">${t.settingsPanel.coffeeSupportDescription}</span>
             </cc-settings-section>
         `;
     }

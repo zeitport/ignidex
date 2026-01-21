@@ -1,3 +1,4 @@
+import {t} from '#i18n';
 import {html, LitElement, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import './settingsSection.ts';
@@ -37,34 +38,34 @@ export class AboutSettingsPanel extends LitElement {
 
     render() {
         return html`
-            <cc-settings-header>About Ignidex</cc-settings-header>
+            <cc-settings-header>${t.settingsPanel.aboutHeader}</cc-settings-header>
 
             <cc-settings-section>
-                <span slot="label">Version</span>
+                <span slot="label">${t.settingsPanel.aboutVersionLabel}</span>
                 <span class="value">${packageJson.version}</span>
             </cc-settings-section>
 
             <cc-settings-section>
-                <span slot="label">Author</span>
+                <span slot="label">${t.settingsPanel.aboutAuthorLabel}</span>
                 <p>
                     I built <strong>Ignidex</strong> for myself because I wanted a calm <strong>start page</strong>, not a dashboard.
-                    It’s a local-first tool for organizing links and small pieces of information, designed to stay out of the way once it’s set up.
+                    It's a local-first tool for organizing links and small pieces of information, designed to stay out of the way once it's set up.
                 </p>
                 <span class="value">Chris</span>
             </cc-settings-section>
 
             <cc-settings-section>
-                <span slot="label">Homepage</span>
+                <span slot="label">${t.settingsPanel.aboutHomepageLabel}</span>
                 <a class="value" href="${packageJson.homepage}" target="_blank" rel="noopener noreferrer">${packageJson.homepage}</a>
             </cc-settings-section>
 
             <cc-settings-section>
-                <span slot="label">Issues</span>
+                <span slot="label">${t.settingsPanel.aboutIssuesLabel}</span>
                 <a class="value" href="${packageJson.bugs.url}" target="_blank" rel="noopener noreferrer">${packageJson.bugs.url}</a>
             </cc-settings-section>
 
             <cc-settings-section>
-                <span slot="label">License</span>
+                <span slot="label">${t.settingsPanel.aboutLicenseLabel}</span>
                 <span class="value">${packageJson.license}</span>
             </cc-settings-section>
         `;

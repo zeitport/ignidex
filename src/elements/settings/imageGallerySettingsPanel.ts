@@ -1,5 +1,6 @@
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
+import {t} from '#i18n';
 
 @customElement('cc-image-gallery-settings-panel')
 export class ImageGallerySettingsPanel extends LitElement {
@@ -25,11 +26,11 @@ export class ImageGallerySettingsPanel extends LitElement {
 
     render() {
         return html`
-            <cc-settings-header>Image Gallery</cc-settings-header>
+            <cc-settings-header>${t.settingsPanel.imageGalleryHeader}</cc-settings-header>
 
             <cc-settings-section>
-                <span slot="label">All Images</span>
-                <div slot="description">All uploaded images stored locally.</div>
+                <span slot="label">${t.settingsPanel.imageGalleryAllImagesLabel}</span>
+                <div slot="description">${t.settingsPanel.imageGalleryAllImagesDescription}</div>
                 <div class="gallery-container">
                     <cc-image-asset-viewer .key=${this.refreshKey}></cc-image-asset-viewer>
                 </div>

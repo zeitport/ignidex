@@ -33,6 +33,10 @@ export const hints = {
     featureRightClick: '[RMB] Try me'
 }
 
+
+/**
+ * Prefer `t` from `i18n`;
+ */
 export const tokens = {
     keyboardShortcut: {
         switchPanel: 'Open panel switcher',
@@ -74,5 +78,75 @@ export const tokens = {
         addBookmark: 'Add Bookmark',
         editBookmark: 'Edit',
         editGroup: 'Edit',
+    },
+    settingsPanel: {
+        // Sidebar navigation labels
+        sidebarUi: 'UI',
+        sidebarNavigation: 'Navigation',
+        sidebarKeyboard: 'Keyboard',
+        sidebarImageGallery: 'Image Gallery',
+        sidebarStorage: 'Storage',
+        sidebarCoffee: 'Coffee',
+        sidebarAbout: 'About',
+
+        // Common option labels
+        optionOff: 'Off',
+        optionSmall: 'Small',
+        optionLarge: 'Large',
+
+        // UI Settings
+        uiHeader: 'UI Settings',
+        uiFontSizeLabel: 'Base Font Size',
+        uiFontSizeDescription: 'Adjust the default text size for better readability.',
+        uiFontSizeSmall: 'small',
+        uiFontSizeMedium: 'medium (default)',
+        uiFontSizeLarge: 'large',
+        uiAccentColorLabel: 'Accent Color',
+        uiAccentColorDescription: 'Choose a color to personalize buttons, highlights, and interactive elements.',
+        uiTextTransformLabel: 'Text Transform',
+        uiTextTransformDescription: 'Enable uppercase text for a modern look.',
+        uiHoverHintsLabel: 'Hover Hints',
+        uiHoverHintsDescription: 'Select how to display hover hints for elements.',
+        uiHoverHintsOnDark: 'On (dark)',
+        uiHoverHintsOnAccent: 'On (accent)',
+        uiCornerActionSizeLabel: 'Corner Action Size',
+        uiCornerActionSizeDescription: 'Configure corner action icon size.',
+        uiCornerActionsLabel: 'Corner Actions',
+        uiCornerActionsDescription: 'Configure corner actions for quick access to your favorite actions.',
+
+        // Navigation Settings
+        navigationHeader: 'Navigation Settings',
+        navigationBookmarkOnClickLabel: 'Bookmark on Click',
+        navigationBookmarkOnClickDescription: 'Choose what happens when you click on a bookmark.',
+        navigationBookmarkOpen: 'Open',
+        navigationBookmarkOpenNewTab: 'Open in new tab',
+
+        // Keyboard Settings
+        keyboardHeader: 'Keyboard Shortcuts',
+        keyboardAvailableLabel: 'Available Shortcuts',
+        keyboardAvailableDescription: 'Overview of all keyboard shortcuts.',
+
+        // Image Gallery Settings
+        imageGalleryHeader: 'Image Gallery',
+        imageGalleryAllImagesLabel: 'All Images',
+        imageGalleryAllImagesDescription: 'All uploaded images stored locally.',
+
+        // Storage Settings
+        storageHeader: 'Storage Settings',
+        storageIconCacheLabel: 'Icon Assets Cache',
+        storageIconCount: (count: number) => `${count} icons stored locally.`,
+
+        // Coffee Settings
+        coffeeHeader: 'Coffee',
+        coffeeSupportLabel: 'Support the developer',
+        coffeeSupportDescription: 'Coming soon...',
+
+        // About Settings
+        aboutHeader: 'About Ignidex',
+        aboutVersionLabel: 'Version',
+        aboutAuthorLabel: 'Author',
+        aboutHomepageLabel: 'Homepage',
+        aboutIssuesLabel: 'Issues',
+        aboutLicenseLabel: 'License'
     }
 };

@@ -1,3 +1,4 @@
+import {t} from '#i18n';
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {ListItem} from '../listElement.ts';
@@ -21,13 +22,13 @@ export class SettingsOverlay extends LitElement {
     private activePanelId: string = 'ui';
 
     private panels: ListItem[] = [
-        {id: 'ui', label: 'UI', icon: mdiPalette},
-        {id: 'navigation', label: 'Navigation', icon: mdiCompassOutline},
-        {id: 'keyboard', label: 'Keyboard', icon: mdiKeyboard},
-        {id: 'gallery', label: 'Image Gallery', icon: mdiImageMultipleOutline},
-        {id: 'storage', label: 'Storage', icon: mdiDatabase},
-        {id: 'coffee', label: 'Coffee', iconDataUri: lucideIconToDataUri(Coffee)},
-        {id: 'about', label: 'About', icon: mdiInformationOutline}
+        {id: 'ui', label: t.settingsPanel.sidebarUi, icon: mdiPalette},
+        {id: 'navigation', label: t.settingsPanel.sidebarNavigation, icon: mdiCompassOutline},
+        {id: 'keyboard', label: t.settingsPanel.sidebarKeyboard, icon: mdiKeyboard},
+        {id: 'gallery', label: t.settingsPanel.sidebarImageGallery, icon: mdiImageMultipleOutline},
+        {id: 'storage', label: t.settingsPanel.sidebarStorage, icon: mdiDatabase},
+        {id: 'coffee', label: t.settingsPanel.sidebarCoffee, iconDataUri: lucideIconToDataUri(Coffee)},
+        {id: 'about', label: t.settingsPanel.sidebarAbout, icon: mdiInformationOutline}
     ];
 
     static styles = css`
