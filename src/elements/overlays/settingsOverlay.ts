@@ -1,12 +1,13 @@
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {ListItem} from '../listElement.ts';
-import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline} from '@mdi/js';
+import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline, mdiCompassOutline} from '@mdi/js';
 import {Coffee} from 'lucide';
 import {lucideIconToDataUri} from '#utils/lucideIconToDataUri.ts';
 import '../overlayElement.ts';
 import '../listElement.ts';
 import '../settings/uiSettingsPanel.ts';
+import '../settings/navigationSettingsPanel.ts';
 import '../settings/storageSettingsPanel.ts';
 import '../settings/aboutSettingsPanel.ts';
 import '../settings/keyboardShortcutsSettingsPanel.ts';
@@ -21,6 +22,7 @@ export class SettingsOverlay extends LitElement {
 
     private panels: ListItem[] = [
         {id: 'ui', label: 'UI', icon: mdiPalette},
+        {id: 'navigation', label: 'Navigation', icon: mdiCompassOutline},
         {id: 'keyboard', label: 'Keyboard', icon: mdiKeyboard},
         {id: 'gallery', label: 'Image Gallery', icon: mdiImageMultipleOutline},
         {id: 'storage', label: 'Storage', icon: mdiDatabase},
@@ -75,6 +77,8 @@ export class SettingsOverlay extends LitElement {
         switch (this.activePanelId) {
             case 'ui':
                 return html`<cc-ui-settings-panel></cc-ui-settings-panel>`;
+            case 'navigation':
+                return html`<cc-navigation-settings-panel></cc-navigation-settings-panel>`;
             case 'keyboard':
                 return html`<cc-keyboard-shortcuts-settings-panel></cc-keyboard-shortcuts-settings-panel>`;
             case 'gallery':

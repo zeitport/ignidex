@@ -37,6 +37,7 @@ export * from './sections/groupSectionElement.ts';
 export * from './settings/settingsSection.ts';
 export * from './settings/settingsHeader.ts';
 export * from './settings/imageGallerySettingsPanel.ts';
+export * from './settings/navigationSettingsPanel.ts';
 export * from './radioButton/radioButtonGroupElement.ts';
 export * from './imageAssetViewer/imageAssetViewerElement.ts';
 export * from './overlays/selectIconOverlay.ts';

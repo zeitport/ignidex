@@ -1,3 +1,4 @@
+import {BookmarkOnClickAction, type BookmarkOnClickActionType} from '#models/idb/bookmarkOnClickAction.ts';
 import {createDefaultCornerActions} from '#models/idb/createDefaultCornerActions.ts';
 import {type CornerActions} from '#models/idb/cornerActions.ts';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
@@ -13,6 +14,7 @@ export class UserStateEntry {
     hoverHintMode: HoverHintModeType = HoverHintMode.Dark;
     settingsIconStyle: SettingsIconStyle = SettingsIconStyle.Large;
     cornerActions: CornerActions = createDefaultCornerActions();
+    bookmarkOnClickAction: BookmarkOnClickActionType = BookmarkOnClickAction.open;
 
     constructor(init: Partial<UserStateEntry> = {}) {
         this.id = init.id ?? 'default';
@@ -32,6 +34,12 @@ export class UserStateEntry {
 
         if (!Object.values(SettingsIconStyle).includes(this.settingsIconStyle)) {
             this.settingsIconStyle = SettingsIconStyle.Large;
+        }
+
+        this.bookmarkOnClickAction = init.bookmarkOnClickAction ?? BookmarkOnClickAction.open;
+
+        if (!Object.values(BookmarkOnClickAction).includes(this.bookmarkOnClickAction)) {
+            this.bookmarkOnClickAction = BookmarkOnClickAction.open;
         }
 
         this.cornerActions = this.initCornerIcons(init.cornerActions);

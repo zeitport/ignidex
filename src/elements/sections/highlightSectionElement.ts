@@ -7,9 +7,10 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#state';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction} from '#state';
 import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
 import {highlightSectionContextMenuItems} from '../../app/contextMenus/highlightSectionContextMenuItems.ts';
+import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
 
 @customElement('cc-highlight-section')
 export class HighlightSectionElement extends LitElement {
@@ -81,14 +82,14 @@ export class HighlightSectionElement extends LitElement {
     }
 
     handleAppClick(event: MouseEvent, card: Card) {
-        console.log(`Clicking card`, {card});
+        if (!card.url) return;
 
-        if (card.url) {
-            if (event.ctrlKey || event.metaKey) {
-                window.open(card.url, '_blank', 'noopener,noreferrer');
-            } else {
-                window.location.href = card.url;
-            }
+        const shouldOpenInNewTab = event.ctrlKey || event.metaKey || bookmarkOnClickAction.value === BookmarkOnClickAction.openInNewTab;
+
+        if (shouldOpenInNewTab) {
+            window.open(card.url, '_blank', 'noopener,noreferrer');
+        } else {
+            window.location.href = card.url;
         }
     }
 }

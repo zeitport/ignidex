@@ -6,10 +6,11 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {groupSectionStyle} from './groupSectionStyle.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup} from '#state';
-import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
-import {bookmarkSectionContextMenuItems} from '../../app/contextMenus/bookmarkSectionContextMenuItems.ts';
-import {groupContextMenuItems} from '../../app/contextMenus/groupContextMenuItems.ts';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction} from '#state';
+import {bookmarkContextMenuItems} from '#app/contextMenus/bookmarkContextMenuItems.ts';
+import {bookmarkSectionContextMenuItems} from '#app/contextMenus/bookmarkSectionContextMenuItems.ts';
+import {groupContextMenuItems} from '#app/contextMenus/groupContextMenuItems.ts';
+import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
 
 @customElement('cc-groups-section')
 export class GroupSectionElement extends LitElement {
@@ -62,7 +63,9 @@ export class GroupSectionElement extends LitElement {
     private handleCardClick(event: MouseEvent, card: Card) {
         if (!card.url) return;
 
-        if (event.ctrlKey || event.metaKey) {
+        const shouldOpenInNewTab = event.ctrlKey || event.metaKey || bookmarkOnClickAction.value === BookmarkOnClickAction.openInNewTab;
+
+        if (shouldOpenInNewTab) {
             window.open(card.url, '_blank', 'noopener,noreferrer');
         } else {
             window.location.href = card.url;

@@ -7,7 +7,7 @@ import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
 import {
     activeStartPanel, activeRemoteUrl, activeOverlay, messageOverlayContent, hoverHintMode, settingsIconStyle,
-    cornerActions
+    cornerActions, bookmarkOnClickAction
 } from '#state';
 import {OverlayType} from './elements/overlays/overlayType.ts';
 import {inject} from '#inject';
@@ -45,6 +45,7 @@ async function main() {
     hoverHintMode.value = state.hoverHintMode;
     settingsIconStyle.value = state.settingsIconStyle;
     cornerActions.value = state.cornerActions;
+    bookmarkOnClickAction.value = state.bookmarkOnClickAction;
 
     activeStartPanel.observe(async (panel) => {
         if (panel) {
