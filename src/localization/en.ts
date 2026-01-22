@@ -30,9 +30,13 @@ export const hints = {
     iconPreviewNoIcon: 'No icon selected',
     switchPanelListItem: '[RMB] open menu to move items up/down',
     copyShareUrlToClipboard: '[LMB] Copy share URL to clipboard',
-    featureRightClick: '[RMB] Try me'
+    featureRightClick: '[RMB] Try me',
+    portafilter: 'Empty Portafilter; [LMB] Take',
+    grinder: 'Grind some Italien coffee beans; [LMB] Fill',
+    tamper: 'Compress coffee; [LMB] Tamper',
+    machine: 'Make coffee; [LMB] Brew',
+    cup: 'Espresso; [LMB] Enjoy'
 }
-
 
 /**
  * Prefer `t` from `i18n`;
@@ -137,9 +141,11 @@ export const tokens = {
         storageIconCount: (count: number) => `${count} icons stored locally.`,
 
         // Coffee Settings
-        coffeeHeader: 'Coffee',
-        coffeeSupportLabel: 'Support the developer',
-        coffeeSupportDescription: 'Coming soon...',
+        coffeeHeader: 'Un caffè',
+        coffeeGameLabel: 'Let’s brew an Italian caffè',
+        coffeeGameDescription: 'It usually starts with the portafilter.',
+        coffeeThanksLabel: 'Thanks for the virtual coffee.',
+        coffeeThanksDescription: 'A real one would taste even better!',
 
         // About Settings
         aboutHeader: 'About Ignidex',

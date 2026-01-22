@@ -99,7 +99,7 @@ async function executeShortcut(shortcut: KeyboardShortcut, event: KeyboardEvent)
         const disabled = await action.isDisabled();
         if (disabled) {
             if (action.disabledHint) {
-                HoverHint.show(new HoverHint({text: action.disabledHint}));
+                HoverHint.show(action.disabledHint);
                 setTimeout(() => HoverHint.clear(), 2000);
             }
             return false;

@@ -41,16 +41,15 @@ export class SettingsOverlay extends LitElement {
         .settings-container {
             display: flex;
             min-height: 60vh;
+            gap: 2rem;
         }
 
         .settings-sidebar {
             width: 200px;
-            padding-right: 1rem;
         }
 
         .settings-content {
             flex: 1;
-            padding-left: 2rem;
         }
     `;
 

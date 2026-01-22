@@ -14,15 +14,15 @@ export class HoverHint {
         this.text = init.text ?? null;
     }
 
-    static show(hint: HoverHint) {
+    static show(text: string | null) {
         if (this.clearTimeout) {
             clearTimeout(this.clearTimeout);
             this.clearTimeout = null;
         }
 
-        if (hint.text) {
+        if (text) {
             this.hoverTimeout = setTimeout(() => {
-                activeHoverHint.value = hint;
+                activeHoverHint.value = new HoverHint({text});
             }, 150);
         }
     }

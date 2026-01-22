@@ -9,11 +9,11 @@ import {HoverHint} from './hoverHint.ts';
  * <cc-button ${hoverHint('This is a button')}>Click me</cc-button>
  */
 class HoverHintDirective extends Directive {
-    private el?: HTMLElement;
+    private el?: Element;
     private hint?: string | null;
     private onEnter = () => {
         if (this.hint) {
-            HoverHint.show(new HoverHint({text: this.hint}));
+            HoverHint.show(this.hint);
         }
     };
 
@@ -33,7 +33,7 @@ class HoverHintDirective extends Directive {
     }
 
     update(part: ElementPart, [hint]: [string | null | undefined]) {
-        const el = part.element as HTMLElement;
+        const el = part.element; // as Element;
 
         if (this.el !== el) {
             this.el?.removeEventListener('mouseenter', this.onEnter);
