@@ -30,20 +30,43 @@ export class CoffeeSettingsPanel extends LitElement {
         #grinder-bg,
         #tamper-bg,
         #portafilter-left-bg,
-        #cup-bg
-        {
-            fill:#404040;
-            fill-opacity:0.6;
+        #cup-bg {
+            fill: #404040;
+            fill-opacity: 0.6;
 
             &[selected] {
-                //fill: color-mix(in srgb, var(--accent) 80%, transparent);
                 fill: color-mix(in srgb, var(--accent) 60%, black);
-                //fill: var(--accent);
             }
         }
 
         [hidden] {
             display: none;
+        }
+
+        .coffee-button {
+            background-color:  color-mix(in srgb, var(--accent) 80%, white);
+            border-radius: 0.5rem;
+            height: 2rem;
+            text-decoration: none;
+            font-size: 1rem;
+            color: color-mix(in srgb, var(--accent) 25%, black);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            user-select: none;
+            margin-block: 1rem;
+            font-weight: bold;
+
+            &:hover {
+                background-color: color-mix(in srgb, var(--accent) 70%, white);
+                color: black;
+            }
+
+            gap: 0.5rem;
+
+            .price {
+            }
         }
     `;
 
@@ -79,6 +102,10 @@ export class CoffeeSettingsPanel extends LitElement {
             <cc-settings-section ?hidden=${!this.isCupDone}>
                 <span slot="label">${t.settingsPanel.coffeeThanksLabel}</span>
                 <span slot="description">${t.settingsPanel.coffeeThanksDescription}</span>
+
+                <div class="button-container">
+                    <a class="coffee-button" href="https://buymeacoffee.com/zeitport" target="_blank"><span>Buy me a coffee</span> <span class="price">(5€)</span></a>
+                </div>
             </cc-settings-section>
         `;
     }
