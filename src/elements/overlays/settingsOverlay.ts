@@ -5,6 +5,8 @@ import {ListItem} from '../listElement.ts';
 import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline, mdiCompassOutline} from '@mdi/js';
 import {Coffee} from 'lucide';
 import {lucideIconToDataUri} from '#utils/lucideIconToDataUri.ts';
+import {activeSettingsPanelId} from '#state';
+import {updateSettingsUrlParameter} from '#core/settingsUrlParameter.ts';
 import '../overlayElement.ts';
 import '../listElement.ts';
 import '../settings/uiSettingsPanel.ts';
@@ -16,10 +18,40 @@ import '../settings/imageGallerySettingsPanel.ts';
 import '../settings/coffeeSettingsPanel.ts';
 import '../dialogButton.ts';
 
+const DEFAULT_PANEL_ID = 'ui';
+
+const VALID_PANEL_IDS = ['ui', 'navigation', 'keyboard', 'gallery', 'storage', 'coffee', 'about'];
+
+export function isValidSettingsPanelId(id: string | null): boolean {
+    return id !== null && VALID_PANEL_IDS.includes(id);
+}
+
 @customElement('cc-settings-overlay')
 export class SettingsOverlay extends LitElement {
     @state()
-    private activePanelId: string = 'ui';
+    private activePanelId: string = DEFAULT_PANEL_ID;
+
+    connectedCallback() {
+        super.connectedCallback();
+        activeSettingsPanelId.watch(this);
+
+        // Initialize from global state if set (e.g., from URL parameter)
+        const globalPanelId = activeSettingsPanelId.value;
+        if (globalPanelId && isValidSettingsPanelId(globalPanelId)) {
+            this.activePanelId = globalPanelId;
+        } else {
+            this.activePanelId = DEFAULT_PANEL_ID;
+        }
+
+        // Update URL with initial panel
+        updateSettingsUrlParameter(this.activePanelId);
+    }
+
+    private handlePanelSelect(panelId: string) {
+        this.activePanelId = panelId;
+        activeSettingsPanelId.value = panelId;
+        updateSettingsUrlParameter(panelId);
+    }
 
     private panels: ListItem[] = [
         {id: 'ui', label: t.settingsPanel.sidebarUi, icon: mdiPalette},
@@ -62,7 +94,7 @@ export class SettingsOverlay extends LitElement {
                             aria-label="Settings Panels"
                             .items=${this.panels}
                             .selectedId=${this.activePanelId}
-                            @selected=${(event: CustomEvent<ListItem>) => this.activePanelId = event.detail.id}
+                            @selected=${(event: CustomEvent<ListItem>) => this.handlePanelSelect(event.detail.id)}
                         ></cc-list>
                     </div>
                     <div class="settings-content">

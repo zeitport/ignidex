@@ -47,3 +47,4 @@ export const panelOrderVersion = new ObservableProperty<number>(0);
 export const settingsIconStyle = new ObservableProperty<SettingsIconStyle>(SettingsIconStyle.Large);
 export const cornerActions = new ObservableProperty<CornerActions>(createDefaultCornerActions());
 export const bookmarkOnClickAction = new ObservableProperty<BookmarkOnClickActionType>(BookmarkOnClickAction.open);
+export const activeSettingsPanelId = new ObservableProperty<string | null>(null);

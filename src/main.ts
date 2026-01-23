@@ -7,11 +7,13 @@ import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
 import {
     activeStartPanel, activeRemoteUrl, activeOverlay, messageOverlayContent, hoverHintMode, settingsIconStyle,
-    cornerActions, bookmarkOnClickAction
+    cornerActions, bookmarkOnClickAction, activeSettingsPanelId
 } from '#state';
 import {OverlayType} from './elements/overlays/overlayType.ts';
 import {inject} from '#inject';
 import {registerKeyboardInputObserver} from './keyboard/keyboardInputObserver.ts';
+import {getSettingsUrlParameter} from '#core/settingsUrlParameter.ts';
+import {isValidSettingsPanelId} from './elements/overlays/settingsOverlay.ts';
 import '#elements';
 
 function registerServiceWorker() {
@@ -64,9 +66,11 @@ async function main() {
     });
 
     window.addEventListener('hashchange', () => void handleHashChange());
+    window.addEventListener('popstate', handlePopState);
 
     const urlParams = new URLSearchParams(window.location.search);
     const loadUrl = urlParams.get('load');
+    const settingParam = urlParams.get('setting');
 
     if (loadUrl) {
         await loadRemotePanel(loadUrl, startPanelsStore);
@@ -100,6 +104,17 @@ async function main() {
         if (!panelLoaded) {
             await switchToFirstStartPanel();
         }
+    }
+
+    // Handle setting URL parameter - open settings overlay if present
+    if (settingParam) {
+        if (isValidSettingsPanelId(settingParam)) {
+            activeSettingsPanelId.value = settingParam;
+        } else {
+            // Invalid ID defaults to 'ui' panel
+            activeSettingsPanelId.value = 'ui';
+        }
+        activeOverlay.value = OverlayType.editSettings;
     }
 }
 
@@ -187,6 +202,29 @@ async function handleHashChange() {
                 activeStartPanel.value = new StartPanel(entry.startPanel);
                 activeRemoteUrl.value = entry.remoteUrl ?? null;
             }
+        }
+    }
+}
+
+function handlePopState() {
+    const settingParam = getSettingsUrlParameter();
+
+    if (settingParam) {
+        // URL has setting parameter - open/update settings overlay
+        if (isValidSettingsPanelId(settingParam)) {
+            activeSettingsPanelId.value = settingParam;
+        } else {
+            activeSettingsPanelId.value = 'ui';
+        }
+
+        if (activeOverlay.value !== OverlayType.editSettings) {
+            activeOverlay.value = OverlayType.editSettings;
+        }
+    } else {
+        // No setting parameter - close settings overlay if open
+        if (activeOverlay.value === OverlayType.editSettings) {
+            activeSettingsPanelId.value = null;
+            activeOverlay.value = null;
         }
     }
 }

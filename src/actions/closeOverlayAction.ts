@@ -1,4 +1,6 @@
-import {activeAction, activeOverlay, activeSubOverlay} from '#state';
+import {activeAction, activeOverlay, activeSubOverlay, activeSettingsPanelId} from '#state';
+import {OverlayType} from '../elements/overlays/overlayType.ts';
+import {removeSettingsUrlParameter} from '#core/settingsUrlParameter.ts';
 import type {ActionInterface} from './actionInterface.ts';
 
 export class CloseOverlayAction implements ActionInterface {
@@ -6,6 +8,11 @@ export class CloseOverlayAction implements ActionInterface {
         if (activeSubOverlay.value !== null) {
             activeSubOverlay.value = null;
         } else {
+            // Remove settings URL parameter if closing settings overlay
+            if (activeOverlay.value === OverlayType.editSettings) {
+                activeSettingsPanelId.value = null;
+                removeSettingsUrlParameter();
+            }
             activeOverlay.value = null;
         }
 
