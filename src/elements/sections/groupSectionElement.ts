@@ -49,7 +49,7 @@ export class GroupSectionElement extends LitElement {
             <div class="bookmark-item"
                  ${hoverHint(i18n.token.hints.bookmark)}
                  @click=${(event: MouseEvent) => this.handleCardClick(event, card)}
-                 @auxclick=${(event: MouseEvent) => this.handleCardClick(event, card)}
+                 @auxclick=${(event: MouseEvent) => this.handleAuxClick(event, card)}
                  @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
                  >
                 <div class="bookmark-item-background"></div>
@@ -64,17 +64,23 @@ export class GroupSectionElement extends LitElement {
     private handleCardClick(event: MouseEvent, card: Card) {
         if (!card.url) return;
 
-        const wasMiddleClick = event.button === 1;
         const shouldOpenInNewTab =
             event.ctrlKey ||
             event.metaKey ||
-            bookmarkOnClickAction.value === BookmarkOnClickAction.openInNewTab ||
-            wasMiddleClick;
-
+            bookmarkOnClickAction.value === BookmarkOnClickAction.openInNewTab;
         if (shouldOpenInNewTab) {
             window.open(card.url, '_blank', 'noopener,noreferrer');
         } else {
             window.location.href = card.url;
+        }
+    }
+
+    private handleAuxClick(event: MouseEvent, card: Card) {
+        if (!card.url) return;
+        const wasMiddleClick = event.button === 1;
+
+        if (wasMiddleClick) {
+            window.open(card.url, '_blank', 'noopener,noreferrer');
         }
     }
 
