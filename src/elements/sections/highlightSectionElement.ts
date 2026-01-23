@@ -40,7 +40,8 @@ export class HighlightSectionElement extends LitElement {
             <div class="bookmark-card">
                 <div class="bookmark"
                      ${hoverHint(i18n.token.hints.bookmark)}
-                     @click=${(event: MouseEvent) => this.handleAppClick(event, card)}
+                     @click=${(event: MouseEvent) => this.handleCardClick(event, card)}
+                     @auxclick=${(event: MouseEvent) => this.handleCardClick(event, card)}
                      @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
                      >
                     <div class="bookmark-background"></div>
@@ -81,10 +82,15 @@ export class HighlightSectionElement extends LitElement {
         }
     }
 
-    handleAppClick(event: MouseEvent, card: Card) {
+    handleCardClick(event: MouseEvent, card: Card) {
         if (!card.url) return;
 
-        const shouldOpenInNewTab = event.ctrlKey || event.metaKey || bookmarkOnClickAction.value === BookmarkOnClickAction.openInNewTab;
+        const wasMiddleClick = event.button === 1;
+        const shouldOpenInNewTab =
+            event.ctrlKey ||
+            event.metaKey ||
+            bookmarkOnClickAction.value === BookmarkOnClickAction.openInNewTab ||
+            wasMiddleClick;
 
         if (shouldOpenInNewTab) {
             window.open(card.url, '_blank', 'noopener,noreferrer');
