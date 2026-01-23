@@ -1,6 +1,6 @@
 # Issue: 
 
-## Use case
+## Story
 
 As a user, I want X to achieve Y.
 
