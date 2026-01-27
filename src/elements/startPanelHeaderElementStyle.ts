@@ -4,6 +4,7 @@ export const startPanelHeaderElementStyle = css`
     :host {
         display: block;
         width: 100%;
+        height: var(--panel-header-height);
         position: relative;
         margin-block: 1rem;
     }
@@ -29,6 +30,7 @@ export const startPanelHeaderElementStyle = css`
         align-items: center;
         grid-template-columns: auto 1fr auto;
         gap: 1rem;
+        height: 100%;
     }
 
     .icon {
@@ -56,11 +58,15 @@ export const startPanelHeaderElementStyle = css`
         flex-direction: column;
         margin: 0;
         padding: 0;
+        min-width: 0;
     }
 
     h1 {
         margin: 0;
         user-select: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .description {
@@ -68,6 +74,9 @@ export const startPanelHeaderElementStyle = css`
         padding: 0;
         color: var(--muted);
         font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .remote-badge {
