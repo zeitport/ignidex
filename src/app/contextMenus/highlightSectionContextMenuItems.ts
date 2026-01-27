@@ -45,7 +45,7 @@ export const highlightSectionContextMenuItems = [
     ContextMenuItem.divider(),
     new ContextMenuItem({
         icon: mdiDelete,
-        label: 'Delete...',
+        label: 'Delete…',
         tooltip: i18n.token.hints.deleteSection,
         action: new DeleteSectionAction(),
         preconditions: [noRemoteUrl]

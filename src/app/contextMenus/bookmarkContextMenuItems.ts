@@ -4,11 +4,13 @@ import {
     mdiOpenInNew,
     mdiPencilOutline,
     mdiArrowUpThin,
-    mdiArrowDownThin
+    mdiArrowDownThin,
+    mdiSwapHorizontal
 } from '@mdi/js';
 import {EditCardAction} from '../../actions/editCardAction.ts';
 import {DeleteCardAction} from '../../actions/deleteCardAction.ts';
 import {MoveCardAction} from '../../actions/moveCardAction.ts';
+import {MoveBookmarkToGroupAction} from '../../actions/moveBookmarkToGroupAction.ts';
 import {CopyUrlAction} from '../../actions/copyUrlAction.ts';
 import {OpenInNewTabAction} from '../../actions/openInNewTabAction.ts';
 import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
@@ -36,6 +38,12 @@ export const bookmarkContextMenuItems = [
         icon: mdiArrowDownThin,
         label: 'Move down',
         action: new MoveCardAction('down'),
+        preconditions: [noRemoteUrl]
+    }),
+    new ContextMenuItem({
+        icon: mdiSwapHorizontal,
+        label: 'Move to…',
+        action: new MoveBookmarkToGroupAction(),
         preconditions: [noRemoteUrl]
     }),
     ContextMenuItem.divider(),

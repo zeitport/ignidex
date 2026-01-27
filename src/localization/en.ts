@@ -91,7 +91,7 @@ export const tokens = {
         deletePanel: 'Delete panel',
         moveRight: 'Move Right',
         moveLeft: 'Move Left',
-        delete: 'Delete...',
+        delete: 'Delete…',
         addBookmark: 'Add Bookmark',
         editBookmark: 'Edit',
         editGroup: 'Edit',

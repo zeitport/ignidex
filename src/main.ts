@@ -27,7 +27,7 @@ function registerServiceWorker() {
 async function main() {
     registerServiceWorker();
     registerKeyboardInputObserver();
-    console.log('Starting application...');
+    console.log('Starting application…');
     console.log(createId());
 
     const userStateStore = inject(UserStateStore);
