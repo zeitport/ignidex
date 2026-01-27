@@ -101,7 +101,7 @@ html {
 
 html,
 body {
-    height: 100%
+    height: 100%;
 }
 
 body {
@@ -109,4 +109,5 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Roboto, system-ui, -apple-system, sans-serif;
+    user-select: none;
 }
