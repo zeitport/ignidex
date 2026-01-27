@@ -7,14 +7,14 @@ import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
 
 export class UserStateEntry {
     id: string;
-    lastUsedStartPanelId: string | null = null;
-    accentColor: string | null = null;
-    baseFontSize: number = 16;
-    useUppercase: boolean = true;
-    hoverHintMode: HoverHintModeType = HoverHintMode.Dark;
-    settingsIconStyle: SettingsIconStyle = SettingsIconStyle.Large;
-    cornerActions: CornerActions = createDefaultCornerActions();
-    bookmarkOnClickAction: BookmarkOnClickActionType = BookmarkOnClickAction.open;
+    lastUsedStartPanelId: string | null;
+    accentColor: string | null;
+    baseFontSize: number;
+    useUppercase: boolean;
+    hoverHintMode: HoverHintModeType;
+    settingsIconStyle: SettingsIconStyle;
+    cornerActions: CornerActions;
+    bookmarkOnClickAction: BookmarkOnClickActionType;
 
     constructor(init: Partial<UserStateEntry> = {}) {
         this.id = init.id ?? 'default';
@@ -42,7 +42,7 @@ export class UserStateEntry {
             this.bookmarkOnClickAction = BookmarkOnClickAction.open;
         }
 
-        this.cornerActions = this.initCornerIcons(init.cornerActions);
+        this.cornerActions = this.initCornerIcons(init.cornerActions) ?? createDefaultCornerActions();
     }
 
     private initCornerIcons(actions?: CornerActions): CornerActions {

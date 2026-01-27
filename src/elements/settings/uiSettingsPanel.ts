@@ -1,12 +1,13 @@
 import {getCornerActionFromPosition} from '#app/cornerAction/getCornerActionFromPosition.ts';
-import {mdiCancel, mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
 import {CornerPosition} from '#models/idb/cornerPosition.ts';
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
 import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
+import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
+import {cornerActionIconSvgMap} from '../cornerAction/cornerActionIconSvgMap.ts';
 import type {CheckedCustomEvent} from '../customEvents/checkedCustomEvent.ts';
 import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts';
 import {OverlayType} from '../overlays/overlayType.ts';
@@ -191,15 +192,8 @@ export class UISettingsPanel extends LitElement {
         hoverHintMode.value = mode;
     }
 
-    private getCornerIconPath(iconType: CornerActionType): string | null {
-        const iconMap: Record<CornerActionType, string | null> = {
-            [CornerActionType.Off]: mdiCancel,
-            [CornerActionType.Settings]: mdiCog,
-            [CornerActionType.Home]: mdiGithub,
-            [CornerActionType.SwitchPanel]: mdiSwapHorizontal,
-            [CornerActionType.Export]: mdiExport,
-        };
-        return iconMap[iconType];
+    private getCornerIconPath(iconType: CornerActionType): Icon {
+        return cornerActionIconSvgMap[iconType] ?? Icon.brokenIcon();
     }
 
     private renderCornerRadioButtons() {
@@ -246,7 +240,7 @@ export class UISettingsPanel extends LitElement {
         return {
             label: indicator,
             value: position,
-            iconPath:  this.getCornerIconPath(iconType) ?? null
+            icon: this.getCornerIconPath(iconType)
         };
     }
 

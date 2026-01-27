@@ -1,4 +1,5 @@
 import {setCornerIconType} from '#app/cornerAction/setCornerIconType.ts';
+import {Icon} from '#models/internal/icon.ts';
 import {mdiCancel, mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
@@ -8,21 +9,23 @@ import {CornerPosition} from '#models/idb/cornerPosition.ts';
 import {UserStateStore} from '#core/idb/userStateStore.ts';
 import {inject} from '#inject';
 import type {ListItem} from '#elements';
+import {Coffee} from 'lucide';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {switchPanelOverlayStyle} from './switchPanelOverlayStyle.ts';
 
 interface CornerActionItem {
     id: CornerActionType;
     label: string;
-    icon: string | null;
+    icon: Icon;
 }
 
 const cornerActionItems: CornerActionItem[] = [
-    {id: CornerActionType.Off, label: 'Off (no icon)', icon: mdiCancel},
-    {id: CornerActionType.SwitchPanel, label: 'Switch Panel', icon: mdiSwapHorizontal},
-    {id: CornerActionType.Home, label: 'Home (GitHub page)', icon: mdiGithub},
-    {id: CornerActionType.Settings, label: 'Settings', icon: mdiCog},
-    {id: CornerActionType.Export, label: 'Export (JSON)', icon: mdiExport},
+    {id: CornerActionType.Off, label: 'Off (no icon)', icon: Icon.fromMdiIcon(mdiCancel)},
+    {id: CornerActionType.SwitchPanel, label: 'Switch Panel', icon: Icon.fromMdiIcon(mdiSwapHorizontal)},
+    {id: CornerActionType.Home, label: 'Home (GitHub page)', icon: Icon.fromMdiIcon(mdiGithub)},
+    {id: CornerActionType.Settings, label: 'Settings', icon: Icon.fromMdiIcon(mdiCog)},
+    {id: CornerActionType.Export, label: 'Export (JSON)', icon: Icon.fromMdiIcon(mdiExport)},
+    {id: CornerActionType.Coffee, label: 'Coffee', icon: Icon.fromLucideIcon(Coffee)},
 ];
 
 const positionLabels: Record<string, string> = {

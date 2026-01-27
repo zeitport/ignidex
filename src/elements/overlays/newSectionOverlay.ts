@@ -1,3 +1,4 @@
+import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {mdiViewDashboardOutline, mdiViewGridPlusOutline} from '@mdi/js';
@@ -16,13 +17,13 @@ export class NewSectionOverlay extends LitElement {
                 id: 'highlight',
                 label: 'Highlight',
                 description: 'Large icon + Two text lines',
-                icon: mdiViewDashboardOutline
+                icon: Icon.fromMdiIcon(mdiViewDashboardOutline)
             },
             {
                 id: 'groups',
                 label: 'Groups',
                 description: 'Groups of cards',
-                icon: mdiViewGridPlusOutline
+                icon: Icon.fromMdiIcon(mdiViewGridPlusOutline)
             }
         ];
 

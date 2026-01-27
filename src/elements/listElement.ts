@@ -1,13 +1,14 @@
+import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {listElementStyle} from './listElementStyle.ts';
 
 export interface ListItem {
     id: string;
     label: string;
     description?: string;
-    icon?: string;
-    iconDataUri?: string;
+    icon?: Icon;
     badgeText?: string;
 }
 
@@ -42,17 +43,11 @@ export class ListElement extends LitElement {
     }
 
     private renderIcon(item: ListItem) {
-        if (item.iconDataUri) {
-            return html`<div class="item-icon item-icon-mask" aria-hidden="true" style="--mask-url: url('${item.iconDataUri}')"></div>`;
+        if (item.icon?.dataUri) {
+            return html`<div class="item-icon item-icon-mask" aria-hidden="true" style="--mask-url: url('${item.icon?.dataUri}')"></div>`;
         }
-        if (item.icon) {
-            return html`
-                <div class="item-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="${item.icon}" />
-                    </svg>
-                </div>
-            `;
+        if (item.icon?.svg) {
+            return html`<div class="item-icon">${unsafeHTML(item.icon?.svg)}</div>`;
         }
         return html``;
     }

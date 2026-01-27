@@ -1,5 +1,5 @@
 import {StartPanel} from '../internal/startPanel.ts';
-
+export * from '../internal/startPanel.ts';
 /**
  * Represents an entry in the IndexedDB for a StartPanel.
  */

@@ -8,6 +8,6 @@ export function createDefaultCornerActions(): CornerActions {
         topLeft: CornerActionType.SwitchPanel,
         topRight: CornerActionType.Home,
         bottomLeft: CornerActionType.Settings,
-        bottomRight: CornerActionType.Export
+        bottomRight: CornerActionType.Coffee
     };
 }

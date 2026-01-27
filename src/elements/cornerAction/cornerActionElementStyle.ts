@@ -63,13 +63,19 @@ export const cornerActionElementStyle = css`
             fill: var(--text);
         }
 
-        .corner-button[data-size=small] svg {
+        .corner-button[data-size=small] svg,
+        .corner-button[data-size=small] img {
             width: 1.25rem;
             height: 1.25rem;
         }
 
-        .corner-button[data-size=large] svg {
+        .corner-button[data-size=large] svg,
+        .corner-button[data-size=large] img {
             width: 2rem;
             height: 2rem;
+        }
+
+        .corner-button img {
+            filter: var(--icon-filter, invert(1));
         }
     `;

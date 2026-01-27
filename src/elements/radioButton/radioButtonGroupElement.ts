@@ -1,5 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {when} from 'lit/directives/when.js';
 import {radioButtonGroupElementStyle} from './radioButtonGroupElementStyle.ts';
 import type {RadioOption} from './radioOption.ts';
@@ -37,7 +38,7 @@ export class RadioButtonGroupElement extends LitElement {
                         @click=${() => this.selectOption(option.value)}
                         @keydown=${(event: KeyboardEvent) => (event.key === ' ' || event.key === 'Enter') && this.selectOption(option.value)}
                     >
-                        ${when(option.iconPath, path => this.renderIcon(path))}
+                        ${when(option.icon?.svg, icon => this.renderIcon(icon))}
                         ${option.label}
                     </div>
                 `)}
@@ -45,8 +46,8 @@ export class RadioButtonGroupElement extends LitElement {
         `;
     }
 
-    private renderIcon(iconPath: string) {
-        return html`<svg class="radio-icon" viewBox="0 0 24 24"><path d="${iconPath}"></path></svg>`
+    private renderIcon(svgIcon: string) {
+        return html`${unsafeHTML(svgIcon)}`;
     }
 }
 

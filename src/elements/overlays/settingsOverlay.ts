@@ -1,10 +1,10 @@
 import {t} from '#i18n';
+import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {ListItem} from '../listElement.ts';
 import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline, mdiCompassOutline} from '@mdi/js';
 import {Coffee} from 'lucide';
-import {lucideIconToDataUri} from '#utils/lucideIconToDataUri.ts';
 import {activeSettingsPanelId} from '#state';
 import {updateSettingsUrlParameter} from '#core/settingsUrlParameter.ts';
 import '../overlayElement.ts';
@@ -54,13 +54,13 @@ export class SettingsOverlay extends LitElement {
     }
 
     private panels: ListItem[] = [
-        {id: 'ui', label: t.settingsPanel.sidebarUi, icon: mdiPalette},
-        {id: 'navigation', label: t.settingsPanel.sidebarNavigation, icon: mdiCompassOutline},
-        {id: 'keyboard', label: t.settingsPanel.sidebarKeyboard, icon: mdiKeyboard},
-        {id: 'gallery', label: t.settingsPanel.sidebarImageGallery, icon: mdiImageMultipleOutline},
-        {id: 'storage', label: t.settingsPanel.sidebarStorage, icon: mdiDatabase},
-        {id: 'coffee', label: t.settingsPanel.sidebarCoffee, iconDataUri: lucideIconToDataUri(Coffee)},
-        {id: 'about', label: t.settingsPanel.sidebarAbout, icon: mdiInformationOutline}
+        {id: 'ui', label: t.settingsPanel.sidebarUi, icon: Icon.fromMdiIcon(mdiPalette)},
+        {id: 'navigation', label: t.settingsPanel.sidebarNavigation, icon: Icon.fromMdiIcon(mdiCompassOutline)},
+        {id: 'keyboard', label: t.settingsPanel.sidebarKeyboard, icon: Icon.fromMdiIcon(mdiKeyboard)},
+        {id: 'gallery', label: t.settingsPanel.sidebarImageGallery, icon: Icon.fromMdiIcon(mdiImageMultipleOutline)},
+        {id: 'storage', label: t.settingsPanel.sidebarStorage, icon: Icon.fromMdiIcon(mdiDatabase)},
+        {id: 'coffee', label: t.settingsPanel.sidebarCoffee, icon: Icon.fromLucideIcon(Coffee)},
+        {id: 'about', label: t.settingsPanel.sidebarAbout, icon: Icon.fromMdiIcon(mdiInformationOutline)}
     ];
 
     static styles = css`

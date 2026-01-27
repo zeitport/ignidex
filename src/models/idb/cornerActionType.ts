@@ -4,6 +4,7 @@ export const CornerActionType = {
     Home: 'home',
     Settings: 'settings',
     Export: 'export',
+    Coffee: 'coffee',
 } as const;
 
 export type CornerActionType = typeof CornerActionType[keyof typeof CornerActionType];

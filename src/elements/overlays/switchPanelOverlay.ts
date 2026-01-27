@@ -1,5 +1,6 @@
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {i18n} from '#i18n';
+import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {activeStartPanel, activeRemoteUrl, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '#state';
@@ -54,7 +55,7 @@ export class SwitchPanelOverlay extends LitElement {
                 id: entry.id,
                 label: entry.startPanel.header?.title || 'Untitled',
                 description: `#${entry.anchor}`,
-                iconDataUri: result.dataUri ?? undefined,
+                icon: Icon.fromDataUri(result.dataUri),
                 badgeText: entry.remoteUrl ? i18n.token.remotePanel.badge : undefined
             });
         }

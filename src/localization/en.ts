@@ -35,7 +35,8 @@ export const hints = {
     grinder: 'Grind some Italien coffee beans; [LMB] Fill',
     tamper: 'Compress coffee; [LMB] Tamper',
     machine: 'Make coffee; [LMB] Brew',
-    cup: 'Espresso; [LMB] Enjoy'
+    cup: 'Espresso; [LMB] Enjoy',
+    openCoffeeSettings: '[LMB] opens the coffee settings'
 }
 
 /**
@@ -56,6 +57,7 @@ export const tokens = {
         [CornerActionType.Home]: hints.openAppHome,
         [CornerActionType.SwitchPanel]: hints.switchPanel,
         [CornerActionType.Export]: hints.exportPanel,
+        [CornerActionType.Coffee]: hints.openCoffeeSettings,
     },
     panel: {
         copyPrefix: 'Copy: ',

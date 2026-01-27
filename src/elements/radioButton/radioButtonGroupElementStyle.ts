@@ -45,7 +45,7 @@ export const radioButtonGroupElementStyle = css`
         fill: var(--icon-color-hover);
     }
 
-    .radio-icon {
+    .radio-option svg {
         width: 1.5rem;
         height: 1.5rem;
         fill: var(--icon-color);

@@ -1,6 +1,7 @@
 import {diceContextMenuItems} from '#app/contextMenus/diceContextMenuItems.ts';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {t} from '#i18n';
+import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {
@@ -44,20 +45,20 @@ export class GettingStartedOverlay extends LitElement {
                 id: 'demo',
                 label: 'Ignidex Demo',
                 description: 'Load the build-in demo panel to explore all features.',
-                icon: mdiFlask,
+                icon: Icon.fromMdiIcon(mdiFlask),
                 badgeText: 'Recommended',
             },
             {
                 id: 'import',
                 label: 'Import',
                 description: 'Import a ignidex JSON file.',
-                icon: mdiImport,
+                icon: Icon.fromMdiIcon(mdiImport),
             },
             {
                 id: 'empty',
                 label: 'Empty Panel',
                 description: 'Start with a new empty panel',
-                icon: mdiFileDocumentOutline,
+                icon: Icon.fromMdiIcon(mdiFileDocumentOutline),
             }
         ];
 

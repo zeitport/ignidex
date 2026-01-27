@@ -1,5 +1,5 @@
 import {getCornerActionFromPosition} from '#app/cornerAction/getCornerActionFromPosition.ts';
-import {mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
+import {Icon} from '#models/internal/icon.ts';
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {hoverHint} from '#core/hoverHintDirective.ts';
@@ -8,28 +8,24 @@ import {cornerActions} from '#state';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
 import {CornerPosition} from '#models/idb/cornerPosition.ts';
 import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
+import {when} from 'lit/directives/when.js';
 import type {ActionInterface} from '../../actions/actionInterface.ts';
 import {OpenSettingsAction} from '../../actions/openSettingsAction.ts';
+import {OpenSettingsPanelAction} from '../../actions/openSettingsPanelAction.ts';
 import {OpenAppHomeAction} from '../../actions/openAppHomeAction.ts';
 import {SwitchPanelAction} from '../../actions/switchPanelAction.ts';
 import {ExportToJsonAction} from '../../actions/exportToJsonAction.ts';
 import {cornerActionElementStyle} from './cornerActionElementStyle.ts';
-
-const iconPathMap: Record<CornerActionType, string | null> = {
-    [CornerActionType.Off]: null,
-    [CornerActionType.Settings]: mdiCog,
-    [CornerActionType.Home]: mdiGithub,
-    [CornerActionType.SwitchPanel]: mdiSwapHorizontal,
-    [CornerActionType.Export]: mdiExport,
-};
+import {cornerActionIconSvgMap} from './cornerActionIconSvgMap.ts';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 @customElement('cc-corner-action')
 export class CornerActionElement extends LitElement {
     @property({type: String})
     position: CornerPosition = CornerPosition.BottomLeft;
 
-    @property({type: String})
-    iconPath: string | null = null;
+    @property({type: Icon})
+    icon: Icon | null = null;
 
     @property({type: String})
     iconAssetId: string | null = null;
@@ -55,11 +51,7 @@ export class CornerActionElement extends LitElement {
             return html``;
         }
 
-        const iconPath = this.iconPath ?? iconPathMap[iconType];
-        if (!iconPath) {
-            return html``;
-        }
-
+        const icon = this.icon ?? cornerActionIconSvgMap[iconType] ?? Icon.brokenIcon();
         const hint = i18n.token.cornerActionType[iconType] ?? '';
 
         return html`
@@ -71,9 +63,8 @@ export class CornerActionElement extends LitElement {
                 ${hoverHint(hint)}
                 @click=${() => this.handleClick(iconType)}
             >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="${iconPath}"></path>
-                </svg>
+                ${when(icon.svg, svg => unsafeHTML(svg))}
+                ${when(icon.dataUri, uri => html`<img src="${uri}" alt="${hint}" />`)}
             </button>
         `;
     }
@@ -84,6 +75,7 @@ export class CornerActionElement extends LitElement {
             [CornerActionType.Home, new OpenAppHomeAction()],
             [CornerActionType.SwitchPanel, new SwitchPanelAction()],
             [CornerActionType.Export, new ExportToJsonAction()],
+            [CornerActionType.Coffee, new OpenSettingsPanelAction('coffee')],
         ]);
 
         actionMap.get(cornerAction)?.run();
