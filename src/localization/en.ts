@@ -3,7 +3,9 @@ import {CornerActionType} from '#models/idb/cornerActionType.ts';
 export const hints = {
     bookmark: '[LMB] open; [CTRL] + [LMB] open in new tab; [RMB] bookmark menu',
     startPanelHeader: '[RMB] panel menu; [🠜] go back; [🠞] go forward',
-    switchPanel: '[LMB] Select another panel; [🠜] go back; [🠞] go forward',
+    switchPanel: '[LMB] Select another panel; [1 - 9] Switch; [🠜] previous; [🠞] next',
+    switchPanelUp: '[LMB] Move panel up',
+    switchPanelDown: '[LMB] Move panel down',
     editPanel: 'Edit current panel',
     addSectionToPanel: 'Add new section to panel',
     deletePanel: '[LMB] + [?] Delete current panel',
@@ -28,7 +30,7 @@ export const hints = {
     iconPreviewCopy: '[LMB] Copy icon data URI to clipboard',
     iconPreviewDelete: '[LMB] Remove icon',
     iconPreviewNoIcon: 'No icon selected',
-    switchPanelListItem: '[RMB] open menu to move items up/down',
+    switchPanelListItem: '[RMB] open menu to move panel up/down; [1 - 9] Switch',
     copyShareUrlToClipboard: '[LMB] Copy share URL to clipboard',
     featureRightClick: '[RMB] Try me',
     portafilter: 'Empty Portafilter; [LMB] Take',
@@ -48,7 +50,16 @@ export const tokens = {
         panelBack: 'Go to previous panel',
         panelNext: 'Go to next panel',
         openSettings: 'Open settings',
-        closeOverlay: 'Close overlay'
+        closeOverlay: 'Close overlay',
+        switchToPanel1: 'Switch to panel 1',
+        switchToPanel2: 'Switch to panel 2',
+        switchToPanel3: 'Switch to panel 3',
+        switchToPanel4: 'Switch to panel 4',
+        switchToPanel5: 'Switch to panel 5',
+        switchToPanel6: 'Switch to panel 6',
+        switchToPanel7: 'Switch to panel 7',
+        switchToPanel8: 'Switch to panel 8',
+        switchToPanel9: 'Switch to panel 9'
     },
     hints: hints,
     cornerActionType: {

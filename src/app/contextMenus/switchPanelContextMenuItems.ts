@@ -1,3 +1,4 @@
+import {t} from '#i18n';
 import {
     mdiArrowUpThin,
     mdiArrowDownThin
@@ -8,12 +9,12 @@ import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 export const switchPanelContextMenuItems = [
     new ContextMenuItem({
         icon: mdiArrowUpThin,
-        label: 'Move up',
+        label: t.hints.switchPanelUp,
         action: new MovePanelAction('up')
     }),
     new ContextMenuItem({
         icon: mdiArrowDownThin,
-        label: 'Move down',
+        label: t.hints.switchPanelDown,
         action: new MovePanelAction('down')
     }),
 ];
