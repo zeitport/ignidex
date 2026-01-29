@@ -1,24 +1,28 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(find:*)",
-      "Bash(npm run lint)",
-      "Bash(npm outdated:*)",
-      "Bash(npm run tsc:*)",
-      "Bash(wc:*)",
-      "Bash(npm install)",
-      "Bash(npx tsc:*)",
-      "Bash(node:*)",
-      "Bash(npm ls:*)",
-      "mcp__ignidex__createId",
-      "Bash(npm run build:*)",
-      "Bash(npm install:*)",
-      "Bash(npm run sync-sw:*)",
-      "Bash(dir /b /s \"P:\\\\ignidex\\\\*.test.ts\")",
-      "Bash(findstr:*)"
+    "permissions": {
+        "allow": [
+            "Bash(find:*)",
+            "Bash(npm run lint)",
+            "Bash(npm outdated:*)",
+            "Bash(npm run tsc:*)",
+            "Bash(wc:*)",
+            "Bash(npm install)",
+            "Bash(npx tsc:*)",
+            "Bash(node:*)",
+            "Bash(npm ls:*)",
+            "mcp__ignidex__createId",
+            "Bash(npm run build:*)",
+            "Bash(npm install:*)",
+            "Bash(npm run sync-sw:*)",
+            "Bash(dir /b /s \"P:\\\\ignidex\\\\*.test.ts\")",
+            "Bash(findstr:*)",
+            "Bash(npm run lint:*)"
+        ],
+        "disallow": [
+            "Bash(git *)"
+        ]
+    },
+    "enabledMcpjsonServers": [
+        "ignidex"
     ]
-  },
-  "enabledMcpjsonServers": [
-    "ignidex"
-  ]
 }

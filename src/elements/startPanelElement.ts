@@ -10,7 +10,8 @@ import {
     messageOverlayContent,
     activeContextMenu,
     activeRemoteUrl,
-    activeSubOverlay
+    activeSubOverlay,
+    bookmarkDragDrop
 } from '#state';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
@@ -36,6 +37,7 @@ export class StartPanelElement extends LitElement {
     private activeStartPanel = activeStartPanel.watch(this);
     private isDraggingFile = isDraggingFile.watch(this);
     private activeContextMenu = activeContextMenu.watch(this);
+    private bookmarkDragDrop = bookmarkDragDrop.watch(this);
     private dragCounter = 0;
 
     private sectionRenderer: Map<CardSectionType, (section: CardSection) => TemplateResult> = new Map(
@@ -79,6 +81,8 @@ export class StartPanelElement extends LitElement {
             ${this.renderOverlay(this.activeSubOverlay.value)}
 
             ${when(this.isDraggingFile.value, () => html`<cc-drop-file-overlay></cc-drop-file-overlay>`)}
+
+            ${when(this.bookmarkDragDrop.value, () => html`<cc-drag-ghost></cc-drag-ghost>`)}
 
             <cc-context-menu id="contextMenu"></cc-context-menu>
 

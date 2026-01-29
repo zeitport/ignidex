@@ -42,6 +42,16 @@ export const hoverHintMode = new ObservableProperty<HoverHintModeType>(HoverHint
 
 export const pastedUrl = new ObservableProperty<string | null>(null);
 export const cardToMove = new ObservableProperty<Card | null>(null);
+
+export interface BookmarkDragDropState {
+    draggedCard: Card;
+    sourceGroupId: string;
+    sourceSectionId: string;
+    cursorX: number;
+    cursorY: number;
+}
+export const bookmarkDragDrop = new ObservableProperty<BookmarkDragDropState | null>(null);
+export const bookmarkDragDropTarget = new ObservableProperty<Card | null>(null);
 export const messageOverlayContent = new ObservableProperty<string | null>(null);
 export const isDraggingFile = new ObservableProperty<boolean>(false);
 export const panelOrderVersion = new ObservableProperty<number>(0);

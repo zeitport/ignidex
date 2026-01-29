@@ -48,6 +48,8 @@ export const groupSectionStyle = css`
         margin: 0.5rem 0;
         height: 1.5rem;
         cursor: pointer;
+        display: grid;
+        align-items: center;
     }
 
     .bookmark-item-content {
@@ -87,5 +89,52 @@ export const groupSectionStyle = css`
         color: var(--text);
         white-space: nowrap;
         text-overflow: ellipsis;
+    }
+
+    .bookmark-item.dragging {
+        opacity: 0.5;
+    }
+
+    .bookmark-item.drop-target {
+        //outline: 2px solid var(--accent);
+        //outline-offset: 2px;
+        //border-radius: 0.25rem;
+        height: 2.5rem;
+    }
+
+    .drop-zone-container {
+        position: absolute;
+        inset: 0;
+        display: none;
+    }
+
+    .drop-zone {
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        &.top {
+            top: 0;
+            bottom: 50%;
+        }
+
+        &.bottom {
+            top: 50%;
+            bottom: 0;
+        }
+    }
+
+    .bookmark-item.drop-target {
+        .drop-zone-container {
+            display: block;
+        }
+
+        .drop-zone {
+            background: var(--accent-transparent-75);
+        }
+
+        .drop-zone:hover {
+            background: var(--accent-transparent-50);
+        }
     }
 `;

@@ -48,3 +48,4 @@ export * from './listElement.ts';
 export * from './iconPreviewElement.ts';
 export * from './overlayElement.ts';
 export * from './imageAssetViewer/imageAssetViewerElement.ts';
+export * from './dragGhostElement.ts';

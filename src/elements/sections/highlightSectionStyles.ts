@@ -101,4 +101,14 @@ export const highlightSectionStyles = css`
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+    .bookmark.dragging {
+        opacity: 0.4;
+    }
+
+    .bookmark.drop-target {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 0.25rem;
+    }
 `;
