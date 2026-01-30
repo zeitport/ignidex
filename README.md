@@ -1,4 +1,4 @@
-<h1 style="text-align: center">
+<h1 align="center">
 <picture>
     <source srcset="./public/favicon.svg">
     <img alt="Ignidex Logo" src="./public/favicon.svg" height="48" width="48">
