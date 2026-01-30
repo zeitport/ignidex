@@ -2,7 +2,7 @@
 <picture>
     <source srcset="./public/favicon.svg">
     <img alt="Ignidex Logo" src="./public/favicon.svg" height="48" width="48">
-</picture>
+</picture><br>
 Ignidex
 </h1>
 
