@@ -21,18 +21,18 @@ Ignidex is a local-first page you open *before* everything else. A calm, fast in
 </p>
 
 
-## Try It Now
+## ⚡ Free hosted version
 
 **[ignidex.eu](https://ignidex.eu)** — Use Ignidex directly in your browser.
 
+- Public hosted instance
 - No installation required
-- No account needed
-- No cloud, no sync
-- No tracking, no telemetry
-- No external network requests
-- Not a dashboard
+- No account needed, no cloud, no sync
+- No tracking, no telemetry, no external network requests
+- Not a metrics, widget, or analytics dashboard — just action panels and links.
 - Everything stored locally (indexdb)
 - Open source, permissive license
+- Same code as the local version.
 
 ## Screenshots
 
@@ -40,9 +40,7 @@ Ignidex is a local-first page you open *before* everything else. A calm, fast in
   <tr>
     <td align="center">
       <strong>Start Panel</strong><br>
-      <a href="https://ignidex.eu">
-        <a href="./docs/screenshots/start-panel.png"><img src="./docs/screenshots/start-panel.png" alt="Start Panel" width="400"></a>
-      </a>
+      <img src="./docs/screenshots/start-panel.png" alt="Start Panel" width="400">
     </td>
     <td align="center">
       <strong>Getting Started</strong><br>
@@ -105,11 +103,8 @@ Read the full **[Philosophy](./PHILOSOPHY.md)** for design rationale.
 
 ## Privacy & Security
 
-- No analytics or telemetry
-- No external network requests
-- Works fully offline
-- Data stored locally in IndexedDB
-- GDPR-compliant hosted in Europe 
+Ignidex is local-first and performs no external network requests by default.
+A **free** hosted version is available at https://ignidex.eu
 
 Read the full **[Privacy Policy](./PRIVACY.md)** for details.
 
@@ -127,6 +122,11 @@ Ignidex is in active development.
 
 - Code: BSD 3-Clause License
 - Examples: [LICENSE INFO](./public/examples/LICENSE)
+
+## FAQ
+
+If you have questions about design decisions, privacy, hosting, 
+or how Ignidex differs from dashboards and bookmarks, see the [FAQ](./docs/FAQ.md).
 
 ---
 
