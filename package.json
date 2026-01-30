@@ -18,8 +18,9 @@
         "test:watch": "vitest ./test/units/",
         "test:all": "vitest",
         "test:units": "vitest ./test/units/",
-        "test:playwright": "vitest ./test/playwright/",
-        "test:ui": "vitest --ui"
+        "test:playwright": "vitest ./test/playwright/ --run",
+        "test:ui": "vitest --ui",
+        "video:drag-drop": "node scripts/video/createBookmarkDragDropVideo.ts"
     },
     "author": "Chris Zeitport <chris@zeitport.com>",
     "homepage": "https://github.com/zeitport/ignidex",
