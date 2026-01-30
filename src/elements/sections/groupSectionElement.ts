@@ -58,7 +58,7 @@ export class GroupSectionElement extends LitElement {
 
     renderList(group: CardGroup) {
         return html`
-            <div class="bookmark-group">
+            <div class="bookmark-group" id="${group.id}">
                 <h2 class="group-title" @contextmenu=${(event: MouseEvent) => this.handleGroupContextMenu(event, group)}>${group.name}</h2>
                 <div class="bookmark-group-items">
                     ${group.cards.map(card => this.renderCard(card, group))}
@@ -79,6 +79,7 @@ export class GroupSectionElement extends LitElement {
 
         return html`
             <div class="${classMap(classes)}"
+                 id="${card.id}"
                  ${hoverHint(i18n.token.hints.bookmark)}
                  @click=${(event: MouseEvent) => this.handleCardClick(event, card)}
                  @auxclick=${(event: MouseEvent) => this.handleAuxClick(event, card)}
