@@ -1,10 +1,11 @@
-<h1>
+<h1 style="text-align: center">
 <picture>
     <source srcset="./public/favicon.svg">
     <img alt="Ignidex Logo" src="./public/favicon.svg" height="48" width="48">
 </picture>
 Ignidex
 </h1>
+
 
 **A personal start page for links, actions, and small checklists.**
 
