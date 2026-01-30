@@ -21,7 +21,6 @@ export const testConfig = {
     headless: !debug,
     testTimeout: debug ? 0 : 5_000,
     launchOptions: {
-        // slowMo: debug ? 500 : 0,
         tracesDir: './test/traces/',
         headless: !debug,
         hookTimeout: debug ? 0 : 10_000,
