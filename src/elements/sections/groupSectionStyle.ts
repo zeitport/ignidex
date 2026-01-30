@@ -39,9 +39,6 @@ export const groupSectionStyle = css`
         user-select: none;
     }
 
-    .bookmark-group-items {
-    }
-
     .bookmark-item {
         position: relative;
         padding: 0 0;
@@ -70,17 +67,15 @@ export const groupSectionStyle = css`
         inset: 0% 100% 0% 0%;
         transition: all ease 700ms;
         border-radius: 0.5rem;
-        opacity: 1;
     }
 
     .bookmark-item:hover {
         --icon-color: var(--icon-color-hover);
 
         .bookmark-item-background {
-            background-color: var(--accent-transparent-10); //var(--accent);
+            background-color: var(--accent-transparent-10);
             inset: -0.25rem;
             transition: all ease 100ms;
-            //opacity: 0.1;
         }
     }
 
@@ -97,7 +92,6 @@ export const groupSectionStyle = css`
 
     .bookmark-item.drop-target {
         background-color: transparent;
-        //height: 2.5rem;
     }
 
     .drop-zone-container {
@@ -128,7 +122,6 @@ export const groupSectionStyle = css`
         }
 
         .bookmark-item-background {
-            //background-color: var(--darken-15);
             inset: -0.5rem;
             border-radius: 0;
         }

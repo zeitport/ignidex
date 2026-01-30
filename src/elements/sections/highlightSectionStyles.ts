@@ -53,12 +53,11 @@ export const highlightSectionStyles = css`
         padding: 0;
     }
 
-    .bookmark-background {
+    .bookmark-item-background {
         position: absolute;
-        inset: 0% 100% 0% 0%;
+        inset: 0 100% 0 0;
         transition: all ease 700ms;
         border-radius: 0.5rem;
-        opacity: 0;
     }
 
     .bookmark-card {
@@ -70,11 +69,10 @@ export const highlightSectionStyles = css`
     .bookmark:hover {
         --icon-color: var(--icon-color-hover);
 
-        .bookmark-background {
-            background-color: var(--accent);
+        .bookmark-item-background {
+            background-color: var(--accent-transparent-10);
             inset: -0.5rem;
             transition: all ease 100ms;
-            opacity: 0.1;
         }
     }
 
@@ -107,8 +105,48 @@ export const highlightSectionStyles = css`
     }
 
     .bookmark.drop-target {
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
-        border-radius: 0.25rem;
+        background-color: transparent;
+    }
+
+    .drop-zone-container {
+        position: absolute;
+        inset: -0.5rem;
+        display: none;
+    }
+
+    .drop-zone {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+
+        &.inline-start {
+            left: 0;
+            right: 50%;
+        }
+
+        &.inline-end {
+            left: 50%;
+            right: 0;
+        }
+    }
+
+    .bookmark.drop-target {
+        .drop-zone-container {
+            display: block;
+        }
+
+        .bookmark-item-background {
+            inset: -0.5rem;
+            border-radius: 0;
+            opacity: 1;
+        }
+
+        .drop-zone {
+            background: var(--accent-transparent-75);
+        }
+
+        .drop-zone:hover {
+            background: var(--accent-transparent-50);
+        }
     }
 `;

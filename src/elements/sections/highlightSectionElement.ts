@@ -1,4 +1,5 @@
-import {i18n} from '#i18n';
+import {HoverHint} from '#core/hoverHint.ts';
+import {i18n, t} from '#i18n';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
@@ -8,7 +9,7 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, bookmarkDragDrop, bookmarkDragDropTarget} from '#state';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, bookmarkDragDrop, bookmarkDragDropTarget, bookmarkDragDropInsertPosition, userState} from '#state';
 import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
 import {highlightSectionContextMenuItems} from '../../app/contextMenus/highlightSectionContextMenuItems.ts';
 import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
@@ -73,14 +74,26 @@ export class HighlightSectionElement extends LitElement {
                      @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
                      @mousedown=${(event: MouseEvent) => this.handleCardMouseDown(event, card, group)}
                      @mouseup=${() => this.handleCardMouseUp()}
-                     @mouseleave=${() => this.handleCardMouseLeave(card)}
                      @mouseenter=${() => this.handleCardMouseEnter(card)}
                      >
-                    <div class="bookmark-background"></div>
+                    <div class="bookmark-item-background"></div>
                     <cc-card-icon .card="${card}" style="--icon-size: 1.75rem"></cc-card-icon>
                     <div class="meta">
                         <div class="name">${card.name ?? ''}</div>
                         ${when(card.description, description => html`<div class="url">${description}</div>`)}
+                    </div>
+
+                    <div class="drop-zone-container" @mouseleave=${() => this.handleCardMouseLeave(card)}>
+                        <div class="drop-zone inline-start"
+                             @mouseenter=${() => {
+                                 HoverHint.show(t.hints.dropZoneInlineStart);
+                                 bookmarkDragDropInsertPosition.value = 'before';
+                             }}></div>
+                        <div class="drop-zone inline-end"
+                             @mouseenter=${() => {
+                                 HoverHint.show(t.hints.dropZoneInlineEnd);
+                                 bookmarkDragDropInsertPosition.value = 'after';
+                             }}></div>
                     </div>
                 </div>
             </div>
@@ -165,7 +178,7 @@ export class HighlightSectionElement extends LitElement {
             }
             this.pendingDragCard = null;
             this.pendingDragGroupId = null;
-        }, 500);
+        }, userState.value.dragHoldDelay);
     }
 
     private handleCardMouseUp() {

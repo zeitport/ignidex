@@ -41,6 +41,8 @@ export const hints = {
     openCoffeeSettings: '[LMB] opens the coffee settings',
     dropZoneTop: 'Release [LMB] to insert before',
     dropZoneBottom: 'Release [LMB] to insert after',
+    dropZoneInlineStart: 'Release [LMB] to insert before',
+    dropZoneInlineEnd: 'Release [LMB] to insert after',
 }
 
 /**
