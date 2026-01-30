@@ -8,6 +8,7 @@ import {type CornerPosition} from '#models/idb/cornerPosition.ts';
 import {createDefaultCornerActions} from '#models/idb/createDefaultCornerActions.ts';
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
 import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
+import {UserStateEntry} from '#models/idb/userStateEntry.ts';
 import {ObservableProperty} from '#utils/observableProperty.ts';
 import {ActionInterface} from '../actions/actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
@@ -16,6 +17,8 @@ import type {Card} from '../models/internal/card.ts';
 import {CardGroup} from '../models/internal/cardGroup.ts';
 import {CardSection} from '../models/internal/cardSection.ts';
 import {StartPanel} from '../models/internal/startPanel.ts';
+
+export const userState = new ObservableProperty<UserStateEntry>(new UserStateEntry());
 
 export const activeStartPanel = new ObservableProperty<StartPanel | null>(null);
 export const activeRemoteUrl = new ObservableProperty<string | null>(null);
@@ -52,6 +55,7 @@ export interface BookmarkDragDropState {
 }
 export const bookmarkDragDrop = new ObservableProperty<BookmarkDragDropState | null>(null);
 export const bookmarkDragDropTarget = new ObservableProperty<Card | null>(null);
+export const bookmarkDragDropInsertPosition = new ObservableProperty<'before' | 'after'>('before');
 export const messageOverlayContent = new ObservableProperty<string | null>(null);
 export const isDraggingFile = new ObservableProperty<boolean>(false);
 export const panelOrderVersion = new ObservableProperty<number>(0);

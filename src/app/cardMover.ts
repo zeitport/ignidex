@@ -19,13 +19,13 @@ export class CardMover {
         const clonedPanel = StartPanel.clone(startPanel);
 
         // Find and remove the dragged card from its current location
-        const sourceGroup = this.findGroupByCardId(sourceCard.id);
+        const sourceGroup = this.findGroupByCardId(clonedPanel, sourceCard.id);
 
         if (sourceGroup) {
             sourceGroup.cards = sourceGroup.cards.filter(item => item.id !== sourceCard.id);
         }
 
-        const targetGroup = this.findGroupByCardId(targetCard.id);
+        const targetGroup = this.findGroupByCardId(clonedPanel, targetCard.id);
 
         if (targetGroup) {
             const targetGroupCards = [];
@@ -58,10 +58,7 @@ export class CardMover {
         activeStartPanel.value = clonedPanel;
     }
 
-    findGroupByCardId(cardId: string): CardGroup | null {
-        const panel = activeStartPanel.value;
-        if (!panel) return null;
-
+    findGroupByCardId(panel: StartPanel, cardId: string): CardGroup | null {
         for (const section of panel.sections) {
             for (const group of section.groups) {
                 if (group.cards.some(card => card.id === cardId)) {

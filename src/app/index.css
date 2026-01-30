@@ -7,8 +7,10 @@
     --dim: #6f7a86;
     --accent: #26c3cb;
     --accent2: #5cb0b8;
+    --accent-transparent-10: color-mix(in srgb, var(--accent) 10%, transparent);
     --accent-transparent-50: color-mix(in srgb, var(--accent) 50%, transparent);
     --accent-transparent-75: color-mix(in srgb, var(--accent) 25%, transparent);
+    --darken-15: color-mix(in srgb, black 15%, transparent);
     --line: #29a6a8;
     --base-font-size: 16px;
     --text-transform: uppercase;

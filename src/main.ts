@@ -7,7 +7,7 @@ import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
 import {
     activeStartPanel, activeRemoteUrl, activeOverlay, messageOverlayContent, hoverHintMode, settingsIconStyle,
-    cornerActions, bookmarkOnClickAction, activeSettingsPanelId
+    cornerActions, bookmarkOnClickAction, activeSettingsPanelId, userState
 } from '#state';
 import {OverlayType} from './elements/overlays/overlayType.ts';
 import {inject} from '#inject';
@@ -34,6 +34,7 @@ async function main() {
     const startPanelsStore = inject(StartPanelsStore);
 
     const state = await userStateStore.getOrCreate();
+    userState.value = state;
 
     if (state.accentColor) {
         document.documentElement.style.setProperty('--accent', state.accentColor);

@@ -27,33 +27,10 @@ export class HighlightSectionElement extends LitElement {
     @property()
     section: CardSection | null = null;
 
-    connectedCallback() {
-        super.connectedCallback();
-        document.addEventListener('mouseup', this.boundHandleDocumentMouseUp);
-        document.addEventListener('mousemove', this.boundHandleDocumentMouseMove);
-    }
-
     disconnectedCallback() {
         super.disconnectedCallback();
-        document.removeEventListener('mouseup', this.boundHandleDocumentMouseUp);
-        document.removeEventListener('mousemove', this.boundHandleDocumentMouseMove);
         this.clearDragTimer();
     }
-
-    private boundHandleDocumentMouseUp = () => {
-        void this.handleDocumentMouseUp();
-    };
-
-    private boundHandleDocumentMouseMove = (event: MouseEvent) => {
-        const dragState = bookmarkDragDrop.value;
-        if (dragState) {
-            bookmarkDragDrop.value = {
-                ...dragState,
-                cursorX: event.clientX,
-                cursorY: event.clientY
-            };
-        }
-    };
 
     render() {
         if (!this.section) return html``;
@@ -212,22 +189,6 @@ export class HighlightSectionElement extends LitElement {
         if (bookmarkDragDrop.value && bookmarkDragDrop.value.draggedCard.id !== card.id) {
             bookmarkDragDropTarget.value = card;
         }
-    }
-
-    private async handleDocumentMouseUp() {
-        this.clearDragTimer();
-
-        const dragState = bookmarkDragDrop.value;
-        const targetCard = bookmarkDragDropTarget.value;
-
-        if (dragState && targetCard && dragState.draggedCard.id !== targetCard.id) {
-            // #TODO
-            // await moveCardToPosition(dragState.draggedCard, targetCard);
-            await Promise.resolve();
-        }
-
-        bookmarkDragDrop.value = null;
-        bookmarkDragDropTarget.value = null;
     }
 
     private clearDragTimer() {

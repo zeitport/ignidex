@@ -11,8 +11,12 @@ import {
     activeContextMenu,
     activeRemoteUrl,
     activeSubOverlay,
-    bookmarkDragDrop
+    bookmarkDragDrop,
+    bookmarkDragDropTarget,
+    bookmarkDragDropInsertPosition
 } from '#state';
+import {CardMover} from '#app/cardMover.ts';
+import {InsertPosition} from '#app/insertPosition.ts';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
 import {documentContextMenuItems} from '../app/contextMenus/documentContextMenuItems.ts';
@@ -39,6 +43,7 @@ export class StartPanelElement extends LitElement {
     private activeContextMenu = activeContextMenu.watch(this);
     private bookmarkDragDrop = bookmarkDragDrop.watch(this);
     private dragCounter = 0;
+    private cardMover = inject(CardMover);
 
     private sectionRenderer: Map<CardSectionType, (section: CardSection) => TemplateResult> = new Map(
         [
@@ -57,6 +62,8 @@ export class StartPanelElement extends LitElement {
         document.addEventListener('dragleave', this.handleDragLeave);
         document.addEventListener('dragover', this.handleDragOver);
         document.addEventListener('drop', this.handleDrop);
+        document.addEventListener('mouseup', this.handleBookmarkDragMouseUp);
+        document.addEventListener('mousemove', this.handleBookmarkDragMouseMove);
     }
 
     disconnectedCallback() {
@@ -69,6 +76,8 @@ export class StartPanelElement extends LitElement {
         document.removeEventListener('dragleave', this.handleDragLeave);
         document.removeEventListener('dragover', this.handleDragOver);
         document.removeEventListener('drop', this.handleDrop);
+        document.removeEventListener('mouseup', this.handleBookmarkDragMouseUp);
+        document.removeEventListener('mousemove', this.handleBookmarkDragMouseMove);
     }
 
     render() {
@@ -385,6 +394,32 @@ export class StartPanelElement extends LitElement {
             void action.run();
         } catch (error) {
             console.warn(error);
+        }
+    }
+
+    private handleBookmarkDragMouseUp = () => {
+        const dragState = bookmarkDragDrop.value;
+        const targetCard = bookmarkDragDropTarget.value;
+        const insertPosition = bookmarkDragDropInsertPosition.value === 'before'
+            ? InsertPosition.before
+            : InsertPosition.after;
+
+        if (dragState && targetCard && dragState.draggedCard.id !== targetCard.id) {
+            void this.cardMover.moveCardToPosition(dragState.draggedCard, targetCard, insertPosition);
+        }
+
+        bookmarkDragDrop.value = null;
+        bookmarkDragDropTarget.value = null;
+    }
+
+    private handleBookmarkDragMouseMove = (event: MouseEvent) => {
+        const dragState = bookmarkDragDrop.value;
+        if (dragState) {
+            bookmarkDragDrop.value = {
+                ...dragState,
+                cursorX: event.clientX,
+                cursorY: event.clientY
+            };
         }
     }
 }

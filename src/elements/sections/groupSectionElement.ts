@@ -1,6 +1,5 @@
-import {CardMover} from '#app/cardMover.ts';
-import {InsertPosition} from '#app/insertPosition.ts';
-import {i18n} from '#i18n';
+import {HoverHint} from '#core/hoverHint.ts';
+import {i18n, t} from '#i18n';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
@@ -9,18 +8,24 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {groupSectionStyle} from './groupSectionStyle.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, bookmarkDragDrop, bookmarkDragDropTarget} from '#state';
+import {
+    activeContextMenu,
+    selectedCard,
+    selectedSection,
+    selectedGroup,
+    bookmarkOnClickAction,
+    bookmarkDragDrop,
+    bookmarkDragDropTarget,
+    bookmarkDragDropInsertPosition, userState
+} from '#state';
 import {bookmarkContextMenuItems} from '#app/contextMenus/bookmarkContextMenuItems.ts';
 import {bookmarkSectionContextMenuItems} from '#app/contextMenus/bookmarkSectionContextMenuItems.ts';
 import {groupContextMenuItems} from '#app/contextMenus/groupContextMenuItems.ts';
 import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
-import {inject} from '#core/injector.ts';
 
 @customElement('cc-groups-section')
 export class GroupSectionElement extends LitElement {
     static styles = groupSectionStyle;
-
-    private cardMover = inject(CardMover);
 
     private dragDrop = bookmarkDragDrop.watch(this);
     private dragDropTarget = bookmarkDragDropTarget.watch(this);
@@ -28,38 +33,14 @@ export class GroupSectionElement extends LitElement {
     private dragHoldTimer: ReturnType<typeof setTimeout> | null = null;
     private pendingDragCard: Card | null = null;
     private pendingDragGroupId: string | null = null;
-    private insertPosition: InsertPosition = InsertPosition.before;
 
     @property()
     section: CardSection | null = null;
 
-    connectedCallback() {
-        super.connectedCallback();
-        document.addEventListener('mouseup', this.boundHandleDocumentMouseUp);
-        document.addEventListener('mousemove', this.boundHandleDocumentMouseMove);
-    }
-
     disconnectedCallback() {
         super.disconnectedCallback();
-        document.removeEventListener('mouseup', this.boundHandleDocumentMouseUp);
-        document.removeEventListener('mousemove', this.boundHandleDocumentMouseMove);
         this.clearDragTimer();
     }
-
-    private boundHandleDocumentMouseUp = () => {
-        void this.handleDocumentMouseUp();
-    };
-
-    private boundHandleDocumentMouseMove = (event: MouseEvent) => {
-        const dragState = bookmarkDragDrop.value;
-        if (dragState) {
-            bookmarkDragDrop.value = {
-                ...dragState,
-                cursorX: event.clientX,
-                cursorY: event.clientY
-            };
-        }
-    };
 
     render() {
         if (!this.section) return html``;
@@ -106,6 +87,7 @@ export class GroupSectionElement extends LitElement {
                  @mouseenter=${() => this.handleCardMouseEnter(card)}
                  >
                 <div class="bookmark-item-background"></div>
+
                 <div class="bookmark-item-content">
                     <cc-card-icon .card=${card}></cc-card-icon>
                     <div class="bookmark-label">${card.name}</div>
@@ -113,9 +95,12 @@ export class GroupSectionElement extends LitElement {
 
                 <div class="drop-zone-container" @mouseleave=${() => this.handleCardMouseLeave(card)}>
                     <div class="drop-zone top"
-                         @mouseenter=${() => this.insertPosition = InsertPosition.before}></div>
+                         @mouseenter=${() => {
+                             HoverHint.show(t.hints.dropZoneTop);
+                             bookmarkDragDropInsertPosition.value = 'before';
+                         }}></div>
                     <div class="drop-zone bottom"
-                         @mouseenter=${() => this.insertPosition = InsertPosition.after}></div>
+                         @mouseenter=${() => bookmarkDragDropInsertPosition.value = 'after'}></div>
                 </div>
             </div>
         `;
@@ -209,11 +194,7 @@ export class GroupSectionElement extends LitElement {
             }
             this.pendingDragCard = null;
             this.pendingDragGroupId = null;
-        }, 500);
-    }
-
-    private handleCardMouseUp() {
-        this.clearDragTimer();
+        }, userState.value.dragHoldDelay);
     }
 
     private handleCardMouseLeave(card: Card) {
@@ -237,21 +218,6 @@ export class GroupSectionElement extends LitElement {
         }
     }
 
-    private async handleDocumentMouseUp() {
-        this.clearDragTimer();
-
-        const dragState = bookmarkDragDrop.value;
-        const targetCard = bookmarkDragDropTarget.value;
-
-        console.log('Mouse up, moving card', dragState?.draggedCard.id, 'to', targetCard?.id);
-        if (dragState && targetCard && dragState.draggedCard.id !== targetCard.id) {
-            await this.cardMover.moveCardToPosition(dragState.draggedCard, targetCard, this.insertPosition);
-        }
-
-        bookmarkDragDrop.value = null;
-        bookmarkDragDropTarget.value = null;
-    }
-
     private clearDragTimer() {
         if (this.dragHoldTimer) {
             clearTimeout(this.dragHoldTimer);
@@ -260,8 +226,6 @@ export class GroupSectionElement extends LitElement {
         this.pendingDragCard = null;
         this.pendingDragGroupId = null;
     }
-
-
 }
 
 declare global {

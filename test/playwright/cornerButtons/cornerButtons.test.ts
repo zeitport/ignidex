@@ -14,7 +14,7 @@ describe('Corner Buttons', async () => {
 
     test('Opens "Playwright Test" panel', async () => {
         await expect(page.getByRole('heading', {name: 'Playwright Test'})).toBeVisible();
-        await page.pause();
+        // await page.pause();
     });
 
     test('Configure top left corner button to "open settings" panel', async () => {

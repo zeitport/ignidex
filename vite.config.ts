@@ -1,11 +1,17 @@
 import {defineConfig} from 'vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-    resolve: {alias: {'@': '/src'}},
+    resolve: {
+        alias: {
+            '@': '/src'
+        }
+    },
     plugins: [],
     server: {
-        host: true,
-        port: 3000
+        host: false,
+        port: 3000,
+        hmr: {
+            host: 'localhost'
+        }
     }
 });

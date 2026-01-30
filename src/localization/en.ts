@@ -38,7 +38,9 @@ export const hints = {
     tamper: 'Compress coffee; [LMB] Tamper',
     machine: 'Make coffee; [LMB] Brew',
     cup: 'Espresso; [LMB] Enjoy',
-    openCoffeeSettings: '[LMB] opens the coffee settings'
+    openCoffeeSettings: '[LMB] opens the coffee settings',
+    dropZoneTop: 'Release [LMB] to insert before',
+    dropZoneBottom: 'Release [LMB] to insert after',
 }
 
 /**

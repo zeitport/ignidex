@@ -16,13 +16,19 @@ export class UserStateEntry {
     cornerActions: CornerActions;
     bookmarkOnClickAction: BookmarkOnClickActionType;
 
+    /**
+     * Users often drag & drop bookmarks when they just wanted to click on them.
+     * This delay (in milliseconds) is used to determine if a drag & drop operation is intended or not.
+     */
+    dragHoldDelay: number;
+
     constructor(init: Partial<UserStateEntry> = {}) {
         this.id = init.id ?? 'default';
         this.lastUsedStartPanelId = init.lastUsedStartPanelId ?? null;
         this.accentColor = init.accentColor ?? null;
         this.baseFontSize = init.baseFontSize ?? 16;
         this.useUppercase = init.useUppercase ?? true;
-
+        this.dragHoldDelay = init.dragHoldDelay ?? 500;
         this.hoverHintMode = init.hoverHintMode ?? HoverHintMode.Dark;
 
         if (!Object.values(HoverHintMode).includes(this.hoverHintMode)) {
