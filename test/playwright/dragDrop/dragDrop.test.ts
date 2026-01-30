@@ -1,6 +1,5 @@
 import type {BBox} from '#test/playwright/bbox.ts';
-import {showMouseCursor} from '#test/playwright/showMouseCursor.ts';
-import {beforeEach, describe, test} from 'vitest';
+import {afterAll, beforeEach, describe, test} from 'vitest';
 import {chromium} from 'playwright';
 import {expect} from '@playwright/test';
 import {testConfig} from '#test/testConfig.ts';
@@ -9,16 +8,20 @@ const iconGroupId = 'ZmejesoOPF';
 const bookmarkId1 = 'XKxOGicntL';
 const bookmarkId3 = 'wsQyZUunTw';
 
-describe('Corner Buttons', async () => {
+describe('Drag Drop', async () => {
     const browser = await chromium.launch(testConfig.launchOptions);
-    const page = await browser.newPage();
+    const context = await browser.newContext({});
+    const page = await context.newPage();
 
     beforeEach(async () => {
-        await showMouseCursor(page);
         await page.goto(testConfig.appUrl.test);
         await expect(page.getByRole('heading', {name: 'Playwright Test'})).toBeVisible();
     });
 
+    afterAll(async () => {
+        await context.close();
+        await browser.close();
+    });
 
     test('Drag last bookmark and drop on top', async () => {
         await expect(page.getByRole('heading', {name: 'Playwright Test'})).toBeVisible();
@@ -33,16 +36,14 @@ describe('Corner Buttons', async () => {
         expect(targetBox).toBeDefined();
 
         await moveMouseToBox(sourceBox);
-        await page.waitForTimeout(1000);
 
         await page.mouse.down();
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(500);
 
         await moveMouseToBox(targetBox, {dy: -16});
-        await page.waitForTimeout(1000);
 
         await page.mouse.up();
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(500);
 
         const bookmarkIds = await page.locator(`#${iconGroupId} .bookmark-item`).evaluateAll(
             (elements) => elements.map(el => el.id)
