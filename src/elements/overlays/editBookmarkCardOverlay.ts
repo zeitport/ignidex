@@ -30,9 +30,6 @@ export class EditBookmarkCardOverlay extends LitElement {
     @state()
     private nameError = '';
 
-    @state()
-    private urlError = '';
-
     private startPanelsStore = inject(StartPanelsStore);
     private imageAssetsStore = inject(ImageAssetsStore);
 
@@ -63,7 +60,6 @@ export class EditBookmarkCardOverlay extends LitElement {
             this.description = '';
         }
         this.nameError = '';
-        this.urlError = '';
     }
 
     private async loadExistingIcon(iconId: string | null) {
@@ -131,11 +127,9 @@ export class EditBookmarkCardOverlay extends LitElement {
                                 type="text"
                                 .value=${this.url}
                                 @input=${this.handleUrlInput}
-                                class=${this.urlError ? 'error' : ''}
                                 placeholder="https://..."
                                 autocomplete="off"
                             >
-                            ${this.urlError ? html`<div class="error-message">${this.urlError}</div>` : ''}
                         </div>
 
                         <div class="form-group">
@@ -166,9 +160,6 @@ export class EditBookmarkCardOverlay extends LitElement {
 
     private handleUrlInput = (event: InputEvent) => {
         this.url = (event.target as HTMLInputElement).value;
-        if (this.url.trim()) {
-            this.urlError = '';
-        }
     }
 
     private handleDescriptionInput = (event: InputEvent) => {
@@ -190,11 +181,6 @@ export class EditBookmarkCardOverlay extends LitElement {
         let hasError = false;
         if (!this.name.trim()) {
             this.nameError = 'Title must not be empty.';
-            hasError = true;
-        }
-
-        if (!this.url.trim()) {
-            this.urlError = 'URL must not be empty.';
             hasError = true;
         }
 
