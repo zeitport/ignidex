@@ -4,19 +4,15 @@ export const startPanelElementStyle = css`
     :host {
         position: absolute;
         inset: 0;
+        overflow-inline: hidden;
+        scrollbar-gutter: stable;
     }
 
     .wrap {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 4rem;
+        padding: 2rem 4rem;
         position: relative;
-    }
-
-    @media (max-width: 1024px) {
-        .wrap {
-            padding: 2rem;
-        }
     }
 
     .toprow {

@@ -7,6 +7,10 @@ export const groupSectionStyle = css`
         gap: 1.5rem 4rem;
     }
 
+    .card-section {
+        margin-block-end: var(--layout-section-margin-end);
+    }
+
     @media (max-width: 1024px) {
         .grid {
             gap: 1rem 3rem;
