@@ -36,10 +36,13 @@ export class EditBookmarkCardOverlay extends LitElement {
     private startPanelsStore = inject(StartPanelsStore);
     private imageAssetsStore = inject(ImageAssetsStore);
 
-    private selectedCard = selectedCard.watch(this);
-    private selectedSection = selectedSection.watch(this);
-    private selectedGroup = selectedGroup.watch(this);
-    private pastedUrl = pastedUrl.watch(this);
+    constructor() {
+        super();
+        selectedCard.watch(this);
+        selectedSection.watch(this);
+        selectedGroup.watch(this);
+        pastedUrl.watch(this);
+    }
 
     connectedCallback(): void {
         super.connectedCallback();
@@ -47,15 +50,15 @@ export class EditBookmarkCardOverlay extends LitElement {
     }
 
     private async resetFields() {
-        const card = this.selectedCard.value;
+        const card = selectedCard.value;
 
         if (card) {
             this.name = card.name ?? '';
-            this.url = card.url || (this.pastedUrl.value ?? '');
+            this.url = card.url || (pastedUrl.value ?? '');
             this.description = card.description ?? '';
             await this.loadExistingIcon(card.icon);
         } else {
-            this.url = this.pastedUrl.value ?? '';
+            this.url = pastedUrl.value ?? '';
             this.name = this.extractDomain(this.url);
             this.description = '';
         }
@@ -94,7 +97,7 @@ export class EditBookmarkCardOverlay extends LitElement {
     }
 
     render() {
-        const card = this.selectedCard.value;
+        const card = selectedCard.value;
 
         return html`
             <cc-overlay @close=${this.handleClose}>
@@ -200,9 +203,9 @@ export class EditBookmarkCardOverlay extends LitElement {
         }
 
         const currentPanel = activeStartPanel.value;
-        const cardToEdit = this.selectedCard.value;
-        const targetSection = this.selectedSection.value;
-        const targetGroup = this.selectedGroup.value;
+        const cardToEdit = selectedCard.value;
+        const targetSection = selectedSection.value;
+        const targetGroup = selectedGroup.value;
 
         if (!currentPanel) {
             this.close();
