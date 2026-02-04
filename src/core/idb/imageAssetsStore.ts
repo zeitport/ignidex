@@ -1,5 +1,4 @@
-import type {ImageDto} from '#models/dto/imageDto.ts';
-import {ImageAssetEntry} from '#models/idb/imageAssetEntry.ts';
+import {ImageAssetEntry, type ImageAssetEntryInit} from '#models/idb/imageAssetEntry.ts';
 import {DatabaseConnector} from './databaseConnector.ts';
 
 export class ImageAssetsStore {
@@ -7,7 +6,7 @@ export class ImageAssetsStore {
 
     private readonly connector = new DatabaseConnector();
 
-    async set(icon: ImageDto): Promise<void> {
+    async set(icon: ImageAssetEntryInit): Promise<void> {
         const entry = new ImageAssetEntry(icon);
         await this.connector.set(ImageAssetsStore.storeName, entry);
     }
