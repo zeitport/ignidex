@@ -4,6 +4,7 @@ import {customElement} from 'lit/decorators.js';
 import {mdiDeleteOutline} from '@mdi/js';
 import {svgToDataUri} from '#utils/svgToDataUri.ts';
 import {PasteIconAction} from '../actions/iconPreview/pasteIconAction.ts';
+import {SelectExistingIconAction} from '../actions/iconPreview/selectExistingIconAction.ts';
 import {activeContextMenu, activeIconPreview} from '#state';
 import {iconPreviewElementStyle} from './iconPreviewElementStyle.ts';
 
@@ -58,8 +59,7 @@ export class IconPreviewElement extends LitElement {
     }
 
     private handlePreviewClick = () => {
-        const fileInput = this.shadowRoot?.getElementById('icon-file') as HTMLInputElement;
-        fileInput?.click();
+        new SelectExistingIconAction().run();
     }
 
     private handleFileChange = (event: Event) => {
