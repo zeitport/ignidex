@@ -5,10 +5,6 @@ import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
-import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
-import {StartPanel} from '#models/internal/startPanel.ts';
-import {CardSection} from '#models/internal/cardSection.ts';
-import {CardGroup} from '#models/internal/cardGroup.ts';
 import {Card} from '#models/internal/card.ts';
 import {createId} from '#utils/createId.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
@@ -178,28 +174,21 @@ export class EditBookmarkCardOverlay extends LitElement {
     }
 
     private handleSave = async () => {
-        let hasError = false;
         if (!this.name.trim()) {
             this.nameError = 'Title must not be empty.';
-            hasError = true;
-        }
-
-        if (hasError) {
             return;
         }
 
         const currentPanel = activeStartPanel.value;
-        const cardToEdit = selectedCard.value;
         const targetSection = selectedSection.value;
         const targetGroup = selectedGroup.value;
 
-        if (!currentPanel) {
+        if (!currentPanel || !targetSection || !targetGroup) {
             this.close();
             return;
         }
 
         const activeIcon = activeIconPreview.value;
-
         if (activeIcon) {
             await this.imageAssetsStore.set({
                 id: activeIcon.assetId ?? createId(),
@@ -209,90 +198,20 @@ export class EditBookmarkCardOverlay extends LitElement {
             });
         }
 
-        let updatedSections: CardSection[];
+        // Create new card if none selected, otherwise use existing
+        const card = selectedCard.value ?? new Card();
+        card.name = this.name.trim();
+        card.url = this.url.trim();
+        card.description = this.description.trim();
+        card.icon = activeIcon?.assetId ?? null;
 
-        if (!cardToEdit) {
-            if (!targetSection || !targetGroup) {
-                this.close();
-                return;
-            }
+        const updatedPanel = await this.startPanelsStore.upsertCard(
+            currentPanel,
+            targetGroup,
+            card
+        );
 
-            updatedSections = currentPanel.sections.map(section => {
-                if (section.id !== targetSection.id) return section;
-
-                const groupExists = section.groups.some(item => item.id === targetGroup.id);
-                let updatedGroups: CardGroup[];
-
-                if (groupExists) {
-                    updatedGroups = section.groups.map(group => {
-                        if (group.id !== targetGroup.id) return group;
-
-                        return new CardGroup({
-                            ...group,
-                            cards: [...group.cards, new Card({
-                                name: this.name.trim(),
-                                url: this.url.trim(),
-                                description: this.description.trim(),
-                                icon: activeIconPreview.value?.assetId ?? null,
-                            })]
-                        });
-                    });
-                } else {
-                    updatedGroups = [...section.groups, new CardGroup({
-                        ...targetGroup,
-                        cards: [new Card({
-                            name: this.name.trim(),
-                            url: this.url.trim(),
-                            description: this.description.trim(),
-                            icon: activeIconPreview.value?.assetId ?? null,
-                        })]
-                    })];
-                }
-
-                return new CardSection({
-                    ...section,
-                    groups: updatedGroups
-                });
-            });
-        } else {
-            updatedSections = currentPanel.sections.map(section => {
-                return new CardSection({
-                    ...section,
-                    groups: section.groups.map(group => {
-                        return new CardGroup({
-                            ...group,
-                            cards: group.cards.map(card => {
-                                if (card.id === cardToEdit.id) {
-                                    return new Card({
-                                        ...card,
-                                        name: this.name.trim(),
-                                        url: this.url.trim(),
-                                        description: this.description.trim(),
-                                        icon: activeIconPreview.value?.assetId ?? null,
-                                    });
-                                }
-                                return card;
-                            })
-                        });
-                    })
-                });
-            });
-        }
-
-        const updatedStartPanel = new StartPanel({
-            ...currentPanel,
-            sections: updatedSections
-        });
-
-        const updatedEntry = new StartPanelEntry({
-            id: currentPanel.id,
-            anchor: currentPanel.anchor,
-            startPanel: updatedStartPanel
-        });
-
-        await this.startPanelsStore.set(updatedEntry);
-        activeStartPanel.value = updatedStartPanel;
-
+        activeStartPanel.value = updatedPanel;
         this.close();
     }
 }

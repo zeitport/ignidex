@@ -1,5 +1,5 @@
+import type {CardGroup} from '#models/internal/cardGroup.ts';
 import {createId} from '#utils/createId.ts';
-import {CardGroup} from './cardGroup.ts';
 import {CardSectionType} from './cardSectionType.ts';
 
 export class CardSection {
@@ -12,6 +12,6 @@ export class CardSection {
         this.id = init.id ?? createId();
         this.name = init.name ?? null;
         this.type = init.type ?? CardSectionType.Highlight;
-        this.groups = (init.groups ?? []).map(group => new CardGroup(group));
+        this.groups =init.groups ?? [];
     }
 }

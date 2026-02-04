@@ -4,6 +4,7 @@ import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
+import {mapDtoToStartPanel} from '#models/mapper/mapDtoToModel.ts';
 import {createId} from '#utils/createId.ts';
 import {activeOverlay, activeStartPanel, activeRemoteUrl, messageOverlayContent} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
@@ -54,11 +55,13 @@ export class ImportFromJsonAction implements ActionInterface {
         const startPanelsStore = inject(StartPanelsStore);
         const imageAssetsStore = inject(ImageAssetsStore);
 
+        data.id = data.id ?? createId();
+
         const existingPanel = await startPanelsStore.get(data.id);
         const oldToNewIdMap = new Map<string, string>();
 
         let panelId = data.id;
-        let anchor = data.anchor;
+        let anchor = data.anchor ?? panelId;
 
         if (existingPanel) {
             panelId = createId();
@@ -102,22 +105,31 @@ export class ImportFromJsonAction implements ActionInterface {
         window.location.hash = startPanel.anchor ?? startPanel.id;
     }
 
+    /**
+     * When a start panel DTO is imported, remap all icon IDS to avoid collisions
+     * @param data
+     * @param newPanelId
+     * @param newAnchor
+     * @param idMap
+     * @private
+     */
     private remapIds(
         data: StartPanelDto,
         newPanelId: string,
         newAnchor: string | null,
         idMap: Map<string, string>
     ): Partial<StartPanel> {
-        const remapped = structuredClone(data);
-        remapped.id = newPanelId;
-        remapped.anchor = newAnchor;
 
-        const iconId = remapped.header?.icon ?? null;
-        if (iconId && idMap.has(iconId) && remapped.header) {
-            remapped.header.icon = idMap.get(iconId) ?? null;
+        const panel = mapDtoToStartPanel(data);
+        panel.id = newPanelId;
+        panel.anchor = newAnchor;
+
+        const iconId = panel.header?.icon ?? null;
+        if (iconId && idMap.has(iconId) && panel.header) {
+            panel.header.icon = idMap.get(iconId) ?? null;
         }
 
-        for (const section of remapped.sections) {
+        for (const section of panel.sections) {
             for (const group of section.groups) {
                 for (const card of group.cards) {
                     if (card.icon && idMap.has(card.icon)) {
@@ -127,7 +139,7 @@ export class ImportFromJsonAction implements ActionInterface {
             }
         }
 
-        return remapped;
+        return panel;
     }
 
     private showError(message: string): void {

@@ -25,6 +25,20 @@ export class StartPanel {
         return new StartPanel(structuredClone(startPanel));
     }
 
+    findSection(sectionId: string): CardSection | undefined {
+        return this.sections.find(section => section.id === sectionId);
+    }
+
+    findGroup(groupId: string): CardGroup | undefined {
+        for (const section of this.sections) {
+            for (const group of section.groups) {
+                if (group.id === groupId) {
+                    return group;
+                }
+            }
+        }
+    }
+
     findSectionWithGroup(groupId: string): CardSection | undefined {
         const filterGroupId = (item: CardGroup) => item.id === groupId;
 

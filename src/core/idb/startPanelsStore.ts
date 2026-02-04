@@ -1,4 +1,7 @@
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
+import {StartPanel} from '#models/internal/startPanel.ts';
+import {CardGroup} from '#models/internal/cardGroup.ts';
+import {Card} from '#models/internal/card.ts';
 import {DatabaseConnector} from './databaseConnector.ts';
 
 export class StartPanelsStore {
@@ -45,5 +48,33 @@ export class StartPanelsStore {
         }
         const maxOrder = Math.max(...allPanels.map(panel => panel.order ?? 0));
         return maxOrder + 1;
+    }
+
+    /**
+     * Adds or updates a card in a group. Creates the group if it doesn't exist in the section.
+     * Returns the updated StartPanel with re-instantiated class instances.
+     */
+    async upsertCard(panel: StartPanel, group: CardGroup, card: Card): Promise<StartPanel> {
+        const clonedPanel = StartPanel.clone(panel);
+
+        const targetGroup = clonedPanel.findGroup(group.id);
+        if (!this.assertGroup(targetGroup) || !card.id) {
+             throw new Error('Group does not exist');
+        }
+
+        targetGroup.upsertCard(card);
+
+        const entry = new StartPanelEntry({
+            id: clonedPanel.id,
+            anchor: clonedPanel.anchor,
+            startPanel: clonedPanel
+        });
+        await this.set(entry);
+
+        return clonedPanel;
+    }
+
+    private assertGroup(group: CardGroup | null | undefined): group is CardGroup {
+        return group !== null && group !== undefined;
     }
 }
