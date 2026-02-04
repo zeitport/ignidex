@@ -1,3 +1,4 @@
+import {DocumentPasteHandler} from '#app/documentPasteHandler.ts';
 import {loadDataFromUrl} from '#core/loadDataFromUrl.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
@@ -25,10 +26,13 @@ function registerServiceWorker() {
 }
 
 async function main() {
-    registerServiceWorker();
-    registerKeyboardInputObserver();
     console.log('Starting application…');
     console.log(createId());
+
+    registerServiceWorker();
+    registerKeyboardInputObserver();
+
+    new DocumentPasteHandler().connect();
 
     const userStateStore = inject(UserStateStore);
     const startPanelsStore = inject(StartPanelsStore);
