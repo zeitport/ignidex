@@ -13,6 +13,10 @@ export const highlightSectionStyles = css`
         user-select: none;
     }
 
+    .card-section {
+        margin-block-end: var(--layout-section-margin-end);
+    }
+
     .group-title {
         margin: 0.5rem 0 0.5rem 0;
         padding: 0;

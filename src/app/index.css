@@ -31,6 +31,9 @@
     /* Local scope vars for cc-card-icon */
     --mask-url: '';
 
+    /* Layout */
+    --layout-section-margin-end: 3rem;
+
     /* Context Menu */
     --context-menu-font-size: 0.8rem;
     --context-menu-text: #e0e0e0;
@@ -103,9 +106,12 @@ html {
     font-size: var(--base-font-size);
 }
 
-html,
+html {}
+
 body {
-    height: 100%;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
 }
 
 body {
