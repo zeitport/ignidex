@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.0]
+
+### Added
+- Copy and paste bookmarks (inside app)
+- Move a group to another section
+
+### Fixed
+- Edited bookmarks could not be stored
+
 ## [0.6.0]
 
 ### Added
