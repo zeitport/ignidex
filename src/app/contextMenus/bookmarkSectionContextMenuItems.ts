@@ -1,17 +1,19 @@
-import {i18n} from '#i18n';
+import {i18n, t} from '#i18n';
 import {
+    mdiArrowDownThin,
+    mdiArrowUpThin,
+    mdiContentPaste,
     mdiDelete,
     mdiPencilOutline,
-    mdiShapeCirclePlus,
-    mdiArrowUpThin,
-    mdiArrowDownThin
+    mdiShapeCirclePlus
 } from '@mdi/js';
+import {AddGroupAction} from '../../actions/addGroupAction.ts';
 import {DeleteSectionAction} from '../../actions/deleteSectionAction.ts';
 import {EditSectionAction} from '../../actions/editSectionAction.ts';
-import {AddGroupAction} from '../../actions/addGroupAction.ts';
 import {MoveSectionAction} from '../../actions/moveSectionAction.ts';
+import {PasteCardToSectionAction} from '../../actions/pasteCardToSectionAction.ts';
 import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
-import {noRemoteUrl} from '../preconditions.ts';
+import {hasCardCopy, noRemoteUrl} from '../preconditions.ts';
 
 export const bookmarkSectionContextMenuItems = [
     new ContextMenuItem({
@@ -27,6 +29,13 @@ export const bookmarkSectionContextMenuItems = [
         tooltip: i18n.token.hints.addGroupToSection,
         action: new AddGroupAction(),
         preconditions: [noRemoteUrl]
+    }),
+    new ContextMenuItem({
+        icon: mdiContentPaste,
+        label: t.contextMenu.pasteCard,
+        tooltip: t.hints.pasteCardToSection,
+        action: new PasteCardToSectionAction(),
+        preconditions: [noRemoteUrl, hasCardCopy]
     }),
     ContextMenuItem.divider(),
     new ContextMenuItem({

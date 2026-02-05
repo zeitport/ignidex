@@ -22,6 +22,10 @@ export const hints = {
     moveGroupRight: '[LMB] Move group right',
     deleteGroup: '[LMB] + [?] Delete group',
     moveGroupToSection: '[LMB] Move group to another section',
+    moveBookmarkToGroup: '[LMB] Move bookmark to another group',
+    copyCard: '[LMB] Copy bookmark to clipboard',
+    pasteCardToGroup: '[LMB] Paste bookmark to this group',
+    pasteCardToSection: '[LMB] Paste bookmark to first group in section',
     editSection: 'Edit section',
     addGroupToSection: 'Add new group to section',
     deleteSection: 'Delete section',
@@ -101,6 +105,8 @@ export const tokens = {
         editBookmark: 'Edit',
         editGroup: 'Edit',
         moveToSection: 'Move to…',
+        copyCard: 'Copy',
+        pasteCard: 'Paste',
     },
     settingsPanel: {
         // Sidebar navigation labels
