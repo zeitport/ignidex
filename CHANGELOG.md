@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - v0.6.0
+## [0.6.0]
 
 ### Added
 - Drag and drop to reorder bookmark cards
@@ -8,6 +8,12 @@
 - Switch panel keyboard shortcuts (1-9)
 - Settings URL parameter support
 - Corner action for "Buy me a coffee"
+- Icon preview click opens image asset viewer
+
+### Changed
+- Improved layout spacing
+- Updated panel header style
+- Disabled user text selection for bookmarks
 
 ## [0.5.1]
 
