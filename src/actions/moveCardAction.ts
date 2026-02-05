@@ -1,5 +1,5 @@
 import {Card} from '#models/internal/card.ts';
-import {StartPanel} from '#models/internal/startPanel.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {selectedCard, activeStartPanel} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {inject} from '#core/injector.ts';
@@ -19,7 +19,7 @@ export class MoveCardAction implements ActionInterface {
             return;
         }
 
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         let cardMoved = false;
         for (const section of clonedPanel.sections) {

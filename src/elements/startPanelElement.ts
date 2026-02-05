@@ -1,4 +1,4 @@
-import {LitElement, html, type TemplateResult} from 'lit';
+import {LitElement, html, type TemplateResult, type PropertyValues} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 import {
@@ -44,6 +44,17 @@ export class StartPanelElement extends LitElement {
         ]
     );
 
+    protected update(changedProperties: PropertyValues) {
+        super.update(changedProperties);
+        console.log('StartPanelElement updated', {changedProperties});
+    }
+
+    constructor() {
+        super();
+
+        // activeStartPanel.watch(this);
+    }
+
     connectedCallback() {
         super.connectedCallback();
 
@@ -71,6 +82,7 @@ export class StartPanelElement extends LitElement {
     }
 
     render() {
+        console.log('StartPanelElement render');
         const startPanel = this.activeStartPanel.value;
 
         return html`

@@ -61,7 +61,7 @@ export class ObservableProperty<T> {
         if (this.debugOptions) {
             console.log(`${this.debugOptions.label} notifies ${this.subscribers.size} subscribers.`);
         }
-        
+
         for(const callback of this.subscribers.values()) {
             callback(this.propertyValue);
         }
@@ -83,6 +83,10 @@ export class ObservableProperty<T> {
      * @param host The Lit component that will use this controller.
      */
     watch(host: ReactiveControllerHost) {
+        if (this.debugOptions) {
+            console.log(`Host is watching property ${this.debugOptions?.label}`, host);
+        }
+
         return new ObservableController(host, this);
     }
 }

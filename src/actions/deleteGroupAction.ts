@@ -1,4 +1,4 @@
-import {StartPanel} from '#models/internal/startPanel.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {selectedGroup, activeAction, activeStartPanel, activeSubOverlay} from '#state';
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
@@ -37,7 +37,7 @@ export class DeleteGroupAction implements ActionInterface {
         }
 
         // Clone the current start panel to avoid in-place mutation
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         // Remove the group from the cloned data
         let groupRemoved = false;

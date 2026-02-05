@@ -1,7 +1,9 @@
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
+import {query} from '#models/internal/query.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {Card} from '#models/internal/card.ts';
+import {activeStartPanel} from '#state';
 import {DatabaseConnector} from './databaseConnector.ts';
 
 export class StartPanelsStore {
@@ -54,27 +56,48 @@ export class StartPanelsStore {
      * Adds or updates a card in a group. Creates the group if it doesn't exist in the section.
      * Returns the updated StartPanel with re-instantiated class instances.
      */
-    async upsertCard(panel: StartPanel, group: CardGroup, card: Card): Promise<StartPanel> {
-        const clonedPanel = StartPanel.clone(panel);
+    async insertCard(group: CardGroup, card: Card): Promise<void> {
+        console.info('Insert card', {group, card});
 
-        const targetGroup = clonedPanel.findGroup(group.id);
-        if (!this.assertGroup(targetGroup) || !card.id) {
-             throw new Error('Group does not exist');
-        }
+        group.cards.push(card);
 
-        targetGroup.upsertCard(card);
-
-        const entry = new StartPanelEntry({
-            id: clonedPanel.id,
-            anchor: clonedPanel.anchor,
-            startPanel: clonedPanel
-        });
-        await this.set(entry);
-
-        return clonedPanel;
+        return this.saveActivePanel();
     }
 
-    private assertGroup(group: CardGroup | null | undefined): group is CardGroup {
-        return group !== null && group !== undefined;
+    async saveActivePanel() {
+        const activePanel = activeStartPanel.nonNullableValue;
+
+        const entry = new StartPanelEntry({
+            id: activePanel.id,
+            anchor: activePanel.anchor,
+            startPanel: activePanel
+        });
+
+        await this.set(entry).catch(error => console.error(error));
+    }
+
+    /**
+     * Adds or updates a card in a group. Creates the group if it doesn't exist in the section.
+     * Returns the updated StartPanel with re-instantiated class instances.
+     */
+    async updateCard(panel: StartPanel, card: Card): Promise<void> {
+        console.info('Update card', {panel, card});
+
+        const result = query.findCard(panel.sections, card.id);
+
+        if (!result) {
+            return;
+        }
+
+        // Replace the card in the group with the updated card
+        result.group.cards = result.group.cards.map(item => item.id === card.id ? card : item);
+
+        const entry = new StartPanelEntry({
+            id: panel.id,
+            anchor: panel.anchor,
+            startPanel: panel
+        });
+
+        await this.set(entry).catch(error => console.error(error));
     }
 }

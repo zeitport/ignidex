@@ -1,4 +1,5 @@
 import type {CardGroup} from '#models/internal/cardGroup.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {activeOverlay, activeStartPanel, selectedSection, selectedGroup, selectedCard, pastedUrl, cardToMove} from '#state';
@@ -6,7 +7,6 @@ import {ListItem} from '#elements';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
-import {StartPanel} from '#models/internal/startPanel.ts';
 import {Card} from '#models/internal/card.ts';
 import '../overlayElement.ts';
 import '../dialogButton.ts';
@@ -63,7 +63,7 @@ export class SelectGroupOverlay extends LitElement {
         const startPanel = activeStartPanel.value;
         if (!startPanel) return;
 
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         // Remove card from its current location
         let cardRemoved = false;

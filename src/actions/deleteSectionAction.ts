@@ -1,4 +1,4 @@
-import {StartPanel} from '#models/internal/startPanel.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {selectedSection, activeAction, activeOverlay, activeStartPanel} from '#state';
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
@@ -34,7 +34,7 @@ export class DeleteSectionAction implements ActionInterface {
         }
 
         // Clone the current start panel to avoid in-place mutation
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         // Remove the section from the cloned data
         const sectionIndex = clonedPanel.sections.findIndex(item => item.id === section.id);

@@ -1,3 +1,4 @@
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {activeOverlay, activeStartPanel, selectedSection, selectedGroup, selectedCard, pastedUrl, cardToMove} from '#state';
@@ -5,7 +6,6 @@ import {CardSectionType} from '#models/internal/cardSectionType.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {Card} from '#models/internal/card.ts';
-import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {inject} from '#core/injector.ts';
@@ -75,7 +75,7 @@ export class SelectSectionOverlay extends LitElement {
         const startPanel = this.activeStartPanel.value;
         if (!startPanel) return;
 
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         // Remove card from its current location
         let cardRemoved = false;

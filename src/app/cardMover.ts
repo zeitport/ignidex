@@ -5,6 +5,7 @@ import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import type {Card} from '#models/internal/card.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {activeStartPanel} from '#state';
 
 export class CardMover {
@@ -16,7 +17,7 @@ export class CardMover {
         const startPanel = activeStartPanel.value;
         if (!startPanel || !sourceCard.id || !targetCard.id) return;
 
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         // Find and remove the dragged card from its current location
         const sourceGroup = this.findGroupByCardId(clonedPanel, sourceCard.id);

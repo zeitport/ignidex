@@ -1,3 +1,4 @@
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl, activeIconPreview} from '#state';
@@ -174,19 +175,14 @@ export class EditBookmarkCardOverlay extends LitElement {
     }
 
     private handleSave = async () => {
+        console.log('#Interaction Save bookmark');
+
         if (!this.name.trim()) {
             this.nameError = 'Title must not be empty.';
             return;
         }
 
-        const currentPanel = activeStartPanel.value;
-        const targetSection = selectedSection.value;
-        const targetGroup = selectedGroup.value;
-
-        if (!currentPanel || !targetSection || !targetGroup) {
-            this.close();
-            return;
-        }
+        const currentPanel = activeStartPanel.nonNullableValue;
 
         const activeIcon = activeIconPreview.value;
         if (activeIcon) {
@@ -205,13 +201,18 @@ export class EditBookmarkCardOverlay extends LitElement {
         card.description = this.description.trim();
         card.icon = activeIcon?.assetId ?? null;
 
-        const updatedPanel = await this.startPanelsStore.upsertCard(
-            currentPanel,
-            targetGroup,
-            card
-        );
+        const targetGroup = selectedGroup.value;
 
-        activeStartPanel.value = updatedPanel;
+        if (targetGroup) {
+            // Add new card
+           await this.startPanelsStore.insertCard(targetGroup, card);
+        } else {
+            // Update card
+            await this.startPanelsStore.updateCard(currentPanel, card);
+        }
+
+        activeStartPanel.value = clonePanel(currentPanel);
+
         this.close();
     }
 }

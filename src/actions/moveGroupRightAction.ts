@@ -1,6 +1,7 @@
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import type {CardSection} from '#models/internal/cardSection.ts';
-import {StartPanel} from '#models/internal/startPanel.ts';
+import {query} from '#models/internal/query.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {selectedGroup, activeStartPanel} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {inject} from '#core/injector.ts';
@@ -18,7 +19,7 @@ export class MoveGroupRightAction implements ActionInterface {
             return true;
         }
 
-        const section = startPanel.findSectionWithGroup(group.id);
+        const section = query.findSectionWithGroup(startPanel.sections, group.id);
 
         if (!section) {
             return true;
@@ -32,9 +33,9 @@ export class MoveGroupRightAction implements ActionInterface {
     async run() {
         const group = selectedGroup.nonNullableValue;
         const startPanel = activeStartPanel.nonNullableValue;
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
-        const section = clonedPanel.findSectionWithGroup(group.id);
+        const section = query.findSectionWithGroup(clonedPanel.sections, group.id);
         const groupIndex: number = this.getGroupIndex(section, group.id);
 
         let groupMoved = false;

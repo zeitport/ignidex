@@ -56,6 +56,7 @@ export class DatabaseConnector {
 
     async set<T>(storeName: string, entry: T): Promise<void> {
         const db = await this.open();
+
         await new Promise<void>((resolve, reject) => {
             const tx = db.transaction(storeName, 'readwrite');
             const store = tx.objectStore(storeName);

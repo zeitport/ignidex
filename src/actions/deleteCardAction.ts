@@ -1,5 +1,5 @@
 import {Card} from '#models/internal/card.ts';
-import {StartPanel} from '#models/internal/startPanel.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {selectedCard, activeAction, activeOverlay, activeStartPanel} from '#state';
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
@@ -36,7 +36,7 @@ export class DeleteCardAction implements ActionInterface {
         }
 
         // Clone the current start panel to avoid in-place mutation
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         // Remove the card from the cloned data
         let cardRemoved = false;

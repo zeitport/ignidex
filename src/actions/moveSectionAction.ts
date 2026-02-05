@@ -1,4 +1,4 @@
-import {StartPanel} from '#models/internal/startPanel.ts';
+import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {selectedSection, activeStartPanel} from '#state';
 import {ActionInterface} from './actionInterface.ts';
 import {inject} from '#core/injector.ts';
@@ -18,7 +18,7 @@ export class MoveSectionAction implements ActionInterface {
             return;
         }
 
-        const clonedPanel = StartPanel.clone(startPanel);
+        const clonedPanel = clonePanel(startPanel);
 
         const sectionIndex = clonedPanel.sections.findIndex(item => item.id === section.id);
 
