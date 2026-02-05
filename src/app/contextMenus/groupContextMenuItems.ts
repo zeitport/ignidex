@@ -4,13 +4,14 @@ import {
     mdiArrowRightThin,
     mdiDelete,
     mdiPencilOutline,
-    mdiPlus,
+    mdiPlus, mdiSwapVertical
 } from '@mdi/js';
 import {DeleteGroupAction} from '../../actions/deleteGroupAction.ts';
 import {EditGroupAction} from '../../actions/editGroupAction.ts';
 import {AddCardAction} from '../../actions/addCardAction.ts';
 import {MoveGroupLeftAction} from '../../actions/moveGroupLeftAction.ts';
 import {MoveGroupRightAction} from '../../actions/moveGroupRightAction.ts';
+import {MoveGroupToSectionAction} from '../../actions/moveGroupToSectionAction.ts';
 import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
 import {noRemoteUrl} from '../preconditions.ts';
 
@@ -42,6 +43,13 @@ export const groupContextMenuItems = [
         label: t.contextMenu.moveRight,
         tooltip: t.hints.moveGroupRight,
         action: new MoveGroupRightAction(),
+        preconditions: [noRemoteUrl]
+    }),
+    new ContextMenuItem({
+        icon: mdiSwapVertical,
+        label: t.contextMenu.moveToSection,
+        tooltip: t.hints.moveGroupToSection,
+        action: new MoveGroupToSectionAction(),
         preconditions: [noRemoteUrl]
     }),
     ContextMenuItem.divider(),

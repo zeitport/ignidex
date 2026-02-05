@@ -47,6 +47,7 @@ export const hoverHintMode = new ObservableProperty<HoverHintModeType>(HoverHint
 
 export const pastedUrl = new ObservableProperty<string | null>(null);
 export const cardToMove = new ObservableProperty<Card | null>(null);
+export const groupToMove = new ObservableProperty<CardGroup | null>(null);
 
 export interface BookmarkDragDropState {
     draggedCard: Card;

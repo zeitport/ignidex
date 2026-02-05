@@ -21,6 +21,7 @@ export const hints = {
     moveGroupLeft: '[LMB] Move group left',
     moveGroupRight: '[LMB] Move group right',
     deleteGroup: '[LMB] + [?] Delete group',
+    moveGroupToSection: '[LMB] Move group to another section',
     editSection: 'Edit section',
     addGroupToSection: 'Add new group to section',
     deleteSection: 'Delete section',
@@ -99,6 +100,7 @@ export const tokens = {
         addBookmark: 'Add Bookmark',
         editBookmark: 'Edit',
         editGroup: 'Edit',
+        moveToSection: 'Move to…',
     },
     settingsPanel: {
         // Sidebar navigation labels

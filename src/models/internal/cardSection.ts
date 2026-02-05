@@ -3,10 +3,10 @@ import {createId} from '#utils/createId.ts';
 import {CardSectionType} from './cardSectionType.ts';
 
 export class CardSection {
-    readonly id: string;
-    readonly name: string | null;
-    readonly type: CardSectionType;
-    readonly groups: Array<CardGroup>;
+    id: string;
+    name: string | null;
+    type: CardSectionType;
+    groups: Array<CardGroup>;
 
     constructor(init: Partial<CardSection>) {
         this.id = init.id ?? createId();
