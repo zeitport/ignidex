@@ -66,6 +66,8 @@ export class StartPanelElement extends LitElement {
         document.addEventListener('drop', this.handleDrop);
         document.addEventListener('mouseup', this.handleBookmarkDragMouseUp);
         document.addEventListener('mousemove', this.handleBookmarkDragMouseMove);
+        document.addEventListener('visibilitychange', this.handleVisibilityChange);
+        window.addEventListener('blur', this.handleWindowBlur);
     }
 
     disconnectedCallback() {
@@ -79,6 +81,8 @@ export class StartPanelElement extends LitElement {
         document.removeEventListener('drop', this.handleDrop);
         document.removeEventListener('mouseup', this.handleBookmarkDragMouseUp);
         document.removeEventListener('mousemove', this.handleBookmarkDragMouseMove);
+        document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+        window.removeEventListener('blur', this.handleWindowBlur);
     }
 
     render() {
@@ -301,6 +305,21 @@ export class StartPanelElement extends LitElement {
 
         bookmarkDragDrop.value = null;
         bookmarkDragDropTarget.value = null;
+    }
+
+    private clearDragState() {
+        bookmarkDragDrop.value = null;
+        bookmarkDragDropTarget.value = null;
+    }
+
+    private handleVisibilityChange = () => {
+        if (document.hidden) {
+            this.clearDragState();
+        }
+    }
+
+    private handleWindowBlur = () => {
+        this.clearDragState();
     }
 
     private handleBookmarkDragMouseMove = (event: MouseEvent) => {

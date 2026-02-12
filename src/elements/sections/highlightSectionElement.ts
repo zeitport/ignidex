@@ -128,6 +128,7 @@ export class HighlightSectionElement extends LitElement {
     }
 
     private handleCardClick(event: MouseEvent, card: Card) {
+        this.clearDragTimer();
         if (event.button === 2) return; // Ignore right-click (context menu only)
         if (!card.url) return;
 

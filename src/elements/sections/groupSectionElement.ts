@@ -108,6 +108,7 @@ export class GroupSectionElement extends LitElement {
     }
 
     private handleCardClick(event: MouseEvent, card: Card) {
+        this.clearDragTimer();
         if (!card.url) return;
 
         const shouldOpenInNewTab =
