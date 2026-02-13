@@ -2,6 +2,7 @@ import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {when} from 'lit/directives/when.js';
+import {hoverHint} from '#core/hoverHintDirective.ts';
 import {radioButtonGroupElementStyle} from './radioButtonGroupElementStyle.ts';
 import type {RadioOption} from './radioOption.ts';
 
@@ -37,6 +38,7 @@ export class RadioButtonGroupElement extends LitElement {
                         tabindex="0"
                         @click=${() => this.selectOption(option.value)}
                         @keydown=${(event: KeyboardEvent) => (event.key === ' ' || event.key === 'Enter') && this.selectOption(option.value)}
+                        ${hoverHint(option.hint)}
                     >
                         ${when(option.icon?.svg, icon => this.renderIcon(icon))}
                         ${option.label}

@@ -15,6 +15,7 @@ import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts
 import {createId} from '#utils/createId.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {editBookmarkCardOverlayStyle} from './editBookmarkCardOverlayStyle.ts';
+import {i18n} from '#i18n';
 
 @customElement('cc-edit-bookmark-card-overlay')
 export class EditBookmarkCardOverlay extends LitElement {
@@ -36,9 +37,9 @@ export class EditBookmarkCardOverlay extends LitElement {
     private nameError = '';
 
     private iconStyleOptions: RadioOption[] = [
-        {label: '', value: IconStyle.none, icon: Icon.fromMdiIcon(mdiCircleOutline)},
-        {label: '', value: IconStyle.mask, icon: Icon.fromMdiIcon(mdiCircleHalfFull)},
-        {label: '', value: IconStyle.maskAccent, icon: Icon.fromMdiIcon(mdiCircle)},
+        {label: '', value: IconStyle.none, icon: Icon.fromMdiIcon(mdiCircleOutline), hint: i18n.token.hints.iconStyleNone},
+        {label: '', value: IconStyle.mask, icon: Icon.fromMdiIcon(mdiCircleHalfFull), hint: i18n.token.hints.iconStyleMask},
+        {label: '', value: IconStyle.maskAccent, icon: Icon.fromMdiIcon(mdiCircle), hint: i18n.token.hints.iconStyleMaskAccent},
     ];
 
     private startPanelsStore = inject(StartPanelsStore);
