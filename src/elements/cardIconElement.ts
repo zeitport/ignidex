@@ -3,6 +3,7 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {IconResolver} from '../core/iconResolver.ts';
 import {inject} from '#inject';
 import {Card} from '../models/internal/card.ts';
+import {IconStyle} from '#models/internal/iconStyle.ts';
 import {cardIconElementStyle} from './cardIconElementStyle.ts';
 
 @customElement('cc-card-icon')
@@ -46,8 +47,18 @@ export class CardIconElement extends LitElement {
             return html``
         }
 
+        const style = this.card?.iconStyle ?? IconStyle.mask;
+
+        if (style === IconStyle.none) {
+            return html`
+                <img class="original-icon" src="${this.iconDataUri}" aria-hidden="true" alt="">
+            `;
+        }
+
+        const cssClass = style === IconStyle.maskAccent ? 'mono-icon accent' : 'mono-icon';
+
         return html`
-            <div class="mono-icon" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>
+            <div class="${cssClass}" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>
         `;
     }
 }

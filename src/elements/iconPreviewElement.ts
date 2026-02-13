@@ -3,6 +3,7 @@ import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {mdiDeleteOutline} from '@mdi/js';
 import {svgToDataUri} from '#utils/svgToDataUri.ts';
+import {IconStyle} from '#models/internal/iconStyle.ts';
 import {PasteIconAction} from '../actions/iconPreview/pasteIconAction.ts';
 import {SelectExistingIconAction} from '../actions/iconPreview/selectExistingIconAction.ts';
 import {activeContextMenu, activeIconPreview} from '#state';
@@ -37,7 +38,7 @@ export class IconPreviewElement extends LitElement {
                 @contextmenu=${(event: MouseEvent) => this.handleContextMenu(event)}
             >
                 ${dataUri
-                    ? html`<div class="icon-preview-icon" style="--mask-url: url('${dataUri}')"></div>`
+                    ? this.renderIcon(dataUri)
                     : html``
                 }
                 ${dataUri ? html`
@@ -58,6 +59,17 @@ export class IconPreviewElement extends LitElement {
         `;
     }
 
+    private renderIcon(dataUri: string) {
+        const iconStyle = this.iconPreviewState.value?.iconStyle ?? IconStyle.mask;
+
+        if (iconStyle === IconStyle.none) {
+            return html`<img class="original-icon" src="${dataUri}" alt="">`;
+        }
+
+        const cssClass = iconStyle === IconStyle.maskAccent ? 'icon-preview-icon accent' : 'icon-preview-icon';
+        return html`<div class="${cssClass}" style="--mask-url: url('${dataUri}')"></div>`;
+    }
+
     private handlePreviewClick = () => {
         new SelectExistingIconAction().run();
     }
@@ -76,6 +88,7 @@ export class IconPreviewElement extends LitElement {
                 dataUri,
                 assetId: null,
                 source: file.name,
+                iconStyle: activeIconPreview.value?.iconStyle ?? IconStyle.mask,
             };
         };
         reader.readAsText(file);

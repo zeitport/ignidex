@@ -41,6 +41,16 @@ export const iconPreviewElementStyle = css`
         -webkit-mask-size: contain;
     }
 
+    .icon-preview-icon.accent {
+        background-color: var(--accent);
+    }
+
+    .original-icon {
+        width: 2rem;
+        height: 2rem;
+        object-fit: contain;
+    }
+
     .icon-delete-btn {
         position: absolute;
         bottom: 4px;

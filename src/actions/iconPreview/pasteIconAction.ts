@@ -1,3 +1,4 @@
+import {IconStyle} from '#models/internal/iconStyle.ts';
 import {createId} from '#utils/createId.ts';
 import type {ActionInterface} from '../actionInterface.ts';
 import {fetchIconFromUrl} from '#utils/fetchIconFromUrl.ts';
@@ -66,7 +67,8 @@ export class PasteIconAction implements ActionInterface {
         activeIconPreview.value = {
             assetId: createId(),
             dataUri,
-            source
+            source,
+            iconStyle: activeIconPreview.value?.iconStyle ?? IconStyle.mask,
         };
     }
 }

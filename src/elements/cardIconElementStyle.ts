@@ -24,4 +24,14 @@ export const cardIconElementStyle = css`
 
         transition: background-color ease 500ms;
     }
+
+    .mono-icon.accent {
+        background-color: var(--accent);
+    }
+
+    .original-icon {
+        width: var(--icon-size);
+        height: var(--icon-size);
+        object-fit: contain;
+    }
 `;

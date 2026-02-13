@@ -1,4 +1,5 @@
 import {clonePanel} from '#models/mapper/clonePanel.ts';
+import {mdiCircle, mdiCircleHalfFull, mdiCircleOutline} from '@mdi/js';
 import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {activeStartPanel, selectedCard, selectedSection, selectedGroup, pastedUrl, activeIconPreview} from '#state';
@@ -7,6 +8,10 @@ import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
 import {Card} from '#models/internal/card.ts';
+import {Icon} from '#models/internal/icon.ts';
+import {IconStyle, type IconStyle as IconStyleType} from '#models/internal/iconStyle.ts';
+import type {RadioOption} from '../radioButton/radioOption.ts';
+import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts';
 import {createId} from '#utils/createId.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {editBookmarkCardOverlayStyle} from './editBookmarkCardOverlayStyle.ts';
@@ -25,7 +30,16 @@ export class EditBookmarkCardOverlay extends LitElement {
     private description = '';
 
     @state()
+    private iconStyle: IconStyleType = IconStyle.mask;
+
+    @state()
     private nameError = '';
+
+    private iconStyleOptions: RadioOption[] = [
+        {label: '', value: IconStyle.none, icon: Icon.fromMdiIcon(mdiCircleOutline)},
+        {label: '', value: IconStyle.mask, icon: Icon.fromMdiIcon(mdiCircleHalfFull)},
+        {label: '', value: IconStyle.maskAccent, icon: Icon.fromMdiIcon(mdiCircle)},
+    ];
 
     private startPanelsStore = inject(StartPanelsStore);
     private imageAssetsStore = inject(ImageAssetsStore);
@@ -50,11 +64,13 @@ export class EditBookmarkCardOverlay extends LitElement {
             this.name = card.name ?? '';
             this.url = card.url || (pastedUrl.value ?? '');
             this.description = card.description ?? '';
+            this.iconStyle = card.iconStyle ?? IconStyle.mask;
             await this.loadExistingIcon(card.icon);
         } else {
             this.url = pastedUrl.value ?? '';
             this.name = this.extractDomain(this.url);
             this.description = '';
+            this.iconStyle = IconStyle.mask;
         }
         this.nameError = '';
     }
@@ -71,6 +87,7 @@ export class EditBookmarkCardOverlay extends LitElement {
                 dataUri: entry.dataUri ?? null,
                 source: entry.source ?? null,
                 assetId: iconId,
+                iconStyle: this.iconStyle,
             }
         }
     }
@@ -100,6 +117,11 @@ export class EditBookmarkCardOverlay extends LitElement {
                     <div class="icon-column">
                         <label>Icon</label>
                         <cc-icon-preview></cc-icon-preview>
+                        <cc-radio-button-group
+                            .options=${this.iconStyleOptions}
+                            .value=${this.iconStyle}
+                            @change=${(event: CustomEventWithValue<IconStyleType>) => { this.handleIconStyleChange(event.detail.value); }}
+                        ></cc-radio-button-group>
                     </div>
 
                     <div class="details-column">
@@ -163,6 +185,14 @@ export class EditBookmarkCardOverlay extends LitElement {
         this.description = (event.target as HTMLInputElement).value;
     }
 
+    private handleIconStyleChange(value: IconStyleType) {
+        this.iconStyle = value;
+        const current = activeIconPreview.value;
+        if (current) {
+            activeIconPreview.value = {...current, iconStyle: value};
+        }
+    }
+
     private handleClose = () => {
         selectedCard.value = null;
         selectedSection.value = null;
@@ -200,6 +230,7 @@ export class EditBookmarkCardOverlay extends LitElement {
         card.url = this.url.trim();
         card.description = this.description.trim();
         card.icon = activeIcon?.assetId ?? null;
+        card.iconStyle = this.iconStyle;
 
         const targetGroup = selectedGroup.value;
 

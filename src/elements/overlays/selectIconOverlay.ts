@@ -1,6 +1,7 @@
 import {inject} from '#inject';
 import type {ImageAssetEntry} from '#models/idb/imageAssetEntry.ts';
 import {ImageAssetType} from '#models/idb/ImageAssetType.ts';
+import {IconStyle} from '#models/internal/iconStyle.ts';
 import {activeIconPreview} from '#state';
 import {createId} from '#utils/createId.ts';
 import {css, html, LitElement} from 'lit';
@@ -40,7 +41,8 @@ export class SelectIconOverlay extends LitElement {
         activeIconPreview.value = {
             dataUri: asset.dataUri,
             source: asset.source ?? null,
-            assetId: asset.id ?? createId()
+            assetId: asset.id ?? createId(),
+            iconStyle: activeIconPreview.value?.iconStyle ?? IconStyle.mask,
         }
 
         inject(CloseOverlayAction).run();

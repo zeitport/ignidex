@@ -4,6 +4,7 @@ import {activeIconPreview, activeStartPanel} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {IconStyle} from '#models/internal/iconStyle.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
@@ -69,6 +70,7 @@ export class EditPanelOverlay extends LitElement {
             assetId: iconId,
             dataUri: entry?.dataUri ?? null,
             source: entry?.source ?? '',
+            iconStyle: IconStyle.mask,
         };
     }
 

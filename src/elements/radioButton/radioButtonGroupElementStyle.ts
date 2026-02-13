@@ -41,13 +41,14 @@ export const radioButtonGroupElementStyle = css`
         inset: -0.25rem;
     }
 
-    .radio-option:hover .radio-icon{
+    .radio-option.selected svg,
+    .radio-option:hover svg {
         fill: var(--icon-color-hover);
     }
 
     .radio-option svg {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.25rem;
+        height: 1.25rem;
         fill: var(--icon-color);
     }
 
