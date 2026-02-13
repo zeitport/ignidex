@@ -8,12 +8,9 @@ import {
     messageOverlayContent,
     activeContextMenu,
     activeSubOverlay,
-    bookmarkDragDrop,
-    bookmarkDragDropTarget,
-    bookmarkDragDropInsertPosition
+    cardDragDrop
 } from '#state';
 import {CardMover} from '#app/cardMover.ts';
-import {InsertPosition} from '#app/insertPosition.ts';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
 import {documentContextMenuItems} from '../app/contextMenus/documentContextMenuItems.ts';
@@ -33,7 +30,7 @@ export class StartPanelElement extends LitElement {
     private activeStartPanel = activeStartPanel.watch(this);
     private isDraggingFile = isDraggingFile.watch(this);
     private activeContextMenu = activeContextMenu.watch(this);
-    private bookmarkDragDrop = bookmarkDragDrop.watch(this);
+    private cardDragDrop = cardDragDrop.watch(this);
     private dragCounter = 0;
     private cardMover = inject(CardMover);
 
@@ -97,7 +94,7 @@ export class StartPanelElement extends LitElement {
 
             ${when(this.isDraggingFile.value, () => html`<cc-drop-file-overlay></cc-drop-file-overlay>`)}
 
-            ${when(this.bookmarkDragDrop.value, () => html`<cc-drag-ghost></cc-drag-ghost>`)}
+            ${when(this.cardDragDrop.value, () => html`<cc-drag-ghost></cc-drag-ghost>`)}
 
             <cc-context-menu id="contextMenu"></cc-context-menu>
 
@@ -293,23 +290,22 @@ export class StartPanelElement extends LitElement {
     }
 
     private handleBookmarkDragMouseUp = () => {
-        const dragState = bookmarkDragDrop.value;
-        const targetCard = bookmarkDragDropTarget.value;
-        const insertPosition = bookmarkDragDropInsertPosition.value === 'before'
-            ? InsertPosition.before
-            : InsertPosition.after;
+        const dragState = cardDragDrop.value;
+        if (!dragState) return;
 
-        if (dragState && targetCard && dragState.draggedCard.id !== targetCard.id) {
-            void this.cardMover.moveCardToPosition(dragState.draggedCard, targetCard, insertPosition);
+        const {draggedCard, cardDropTarget, groupDropTarget, insertPosition} = dragState;
+
+        if (cardDropTarget && draggedCard.id !== cardDropTarget.id) {
+            void this.cardMover.moveCardToPosition(draggedCard, cardDropTarget, insertPosition);
+        } else if (groupDropTarget) {
+            void this.cardMover.moveCardToGroup(draggedCard, groupDropTarget);
         }
 
-        bookmarkDragDrop.value = null;
-        bookmarkDragDropTarget.value = null;
+        cardDragDrop.value = null;
     }
 
     private clearDragState() {
-        bookmarkDragDrop.value = null;
-        bookmarkDragDropTarget.value = null;
+        cardDragDrop.value = null;
     }
 
     private handleVisibilityChange = () => {
@@ -323,9 +319,9 @@ export class StartPanelElement extends LitElement {
     }
 
     private handleBookmarkDragMouseMove = (event: MouseEvent) => {
-        const dragState = bookmarkDragDrop.value;
+        const dragState = cardDragDrop.value;
         if (dragState) {
-            bookmarkDragDrop.value = {
+            cardDragDrop.value = {
                 ...dragState,
                 cursorX: event.clientX,
                 cursorY: event.clientY

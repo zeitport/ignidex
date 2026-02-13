@@ -153,4 +153,22 @@ export const highlightSectionStyles = css`
             background: var(--accent-transparent-50);
         }
     }
+
+    .empty-group-placeholder {
+        display: flex;
+        align-items: center;
+        padding: 0 0.5rem;
+        border-radius: 0.5rem;
+        border: 2px dashed var(--input-border-color);
+    }
+
+    .empty-group-placeholder.drop-target {
+        background: var(--accent-transparent-50);
+        border-color: var(--accent);
+    }
+
+    .empty-group-label {
+        height: 2rem;
+        color: var(--muted);
+    }
 `;

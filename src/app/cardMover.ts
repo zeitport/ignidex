@@ -3,7 +3,8 @@ import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {inject} from '#inject';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import type {Card} from '#models/internal/card.ts';
-import {CardGroup} from '#models/internal/cardGroup.ts';
+import type {CardGroup} from '#models/internal/cardGroup.ts';
+import {query} from '#models/internal/query.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {activeStartPanel} from '#state';
@@ -12,26 +13,13 @@ export class CardMover {
     private readonly panelStore: StartPanelsStore = inject(StartPanelsStore);
 
     async moveCardToPosition(sourceCard: Card, targetCard: Card, position: InsertPosition) {
-        console.log('Moving card', sourceCard.id, 'to', targetCard.id, 'at', position);
+        const clonedPanel = this.removeCardFromPanel(sourceCard.id);
+        if (!clonedPanel) return;
 
-        const startPanel = activeStartPanel.value;
-        if (!startPanel || !sourceCard.id || !targetCard.id) return;
-
-        const clonedPanel = clonePanel(startPanel);
-
-        // Find and remove the dragged card from its current location
-        const sourceGroup = this.findGroupByCardId(clonedPanel, sourceCard.id);
-
-        if (sourceGroup) {
-            sourceGroup.cards = sourceGroup.cards.filter(item => item.id !== sourceCard.id);
-        }
-
-        const targetGroup = this.findGroupByCardId(clonedPanel, targetCard.id);
-
-        if (targetGroup) {
+        const result = query.findCard(clonedPanel.sections, targetCard.id);
+        if (result) {
             const targetGroupCards = [];
-
-            for(const card of targetGroup.cards) {
+            for (const card of result.group.cards) {
                 if (card.id === targetCard.id) {
                     if (position === InsertPosition.before) {
                         targetGroupCards.push(sourceCard);
@@ -44,30 +32,45 @@ export class CardMover {
                     targetGroupCards.push(card);
                 }
             }
-
-            targetGroup.cards = targetGroupCards;
+            result.group.cards = targetGroupCards;
         }
 
-        // Save to database
+        await this.savePanel(clonedPanel);
+    }
+
+    async moveCardToGroup(sourceCard: Card, targetGroup: CardGroup) {
+        const clonedPanel = this.removeCardFromPanel(sourceCard.id);
+        if (!clonedPanel) return;
+
+        const group = query.findGroup(clonedPanel.sections, targetGroup.id);
+        if (group) {
+            group.cards.push(sourceCard);
+        }
+
+        await this.savePanel(clonedPanel);
+    }
+
+    private removeCardFromPanel(cardId: string): StartPanel | null {
+        const startPanel = activeStartPanel.value;
+        if (!startPanel || !cardId) return null;
+
+        const clonedPanel = clonePanel(startPanel);
+        const result = query.findCard(clonedPanel.sections, cardId);
+        if (result) {
+            result.group.cards = result.group.cards.filter(item => item.id !== cardId);
+        }
+
+        return clonedPanel;
+    }
+
+    private async savePanel(panel: StartPanel) {
         const updatedEntry = new StartPanelEntry({
-            id: clonedPanel.id,
-            anchor: clonedPanel.anchor,
-            startPanel: clonedPanel
+            id: panel.id,
+            anchor: panel.anchor,
+            startPanel: panel
         });
 
         await this.panelStore.set(updatedEntry);
-        activeStartPanel.value = clonedPanel;
-    }
-
-    findGroupByCardId(panel: StartPanel, cardId: string): CardGroup | null {
-        for (const section of panel.sections) {
-            for (const group of section.groups) {
-                if (group.cards.some(card => card.id === cardId)) {
-                    return group;
-                }
-            }
-        }
-
-        return null;
+        activeStartPanel.value = panel;
     }
 }

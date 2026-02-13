@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {bookmarkDragDrop} from '#state';
+import {cardDragDrop} from '#state';
 
 @customElement('cc-drag-ghost')
 export class DragGhostElement extends LitElement {
@@ -32,7 +32,7 @@ export class DragGhostElement extends LitElement {
         }
     `;
 
-    private dragDrop = bookmarkDragDrop.watch(this);
+    private dragDrop = cardDragDrop.watch(this);
 
     render() {
         const dragState = this.dragDrop.value;

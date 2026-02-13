@@ -138,4 +138,15 @@ export const groupSectionStyle = css`
             background: var(--accent-transparent-50);
         }
     }
+
+    .empty-group-placeholder {
+        height: 2rem;
+        border-radius: 0.5rem;
+        border: 2px dashed var(--input-border-color);
+    }
+
+    .empty-group-placeholder.drop-target {
+        background: var(--accent-transparent-50);
+        border-color: var(--accent);
+    }
 `;

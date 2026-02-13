@@ -14,9 +14,8 @@ import {
     selectedSection,
     selectedGroup,
     bookmarkOnClickAction,
-    bookmarkDragDrop,
-    bookmarkDragDropTarget,
-    bookmarkDragDropInsertPosition, userState
+    cardDragDrop,
+    userState
 } from '#state';
 import {bookmarkContextMenuItems} from '#app/contextMenus/bookmarkContextMenuItems.ts';
 import {bookmarkSectionContextMenuItems} from '#app/contextMenus/bookmarkSectionContextMenuItems.ts';
@@ -27,8 +26,7 @@ import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
 export class GroupSectionElement extends LitElement {
     static styles = groupSectionStyle;
 
-    private dragDrop = bookmarkDragDrop.watch(this);
-    private dragDropTarget = bookmarkDragDropTarget.watch(this);
+    private dragDrop = cardDragDrop.watch(this);
 
     private dragHoldTimer: ReturnType<typeof setTimeout> | null = null;
     private pendingDragCard: Card | null = null;
@@ -57,11 +55,21 @@ export class GroupSectionElement extends LitElement {
     }
 
     renderList(group: CardGroup) {
+        const isDragging = this.dragDrop.value !== null;
+        const isEmpty = group.cards.length === 0;
+        const isGroupDropTarget = this.dragDrop.value?.groupDropTarget?.id === group.id;
+
         return html`
             <div class="bookmark-group" id="${group.id}">
                 <h2 class="group-title" @contextmenu=${(event: MouseEvent) => this.handleGroupContextMenu(event, group)}>${group.name}</h2>
                 <div class="bookmark-group-items">
                     ${group.cards.map(card => this.renderCard(card, group))}
+                    ${isDragging && isEmpty ? html`
+                        <div class="empty-group-placeholder ${isGroupDropTarget ? 'drop-target' : ''}"
+                             @mouseenter=${() => this.handleEmptyGroupMouseEnter(group)}
+                             @mouseleave=${() => this.handleEmptyGroupMouseLeave(group)}>
+                        </div>
+                    ` : ''}
                 </div>
             </div>
         `;
@@ -69,7 +77,7 @@ export class GroupSectionElement extends LitElement {
 
     renderCard(card: Card, group: CardGroup) {
         const isDragging = this.dragDrop.value?.draggedCard.id === card.id;
-        const isDropTarget = this.dragDropTarget.value?.id === card.id && this.dragDrop.value !== null;
+        const isDropTarget = this.dragDrop.value?.cardDropTarget?.id === card.id;
 
         const classes = {
             'bookmark-item': true,
@@ -98,10 +106,10 @@ export class GroupSectionElement extends LitElement {
                     <div class="drop-zone top"
                          @mouseenter=${() => {
                              HoverHint.show(t.hints.dropZoneTop);
-                             bookmarkDragDropInsertPosition.value = 'before';
+                             this.setInsertPosition('before');
                          }}></div>
                     <div class="drop-zone bottom"
-                         @mouseenter=${() => bookmarkDragDropInsertPosition.value = 'after'}></div>
+                         @mouseenter=${() => this.setInsertPosition('after')}></div>
                 </div>
             </div>
         `;
@@ -185,13 +193,15 @@ export class GroupSectionElement extends LitElement {
 
         this.dragHoldTimer = setTimeout(() => {
             if (this.pendingDragCard && this.pendingDragGroupId && this.section) {
-                console.log('Set bookmarkDragDrop', card, group);
-                bookmarkDragDrop.value = {
+                cardDragDrop.value = {
                     draggedCard: this.pendingDragCard,
                     sourceGroupId: this.pendingDragGroupId,
                     sourceSectionId: this.section.id,
                     cursorX: this.pendingDragCursorX,
-                    cursorY: this.pendingDragCursorY
+                    cursorY: this.pendingDragCursorY,
+                    cardDropTarget: null,
+                    groupDropTarget: null,
+                    insertPosition: 'before'
                 };
             }
             this.pendingDragCard = null;
@@ -200,23 +210,44 @@ export class GroupSectionElement extends LitElement {
     }
 
     private handleCardMouseLeave(card: Card) {
-        console.log('handleCardMouseLeave', card);
         // Cancel pending drag if mouse leaves the card before timer completes
         if (this.pendingDragCard?.id === card.id) {
             this.clearDragTimer();
         }
 
         // Clear drop target if leaving the current target
-        if (bookmarkDragDropTarget.value?.id === card.id) {
-            bookmarkDragDropTarget.value = null;
+        const dragState = cardDragDrop.value;
+        if (dragState?.cardDropTarget?.id === card.id) {
+            cardDragDrop.value = {...dragState, cardDropTarget: null};
         }
     }
 
     private handleCardMouseEnter(card: Card) {
         // Set drop target when hovering over a card while dragging
-        if (bookmarkDragDrop.value && bookmarkDragDrop.value.draggedCard.id !== card.id) {
-            console.log('Update bookmarkDragDropTarget', card.id);
-            bookmarkDragDropTarget.value = card;
+        const dragState = cardDragDrop.value;
+        if (dragState && dragState.draggedCard.id !== card.id) {
+            cardDragDrop.value = {...dragState, cardDropTarget: card, groupDropTarget: null};
+        }
+    }
+
+    private setInsertPosition(position: 'before' | 'after') {
+        const dragState = cardDragDrop.value;
+        if (dragState) {
+            cardDragDrop.value = {...dragState, insertPosition: position};
+        }
+    }
+
+    private handleEmptyGroupMouseEnter(group: CardGroup) {
+        const dragState = cardDragDrop.value;
+        if (dragState) {
+            cardDragDrop.value = {...dragState, groupDropTarget: group, cardDropTarget: null};
+        }
+    }
+
+    private handleEmptyGroupMouseLeave(group: CardGroup) {
+        const dragState = cardDragDrop.value;
+        if (dragState?.groupDropTarget?.id === group.id) {
+            cardDragDrop.value = {...dragState, groupDropTarget: null};
         }
     }
 

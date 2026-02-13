@@ -9,7 +9,7 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, bookmarkDragDrop, bookmarkDragDropTarget, bookmarkDragDropInsertPosition, userState} from '#state';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, cardDragDrop, userState} from '#state';
 import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
 import {highlightSectionContextMenuItems} from '../../app/contextMenus/highlightSectionContextMenuItems.ts';
 import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
@@ -18,8 +18,7 @@ import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
 export class HighlightSectionElement extends LitElement {
     static styles = highlightSectionStyles;
 
-    private dragDrop = bookmarkDragDrop.watch(this);
-    private dragDropTarget = bookmarkDragDropTarget.watch(this);
+    private dragDrop = cardDragDrop.watch(this);
 
     private dragHoldTimer: ReturnType<typeof setTimeout> | null = null;
     private pendingDragCard: Card | null = null;
@@ -36,6 +35,8 @@ export class HighlightSectionElement extends LitElement {
     render() {
         if (!this.section) return html``;
 
+        const isDragging = this.dragDrop.value !== null;
+
         // Create cards with their group reference for drag tracking
         const cardsWithGroup: Array<{card: Card; group: CardGroup}> = [];
         for (const group of this.section.groups) {
@@ -44,20 +45,36 @@ export class HighlightSectionElement extends LitElement {
             }
         }
 
+        // Collect empty groups for placeholder rendering during drag
+        const emptyGroups = isDragging ? this.section.groups.filter(group => group.cards.length === 0) : [];
+
         return html`
             <div class="card-section">
                 <div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>${this.section.name}</div>
 
                 <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>
                     ${cardsWithGroup.map(({card, group}) => this.renderCard(card, group))}
+                    ${emptyGroups.map(group => this.renderEmptyGroupPlaceholder(group))}
                 </div>
+            </div>
+        `;
+    }
+
+    private renderEmptyGroupPlaceholder(group: CardGroup) {
+        const isGroupDropTarget = this.dragDrop.value?.groupDropTarget?.id === group.id;
+
+        return html`
+            <div class="empty-group-placeholder ${isGroupDropTarget ? 'drop-target' : ''}"
+                 @mouseenter=${() => this.handleEmptyGroupMouseEnter(group)}
+                 @mouseleave=${() => this.handleEmptyGroupMouseLeave(group)}>
+                <span class="empty-group-label"></span>
             </div>
         `;
     }
 
     private renderCard(card: Card, group: CardGroup) {
         const isDragging = this.dragDrop.value?.draggedCard.id === card.id;
-        const isDropTarget = this.dragDropTarget.value?.id === card.id && this.dragDrop.value !== null;
+        const isDropTarget = this.dragDrop.value?.cardDropTarget?.id === card.id;
 
         const classes = {
             'bookmark': true,
@@ -87,12 +104,12 @@ export class HighlightSectionElement extends LitElement {
                         <div class="drop-zone inline-start"
                              @mouseenter=${() => {
                                  HoverHint.show(t.hints.dropZoneInlineStart);
-                                 bookmarkDragDropInsertPosition.value = 'before';
+                                 this.setInsertPosition('before');
                              }}></div>
                         <div class="drop-zone inline-end"
                              @mouseenter=${() => {
                                  HoverHint.show(t.hints.dropZoneInlineEnd);
-                                 bookmarkDragDropInsertPosition.value = 'after';
+                                 this.setInsertPosition('after');
                              }}></div>
                     </div>
                 </div>
@@ -169,12 +186,15 @@ export class HighlightSectionElement extends LitElement {
 
         this.dragHoldTimer = setTimeout(() => {
             if (this.pendingDragCard && this.pendingDragGroupId && this.section) {
-                bookmarkDragDrop.value = {
+                cardDragDrop.value = {
                     draggedCard: this.pendingDragCard,
                     sourceGroupId: this.pendingDragGroupId,
                     sourceSectionId: this.section.id,
                     cursorX: this.pendingDragCursorX,
-                    cursorY: this.pendingDragCursorY
+                    cursorY: this.pendingDragCursorY,
+                    cardDropTarget: null,
+                    groupDropTarget: null,
+                    insertPosition: 'before'
                 };
             }
             this.pendingDragCard = null;
@@ -193,15 +213,38 @@ export class HighlightSectionElement extends LitElement {
         }
 
         // Clear drop target if leaving the current target
-        if (bookmarkDragDropTarget.value?.id === card.id) {
-            bookmarkDragDropTarget.value = null;
+        const dragState = cardDragDrop.value;
+        if (dragState?.cardDropTarget?.id === card.id) {
+            cardDragDrop.value = {...dragState, cardDropTarget: null};
         }
     }
 
     private handleCardMouseEnter(card: Card) {
         // Set drop target when hovering over a card while dragging
-        if (bookmarkDragDrop.value && bookmarkDragDrop.value.draggedCard.id !== card.id) {
-            bookmarkDragDropTarget.value = card;
+        const dragState = cardDragDrop.value;
+        if (dragState && dragState.draggedCard.id !== card.id) {
+            cardDragDrop.value = {...dragState, cardDropTarget: card, groupDropTarget: null};
+        }
+    }
+
+    private setInsertPosition(position: 'before' | 'after') {
+        const dragState = cardDragDrop.value;
+        if (dragState) {
+            cardDragDrop.value = {...dragState, insertPosition: position};
+        }
+    }
+
+    private handleEmptyGroupMouseEnter(group: CardGroup) {
+        const dragState = cardDragDrop.value;
+        if (dragState) {
+            cardDragDrop.value = {...dragState, groupDropTarget: group, cardDropTarget: null};
+        }
+    }
+
+    private handleEmptyGroupMouseLeave(group: CardGroup) {
+        const dragState = cardDragDrop.value;
+        if (dragState?.groupDropTarget?.id === group.id) {
+            cardDragDrop.value = {...dragState, groupDropTarget: null};
         }
     }
 
