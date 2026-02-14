@@ -33,7 +33,7 @@ For production, we recommend running Ignidex behind a reverse proxy. Caddy handl
 ```yaml
 services:
   ignidex:
-    build: .
+    image: ghcr.io/zeitport/ignidex:latest
     restart: unless-stopped
 
   caddy:
@@ -44,10 +44,13 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
+    depends_on:
+      - ignidex
     restart: unless-stopped
 
 volumes:
   caddy_data:
+  caddy_config:
 ```
 
 Create a `Caddyfile`:
@@ -63,8 +66,7 @@ Caddy automatically provisions Let's Encrypt certificates.
 ## Updates
 
 ```bash
-git pull
-docker compose build
+docker compose pull
 docker compose up -d
 ```
 
@@ -85,7 +87,7 @@ Mount a local `panels/` directory into the container:
 ```yaml
 services:
   ignidex:
-    build: .
+    image: ghcr.io/zeitport/ignidex:latest
     ports:
       - "4280:80"
     volumes:
