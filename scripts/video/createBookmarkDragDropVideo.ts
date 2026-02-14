@@ -16,7 +16,7 @@ const context = await browser.newContext({
 const page = await context.newPage();
 
 await showMouseCursor(page);
-await page.goto(testConfig.appUrl.test);
+await page.goto(testConfig.appUrl.ignidex);
 
 const sourceLocator = page.locator(`#${bookmarkId3}`);
 const targetLocator = page.locator(`#${bookmarkId1}`);
