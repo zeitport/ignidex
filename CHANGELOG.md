@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.8.0]
+
+### Added
+- #067 Icon styles: none, mask, maskAccent
+- #068 Hints for icon style buttons
+- #069 Drop card over empty group
+
+### Fixed
+- #066 Sticky drag ghost
+- #070 Add section action
+
 ## [0.7.0]
 
 ### Added
