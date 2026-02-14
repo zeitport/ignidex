@@ -6,6 +6,13 @@
 Ignidex
 </h1>
 
+<p align="center">
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/zeitport/ignidex" alt="License"></a>
+  <a href="https://github.com/zeitport/ignidex/releases"><img src="https://img.shields.io/github/v/tag/zeitport/ignidex?label=version" alt="Version"></a>
+  <a href="https://github.com/zeitport/ignidex/pkgs/container/ignidex"><img src="https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker" alt="Docker"></a>
+  <img src="https://img.shields.io/badge/local--first-yes-brightgreen" alt="Local First">
+  <img src="https://img.shields.io/badge/tracking-none-brightgreen" alt="No Tracking">
+</p>
 
 **A personal start page for links, actions, and small checklists.**
 
