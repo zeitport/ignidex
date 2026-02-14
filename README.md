@@ -21,13 +21,12 @@ Ignidex
 
 Ignidex is a local-first page you open *before* everything else. A calm, fast index for the things you access frequently.
 
-<p>
-  <a href="https://ignidex.eu"><strong>Try it live</strong></a> · ...
+<p align="center">
+  <a href="https://ignidex.eu"><strong>Try it live</strong></a>
 </p>
 
-<!-- 👇 Right here -->
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/718d15bc7027c8b6b220d30fb703417c.webm" width="720" autoplay loop muted>
+  <video src="https://github.com/user-attachments/assets/001fa020-384c-42b4-b0e8-bf834137be04" width="720" autoplay loop muted>
   </video>
 </p>
 
