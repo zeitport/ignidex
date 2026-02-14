@@ -22,7 +22,7 @@ Ignidex
 Ignidex is a local-first page you open *before* everything else. A calm, fast index for the things you access frequently.
 
 
-<h2 align="center"><a href="https://ignidex.eu"><strong>Try it live</strong></a></h2>
+<h3 align="center"><a href="https://ignidex.eu"><strong>Try it live</strong></a></h3>
 
 
 <p align="center">
