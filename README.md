@@ -7,6 +7,12 @@ Ignidex
 </h1>
 
 <p align="center">
+**A personal start page for links, actions, and small checklists.**
+</p>
+
+---
+
+<p align="center">
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/zeitport/ignidex" alt="License"></a>
   <a href="https://github.com/zeitport/ignidex/releases"><img src="https://img.shields.io/github/v/tag/zeitport/ignidex?label=version" alt="Version"></a>
   <a href="https://github.com/zeitport/ignidex/pkgs/container/ignidex"><img src="https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker" alt="Docker"></a>
@@ -14,7 +20,6 @@ Ignidex
   <img src="https://img.shields.io/badge/tracking-none-brightgreen" alt="No Tracking">
 </p>
 
-**A personal start page for links, actions, and small checklists.**
 
 Ignidex is a local-first page you open *before* everything else. A calm, fast index for the things you access frequently.
 
