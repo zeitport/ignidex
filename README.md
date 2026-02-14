@@ -7,10 +7,8 @@ Ignidex
 </h1>
 
 <p align="center">
-**A personal start page for links, actions, and small checklists.**
+<strong>A personal start page for links, actions, and small checklists.</strong>
 </p>
-
----
 
 <p align="center">
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/zeitport/ignidex" alt="License"></a>
