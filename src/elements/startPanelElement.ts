@@ -11,9 +11,9 @@ import {
     cardDragDrop
 } from '#state';
 import {CardMover} from '#app/cardMover.ts';
+import {panelContextMenuItems} from '../contextMenus/panelContextMenuItems.ts';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
-import {documentContextMenuItems} from '../contextMenus/documentContextMenuItems.ts';
 import type {ContextMenuElement} from './contextMenuElement.ts';
 import {OverlayType} from './overlays/overlayType.ts';
 import {startPanelElementStyle} from './startPanelElementStyle.ts';
@@ -220,7 +220,7 @@ export class StartPanelElement extends LitElement {
         event.preventDefault();
         if (this.activeOverlay.value) return;
         activeContextMenu.value = {
-            items: documentContextMenuItems,
+            items: panelContextMenuItems,
             x: event.clientX,
             y: event.clientY
         };
@@ -229,8 +229,6 @@ export class StartPanelElement extends LitElement {
     private handleClickEvent = () => {
         activeContextMenu.value = null;
     }
-
-
 
     private hasFiles(event: DragEvent): boolean {
         return event.dataTransfer?.types.includes('Files') ?? false;
