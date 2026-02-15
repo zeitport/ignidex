@@ -26,8 +26,6 @@ export class DatabaseConnector {
             const request = this.idb!.open(this.dbName, this.dbVersion);
 
             request.onupgradeneeded = () => {
-                console.log(`Upgrading IndexedDB database to version ${this.dbVersion}`);
-
                 const db = request.result;
                 const transaction = request.transaction!;
 
@@ -113,7 +111,6 @@ export class DatabaseConnector {
 
     private upgradeStartPanelsStore(db: IDBDatabase, transaction: IDBTransaction): void {
         if (!db.objectStoreNames.contains(this.startPanelsStoreName)) {
-            console.log(`Creating start panels store with anchor and remoteUrl indexes`);
             const store = db.createObjectStore(this.startPanelsStoreName, {keyPath: 'id'});
             store.createIndex('anchor', 'anchor', {unique: false});
             store.createIndex('remoteUrl', 'remoteUrl', {unique: false});
