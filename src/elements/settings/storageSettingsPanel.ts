@@ -2,7 +2,7 @@ import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import './settingsSection.ts';
 import './settingsHeader.ts';
-import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {ImageAssetsStore} from '../../idb/imageAssetsStore.ts';
 import {inject} from '#inject';
 import {t} from '#i18n';
 

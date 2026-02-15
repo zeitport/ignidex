@@ -1,6 +1,6 @@
 {
     "name": "@zeitport/ignidex",
-    "version": "0.8.1",
+    "version": "0.9.0",
     "description": "A calm, local-first personal start page.",
     "type": "module",
     "scripts": {
@@ -39,12 +39,12 @@
         "nanoid": "^5.1.6"
     },
     "imports": {
+        "#src/*": "./src/*",
         "#app/*": "./src/app/*",
-        "#core/*": "./src/core/*",
         "#elements": "./src/elements/index.ts",
-        "#inject": "./src/core/injector.ts",
+        "#inject": "./src/app/injector.ts",
         "#models/*": "./src/models/*",
-        "#state": "./src/app/state.ts",
+        "#state": "./src/state/state.ts",
         "#utils/*": "./src/utils/*",
         "#i18n": "./src/localization/i18n.ts",
         "#test/*": "./test/*"

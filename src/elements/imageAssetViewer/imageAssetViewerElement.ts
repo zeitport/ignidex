@@ -1,5 +1,5 @@
 import {imageGalleryItemContextMenuItems} from '../../contextMenus/imageGalleryItemContextMenuItems.ts';
-import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {ImageAssetsStore} from '../../idb/imageAssetsStore.ts';
 import {inject} from '#inject';
 import type {ImageAssetEntry} from '#models/idb/imageAssetEntry.ts';
 import type {ImageAssetType} from '#models/idb/ImageAssetType.ts';

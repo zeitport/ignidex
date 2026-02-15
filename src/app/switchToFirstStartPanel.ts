@@ -1,7 +1,7 @@
 import {activeOverlay, activeStartPanel, activeRemoteUrl} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
-import {StartPanelsStore} from './idb/startPanelsStore.ts';
-import {inject} from '#inject';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
+import {inject} from '#app/injector.ts';
 
 /**
  * Switches to the first available start panel in the database.

@@ -1,4 +1,4 @@
-import {HoverHint} from '#core/hoverHint.ts';
+import {HoverHint} from '#app/hoverHint.ts';
 import {i18n, t} from '#i18n';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
@@ -7,7 +7,7 @@ import type {Card} from '#models/internal/card.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
 import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, cardDragDrop, userState} from '#state';
 import {bookmarkContextMenuItems} from '../../contextMenus/bookmarkContextMenuItems.ts';

@@ -2,7 +2,7 @@ import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {when} from 'lit/directives/when.js';
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {radioButtonGroupElementStyle} from './radioButtonGroupElementStyle.ts';
 import type {RadioOption} from './radioOption.ts';
 

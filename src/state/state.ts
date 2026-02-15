@@ -1,23 +1,23 @@
-import type {ActiveContextMenu} from '#app/activeContextMenu.ts';
-import type {InsertPosition} from '#app/insertPosition.ts';
-import type {ActiveIconPreview} from '#app/activeIconPreview.ts';
-import type {ImageAssetSelection} from '#app/imageAssetSelection.ts';
-import {HoverHint} from '#core/hoverHint.ts';
+import type {ImageAssetSelection} from './imageAssetSelection.ts';
+import {HoverHint} from '#app/hoverHint.ts';
 import {BookmarkOnClickAction, type BookmarkOnClickActionType} from '#models/idb/bookmarkOnClickAction.ts';
 import {type CornerActions} from '#models/idb/cornerActions.ts';
 import {type CornerPosition} from '#models/idb/cornerPosition.ts';
 import {createDefaultCornerActions} from '#models/idb/createDefaultCornerActions.ts';
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';
 import {SettingsIconStyle} from '#models/idb/settingsIconStyle.ts';
+import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {UserStateEntry} from '#models/idb/userStateEntry.ts';
+import type {Card} from '#models/internal/card.ts';
+import {CardGroup} from '#models/internal/cardGroup.ts';
+import {CardSection} from '#models/internal/cardSection.ts';
+import {StartPanel} from '#models/internal/startPanel.ts';
 import {ObservableProperty} from '#utils/observableProperty.ts';
 import {ActionInterface} from '../actions/actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
-import {StartPanelEntry} from '../models/idb/startPanelEntry.ts';
-import type {Card} from '../models/internal/card.ts';
-import {CardGroup} from '../models/internal/cardGroup.ts';
-import {CardSection} from '../models/internal/cardSection.ts';
-import {StartPanel} from '../models/internal/startPanel.ts';
+import type {ActiveContextMenu} from './activeContextMenu.ts';
+import type {ActiveIconPreview} from './activeIconPreview.ts';
+import type {CardDragDropState} from './cardDragDropState.ts';
 
 export const userState = new ObservableProperty<UserStateEntry>(new UserStateEntry());
 
@@ -36,8 +36,6 @@ export const selectedCard = new ObservableProperty<Card | null>(null);
 export const selectedSection = new ObservableProperty<CardSection | null>(null);
 export const selectedGroup = new ObservableProperty<CardGroup | null>(null);
 
-selectedGroup.debug({label: 'selectedGroup'});
-
 export const selectedPanelEntry = new ObservableProperty<StartPanelEntry | null>(null);
 export const selectedCornerPosition = new ObservableProperty<CornerPosition | null>(null);
 export const selectedImageAsset = new ObservableProperty<ImageAssetSelection | null>(null);
@@ -50,17 +48,6 @@ export const pastedUrl = new ObservableProperty<string | null>(null);
 export const cardToMove = new ObservableProperty<Card | null>(null);
 export const groupToMove = new ObservableProperty<CardGroup | null>(null);
 export const cardCopy = new ObservableProperty<Card | null>(null);
-
-export interface CardDragDropState {
-    draggedCard: Card;
-    sourceGroupId: string;
-    sourceSectionId: string;
-    cursorX: number;
-    cursorY: number;
-    cardDropTarget: Card | null;
-    groupDropTarget: CardGroup | null;
-    insertPosition: InsertPosition;
-}
 
 export const cardDragDrop = new ObservableProperty<CardDragDropState | null>(null);
 export const messageOverlayContent = new ObservableProperty<string | null>(null);

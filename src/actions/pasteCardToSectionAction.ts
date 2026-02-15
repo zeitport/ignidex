@@ -3,7 +3,7 @@ import {Card} from '#models/internal/card.ts';
 import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {activeStartPanel, cardCopy, selectedSection} from '#state';
 import {createId} from '#utils/createId.ts';
-import {StartPanelsStore} from '../core/idb/startPanelsStore.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
 import {ActionInterface} from './actionInterface.ts';
 
 export class PasteCardToSectionAction implements ActionInterface {

@@ -1,4 +1,4 @@
-import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {ImageAssetsStore} from '#src/idb/imageAssetsStore.ts';
 import type {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 
 export class DatabaseConnector {

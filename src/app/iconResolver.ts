@@ -1,7 +1,7 @@
-import type {Card} from '../models/internal/card.ts';
+import type {Card} from '#models/internal/card.ts';
 import {IconResolverResult} from './iconResolverResult.ts';
-import {ImageAssetsStore} from './idb/imageAssetsStore.ts';
-import {inject} from '#inject';
+import {ImageAssetsStore} from '../idb/imageAssetsStore.ts';
+import {inject} from '#app/injector.ts';
 import {mdiLinkOff} from '@mdi/js';
 
 export class IconResolver {

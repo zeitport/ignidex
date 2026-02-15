@@ -1,5 +1,5 @@
 import {diceContextMenuItems} from '../../contextMenus/diceContextMenuItems.ts';
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {t} from '#i18n';
 import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement} from 'lit';
@@ -16,10 +16,10 @@ import {
     mdiImport
 } from '@mdi/js';
 import {activeStartPanel, activeRemoteUrl, activeContextMenu, diceRollResult} from '#state';
-import {inject} from '#core/injector.ts';
+import {inject} from '#app/injector.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
-import {loadDataFromUrl} from '../../core/loadDataFromUrl.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {loadDataFromUrl} from '#app/loadDataFromUrl.ts';
+import {StartPanelsStore} from '../../idb/startPanelsStore.ts';
 import {StartPanelEntry} from '../../models/idb/startPanelEntry.ts';
 import {StartPanel} from '../../models/internal/startPanel.ts';
 import {StartPanelHeader} from '../../models/internal/startPanelHeader.ts';

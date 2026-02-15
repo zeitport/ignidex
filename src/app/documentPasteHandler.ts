@@ -1,5 +1,5 @@
-import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {ImageAssetsStore} from '../idb/imageAssetsStore.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
 import {inject} from '#inject';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';

@@ -1,6 +1,6 @@
-import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {loadDataFromUrl} from '#core/loadDataFromUrl.ts';
+import {inject} from '#app/injector.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
+import {loadDataFromUrl} from '#app/loadDataFromUrl.ts';
 import {activeStartPanel, activeRemoteUrl, activeOverlay, messageOverlayContent} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {ActionInterface} from './actionInterface.ts';

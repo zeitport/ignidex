@@ -1,7 +1,7 @@
 import {mdiCog} from '@mdi/js';
 import {LitElement, html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {i18n} from '#i18n';
 import {activeOverlay, settingsIconStyle} from '#state';
 import {OverlayType} from './overlays/overlayType.ts';

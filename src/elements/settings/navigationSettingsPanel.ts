@@ -2,7 +2,7 @@ import {BookmarkOnClickAction, type BookmarkOnClickActionType} from '#models/idb
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts';
-import {UserStateStore} from '#core/idb/userStateStore.ts';
+import {UserStateStore} from '../../idb/userStateStore.ts';
 import {inject} from '#inject';
 import {bookmarkOnClickAction} from '#state';
 import {t} from '#i18n';

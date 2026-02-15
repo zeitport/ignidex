@@ -1,4 +1,4 @@
-import {HoverHint} from '#core/hoverHint.ts';
+import {HoverHint} from '#app/hoverHint.ts';
 import {i18n, t} from '#i18n';
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
@@ -6,7 +6,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import type {Card} from '#models/internal/card.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {groupSectionStyle} from './groupSectionStyle.ts';
 import {
     activeContextMenu,

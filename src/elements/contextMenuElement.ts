@@ -4,8 +4,8 @@ import {until} from 'lit/directives/until.js';
 import type {ContextMenuItem} from './contextMenuItem.ts';
 import {contextMenuElementStyle} from './contextMenuElementStyle.ts';
 import {when} from 'lit/directives/when.js';
-import {HoverHint} from '#core/hoverHint.ts';
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {HoverHint} from '#app/hoverHint.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 
 @customElement('cc-context-menu')
 export class ContextMenuElement extends LitElement {

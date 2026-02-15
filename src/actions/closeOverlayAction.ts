@@ -1,6 +1,6 @@
 import {activeAction, activeOverlay, activeSubOverlay, activeSettingsPanelId} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
-import {removeSettingsUrlParameter} from '#core/settingsUrlParameter.ts';
+import {removeSettingsUrlParameter} from '#app/settingsUrlParameter.ts';
 import type {ActionInterface} from './actionInterface.ts';
 
 export class CloseOverlayAction implements ActionInterface {

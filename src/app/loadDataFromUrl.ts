@@ -1,8 +1,8 @@
-import {inject} from '#core/injector.ts';
-import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {inject} from '#app/injector.ts';
+import {ImageAssetsStore} from '../idb/imageAssetsStore.ts';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import {mapDtoToStartPanel} from '#models/mapper/mapDtoToModel.ts';
-import {StartPanel} from '../models/internal/startPanel.ts';
+import {StartPanel} from '#models/internal/startPanel.ts';
 
 /**
  * Loads a StartPanelDto from a remote URL.

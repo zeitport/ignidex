@@ -6,7 +6,7 @@ import {customElement} from 'lit/decorators.js';
 import {cornerActions, selectedCornerPosition} from '#state';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
 import {CornerPosition} from '#models/idb/cornerPosition.ts';
-import {UserStateStore} from '#core/idb/userStateStore.ts';
+import {UserStateStore} from '../../idb/userStateStore.ts';
 import {inject} from '#inject';
 import type {ListItem} from '#elements';
 import {Coffee} from 'lucide';

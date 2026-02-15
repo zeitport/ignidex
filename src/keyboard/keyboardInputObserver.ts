@@ -1,5 +1,5 @@
 import {activeContextMenu} from '#state';
-import {HoverHint} from '#core/hoverHint.ts';
+import {HoverHint} from '#app/hoverHint.ts';
 import type {KeyboardShortcut, KeyCombination} from './keyboardShortcutInterface.ts';
 import {keyboardShortcuts} from './keyboardShortcuts.ts';
 import {isModifierOnlyEvent, matchesCombination, parseKeySequence} from './keySequenceParser.ts';

@@ -1,4 +1,4 @@
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {html, LitElement, css, svg} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import './settingsSection.ts';

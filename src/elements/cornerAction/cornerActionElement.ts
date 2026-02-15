@@ -2,7 +2,7 @@ import {getCornerActionFromPosition} from '../../cornerAction/getCornerActionFro
 import {Icon} from '#models/internal/icon.ts';
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {i18n} from '#i18n';
 import {cornerActions} from '#state';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';

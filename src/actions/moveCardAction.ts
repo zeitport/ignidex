@@ -2,8 +2,8 @@ import {Card} from '#models/internal/card.ts';
 import {clonePanel} from '#models/mapper/clonePanel.ts';
 import {selectedCard, activeStartPanel} from '#state';
 import {ActionInterface} from './actionInterface.ts';
-import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {inject} from '#app/injector.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 
 export class MoveCardAction implements ActionInterface {

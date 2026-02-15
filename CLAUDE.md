@@ -27,12 +27,13 @@ Use the package.json import aliases:
 - `#utils/*` - Utility functions
 - `#inject` - Dependency injection
 - `#models/*` - Data models
-- `#core/*` - Core business logic
+- `#app/*` - App core logic
+- `#state` - The global app state.
 
 ### Directory Structure
 
-- `src/app/` - Global styles (`index.css`) and observable state (`state.ts`)
-- `src/core/` - Persistence layer (IndexedDB), stores, dependency injection
+- `src/app/` - Global styles (`index.css`), stores, dependency injection
+- `src/state/` - The global app state.
 - `src/models/` - Data models (see Data Model Layers below)
 - `src/elements/` - Lit web components
 - `src/actions/` - User interaction commands implementing `ActionInterface`

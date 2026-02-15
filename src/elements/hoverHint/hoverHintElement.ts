@@ -1,5 +1,5 @@
 import {activeHoverHint, hoverHintMode} from '#state';
-import type {HoverHint} from '#core/hoverHint.ts';
+import type {HoverHint} from '#app/hoverHint.ts';
 import {HoverHintMode} from '#models/idb/hoverHintMode.ts';
 import {mdiLockOutline, mdiMouseLeftClickOutline, mdiMouseRightClickOutline, mdiMouseScrollWheel} from '@mdi/js';
 import {nothing, type TemplateResult} from 'lit';

@@ -13,7 +13,7 @@ import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts
 import {OverlayType} from '../overlays/overlayType.ts';
 import type {RadioOption} from '../radioButton/radioOption.ts';
 import {colorPalette} from './colorPalette.ts';
-import {UserStateStore} from '#core/idb/userStateStore.ts';
+import {UserStateStore} from '../../idb/userStateStore.ts';
 import {inject} from '#inject';
 import {activeSubOverlay, cornerActions, hoverHintMode, selectedCornerPosition} from '#state';
 import {uiSettingsPanelStyle} from './uiSettingsPanelStyle.ts';

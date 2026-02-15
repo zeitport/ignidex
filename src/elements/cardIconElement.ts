@@ -1,6 +1,6 @@
 import {LitElement, html, type PropertyValues} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {IconResolver} from '../core/iconResolver.ts';
+import {IconResolver} from '#app/iconResolver.ts';
 import {inject} from '#inject';
 import {Card} from '../models/internal/card.ts';
 import {IconStyle} from '#models/internal/iconStyle.ts';

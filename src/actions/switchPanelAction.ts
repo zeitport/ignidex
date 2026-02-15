@@ -1,5 +1,5 @@
-import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {inject} from '#app/injector.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
 import {activeOverlay, activeSubOverlay} from '#state';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
 import {ActionInterface} from './actionInterface.ts';

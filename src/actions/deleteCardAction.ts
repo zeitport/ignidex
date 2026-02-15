@@ -4,8 +4,8 @@ import {selectedCard, activeAction, activeOverlay, activeStartPanel} from '#stat
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
-import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {inject} from '#app/injector.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 
 export class DeleteCardAction implements ActionInterface {

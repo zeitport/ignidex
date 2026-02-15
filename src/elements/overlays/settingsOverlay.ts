@@ -6,7 +6,7 @@ import {ListItem} from '../listElement.ts';
 import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline, mdiCompassOutline} from '@mdi/js';
 import {Coffee} from 'lucide';
 import {activeSettingsPanelId} from '#state';
-import {updateSettingsUrlParameter} from '#core/settingsUrlParameter.ts';
+import {updateSettingsUrlParameter} from '#app/settingsUrlParameter.ts';
 import '../overlayElement.ts';
 import '../listElement.ts';
 import '../settings/uiSettingsPanel.ts';

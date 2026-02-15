@@ -1,8 +1,8 @@
 import {DocumentPasteHandler} from '#app/documentPasteHandler.ts';
-import {loadDataFromUrl} from '#core/loadDataFromUrl.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
-import {UserStateStore} from '#core/idb/userStateStore.ts';
+import {loadDataFromUrl} from '#app/loadDataFromUrl.ts';
+import {StartPanelsStore} from '#src/idb/startPanelsStore.ts';
+import {switchToFirstStartPanel} from '#app/switchToFirstStartPanel.ts';
+import {UserStateStore} from '#src/idb/userStateStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {createId} from '#utils/createId.ts';
@@ -13,8 +13,8 @@ import {
 import {OverlayType} from './elements/overlays/overlayType.ts';
 import {inject} from '#inject';
 import {registerKeyboardInputObserver} from './keyboard/keyboardInputObserver.ts';
-import {getSettingsUrlParameter} from '#core/settingsUrlParameter.ts';
-import {isValidSettingsPanelId} from './elements/overlays/settingsOverlay.ts';
+import {getSettingsUrlParameter} from '#app/settingsUrlParameter.ts';
+import {isValidSettingsPanelId} from '#elements';
 import '#elements';
 
 function registerServiceWorker() {

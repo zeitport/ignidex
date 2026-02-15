@@ -2,9 +2,9 @@ import {activeAction, activeOverlay, activeStartPanel} from '#state';
 import {ActionConfirmation} from './actionConfirmation.ts';
 import {ActionInterface} from './actionInterface.ts';
 import {OverlayType} from '../elements/overlays/overlayType.ts';
-import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {switchToFirstStartPanel} from '#core/switchToFirstStartPanel.ts';
+import {inject} from '#app/injector.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
+import {switchToFirstStartPanel} from '#app/switchToFirstStartPanel.ts';
 
 export class DeletePanelAction implements ActionInterface {
     readonly confirmation = new ActionConfirmation({buttonLabel: 'Delete'});

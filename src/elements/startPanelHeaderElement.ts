@@ -1,9 +1,9 @@
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {i18n} from '#i18n';
 import {LitElement, html, type PropertyValues} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {inject} from '#inject';
-import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {ImageAssetsStore} from '../idb/imageAssetsStore.ts';
 import {IconStyle} from '#models/internal/iconStyle.ts';
 import type {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {startPanelHeaderElementStyle} from './startPanelHeaderElementStyle.ts';

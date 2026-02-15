@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ignidex-v0.8.1';
+const CACHE_NAME = 'ignidex-v0.9.0';
 
 self.addEventListener('install', () => {
     self.skipWaiting();

@@ -3,7 +3,7 @@ import {createId} from '#utils/createId.ts';
 import type {ActionInterface} from '../actionInterface.ts';
 import {fetchIconFromUrl} from '#utils/fetchIconFromUrl.ts';
 import {svgToDataUri} from '#utils/svgToDataUri.ts';
-import {activeIconPreview} from '../../app/state.ts';
+import {activeIconPreview} from '../../state/state.ts';
 
 export class PasteIconAction implements ActionInterface {
     async run() {

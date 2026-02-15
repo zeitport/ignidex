@@ -1,5 +1,5 @@
-import {InsertPosition} from '#app/insertPosition.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {InsertPosition} from '#src/state/insertPosition.ts';
+import {StartPanelsStore} from '../idb/startPanelsStore.ts';
 import {inject} from '#inject';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import type {Card} from '#models/internal/card.ts';

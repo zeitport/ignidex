@@ -1,12 +1,12 @@
-import {hoverHint} from '#core/hoverHintDirective.ts';
+import {hoverHint} from '#app/hoverHintDirective.ts';
 import {i18n} from '#i18n';
 import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {activeStartPanel, activeRemoteUrl, activeContextMenu, selectedPanelEntry, panelOrderVersion} from '#state';
-import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
-import {IconResolver} from '#core/iconResolver.ts';
+import {inject} from '#app/injector.ts';
+import {StartPanelsStore} from '../../idb/startPanelsStore.ts';
+import {IconResolver} from '#app/iconResolver.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {type ListItem} from '../listElement.ts';

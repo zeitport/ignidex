@@ -1,8 +1,8 @@
 import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {activeStartPanel, selectedSection, selectedGroup} from '#state';
-import {inject} from '#core/injector.ts';
-import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
+import {inject} from '#app/injector.ts';
+import {StartPanelsStore} from '../../idb/startPanelsStore.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
