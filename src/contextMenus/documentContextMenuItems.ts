@@ -3,12 +3,12 @@ import {
     mdiCog, mdiContentDuplicate,
     mdiExport, mdiPlus, mdiSwapHorizontal
 } from '@mdi/js';
-import {DuplicatePanelAction} from '../../actions/duplicatePanelAction.ts';
-import {OpenSettingsAction} from '../../actions/openSettingsAction.ts';
-import {ExportToJsonAction} from '../../actions/exportToJsonAction.ts';
-import {NewPanelAction} from '../../actions/newPanelAction.ts';
-import {SwitchPanelAction} from '../../actions/switchPanelAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
+import {DuplicatePanelAction} from '../actions/duplicatePanelAction.ts';
+import {OpenSettingsAction} from '../actions/openSettingsAction.ts';
+import {ExportToJsonAction} from '../actions/exportToJsonAction.ts';
+import {NewPanelAction} from '../actions/newPanelAction.ts';
+import {SwitchPanelAction} from '../actions/switchPanelAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
 
 export const documentContextMenuItems = [
     new ContextMenuItem({

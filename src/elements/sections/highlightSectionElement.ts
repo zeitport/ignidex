@@ -10,8 +10,8 @@ import {when} from 'lit/directives/when.js';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
 import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, cardDragDrop, userState} from '#state';
-import {bookmarkContextMenuItems} from '../../app/contextMenus/bookmarkContextMenuItems.ts';
-import {highlightSectionContextMenuItems} from '../../app/contextMenus/highlightSectionContextMenuItems.ts';
+import {bookmarkContextMenuItems} from '../../contextMenus/bookmarkContextMenuItems.ts';
+import {highlightSectionContextMenuItems} from '../../contextMenus/highlightSectionContextMenuItems.ts';
 import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
 
 @customElement('cc-highlight-section')

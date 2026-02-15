@@ -6,14 +6,14 @@ import {
     mdiShapeSquarePlus,
     mdiSwapHorizontal
 } from '@mdi/js';
-import {DuplicatePanelAction} from '../../actions/duplicatePanelAction.ts';
-import {ExportToJsonAction} from '../../actions/exportToJsonAction.ts';
-import {SwitchPanelAction} from '../../actions/switchPanelAction.ts';
-import {EditPanelAction} from '../../actions/editPanelAction.ts';
-import {DeletePanelAction} from '../../actions/deletePanelAction.ts';
-import {AddSectionAction} from '../../actions/addSectionAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
-import {noRemoteUrl} from '../preconditions.ts';
+import {DuplicatePanelAction} from '../actions/duplicatePanelAction.ts';
+import {ExportToJsonAction} from '../actions/exportToJsonAction.ts';
+import {SwitchPanelAction} from '../actions/switchPanelAction.ts';
+import {EditPanelAction} from '../actions/editPanelAction.ts';
+import {DeletePanelAction} from '../actions/deletePanelAction.ts';
+import {AddSectionAction} from '../actions/addSectionAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
+import {noRemoteUrl} from '#app/preconditions.ts';
 
 export const panelContextMenuItems = [
     new ContextMenuItem({

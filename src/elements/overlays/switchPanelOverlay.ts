@@ -11,7 +11,7 @@ import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {type ListItem} from '../listElement.ts';
 import {switchPanelOverlayStyle} from './switchPanelOverlayStyle.ts';
-import {switchPanelContextMenuItems} from '../../app/contextMenus/switchPanelContextMenuItems.ts';
+import {switchPanelContextMenuItems} from '../../contextMenus/switchPanelContextMenuItems.ts';
 
 @customElement('cc-switch-panel-overlay')
 export class SwitchPanelOverlay extends LitElement {

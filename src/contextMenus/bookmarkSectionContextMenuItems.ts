@@ -7,13 +7,13 @@ import {
     mdiPencilOutline,
     mdiShapeCirclePlus
 } from '@mdi/js';
-import {AddGroupAction} from '../../actions/addGroupAction.ts';
-import {DeleteSectionAction} from '../../actions/deleteSectionAction.ts';
-import {EditSectionAction} from '../../actions/editSectionAction.ts';
-import {MoveSectionAction} from '../../actions/moveSectionAction.ts';
-import {PasteCardToSectionAction} from '../../actions/pasteCardToSectionAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
-import {hasCardCopy, noRemoteUrl} from '../preconditions.ts';
+import {AddGroupAction} from '../actions/addGroupAction.ts';
+import {DeleteSectionAction} from '../actions/deleteSectionAction.ts';
+import {EditSectionAction} from '../actions/editSectionAction.ts';
+import {MoveSectionAction} from '../actions/moveSectionAction.ts';
+import {PasteCardToSectionAction} from '../actions/pasteCardToSectionAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
+import {hasCardCopy, noRemoteUrl} from '#app/preconditions.ts';
 
 export const bookmarkSectionContextMenuItems = [
     new ContextMenuItem({

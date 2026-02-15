@@ -1,4 +1,4 @@
-import {getCornerActionFromPosition} from '#app/cornerAction/getCornerActionFromPosition.ts';
+import {getCornerActionFromPosition} from '../../cornerAction/getCornerActionFromPosition.ts';
 import {Icon} from '#models/internal/icon.ts';
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';

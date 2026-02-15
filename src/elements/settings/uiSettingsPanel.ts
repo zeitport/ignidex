@@ -1,4 +1,4 @@
-import {getCornerActionFromPosition} from '#app/cornerAction/getCornerActionFromPosition.ts';
+import {getCornerActionFromPosition} from '../../cornerAction/getCornerActionFromPosition.ts';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
 import {CornerPosition} from '#models/idb/cornerPosition.ts';
 import {HoverHintMode, type HoverHintModeType} from '#models/idb/hoverHintMode.ts';

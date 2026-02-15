@@ -3,8 +3,8 @@ import {
     mdiArrowUpThin,
     mdiArrowDownThin
 } from '@mdi/js';
-import {MovePanelAction} from '../../actions/movePanelAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
+import {MovePanelAction} from '../actions/movePanelAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
 
 export const switchPanelContextMenuItems = [
     new ContextMenuItem({

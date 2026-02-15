@@ -17,9 +17,9 @@ import {
     cardDragDrop,
     userState
 } from '#state';
-import {bookmarkContextMenuItems} from '#app/contextMenus/bookmarkContextMenuItems.ts';
-import {bookmarkSectionContextMenuItems} from '#app/contextMenus/bookmarkSectionContextMenuItems.ts';
-import {groupContextMenuItems} from '#app/contextMenus/groupContextMenuItems.ts';
+import {bookmarkContextMenuItems} from '../../contextMenus/bookmarkContextMenuItems.ts';
+import {bookmarkSectionContextMenuItems} from '../../contextMenus/bookmarkSectionContextMenuItems.ts';
+import {groupContextMenuItems} from '../../contextMenus/groupContextMenuItems.ts';
 import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
 
 @customElement('cc-groups-section')

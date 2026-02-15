@@ -1,4 +1,4 @@
-import {iconPreviewContextMenuItems} from '#app/contextMenus/iconPreviewContextMenuItems.ts';
+import {iconPreviewContextMenuItems} from '../contextMenus/iconPreviewContextMenuItems.ts';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {mdiDeleteOutline} from '@mdi/js';

@@ -1,9 +1,9 @@
 import {i18n} from '#i18n';
 import {mdiCloudDownloadOutline, mdiLink, mdiRefresh} from '@mdi/js';
-import {CopyShareUrlToClipboardAction} from '../../actions/copyShareUrlToClipboardAction.ts';
-import {CreateLocalPanelAction} from '../../actions/createLocalPanelAction.ts';
-import {RefreshFromRemoteAction} from '../../actions/refreshFromRemoteAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
+import {CopyShareUrlToClipboardAction} from '../actions/copyShareUrlToClipboardAction.ts';
+import {CreateLocalPanelAction} from '../actions/createLocalPanelAction.ts';
+import {RefreshFromRemoteAction} from '../actions/refreshFromRemoteAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
 
 export const remoteBadgeContextMenuItems = [
     new ContextMenuItem({

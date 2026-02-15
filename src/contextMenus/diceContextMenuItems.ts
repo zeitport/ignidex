@@ -1,7 +1,7 @@
 import { mdiDice6
 } from '@mdi/js';
-import {D6, RollD6DiceAction} from '../../actions/rollD6DiceAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
+import {D6, RollD6DiceAction} from '../actions/rollD6DiceAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
 
 export const diceContextMenuItems = [
     new ContextMenuItem({

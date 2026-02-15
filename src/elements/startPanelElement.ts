@@ -13,7 +13,7 @@ import {
 import {CardMover} from '#app/cardMover.ts';
 import type {CardSection} from '../models/internal/cardSection.ts';
 import {CardSectionType} from '../models/internal/cardSectionType.ts';
-import {documentContextMenuItems} from '../app/contextMenus/documentContextMenuItems.ts';
+import {documentContextMenuItems} from '../contextMenus/documentContextMenuItems.ts';
 import type {ContextMenuElement} from './contextMenuElement.ts';
 import {OverlayType} from './overlays/overlayType.ts';
 import {startPanelElementStyle} from './startPanelElementStyle.ts';

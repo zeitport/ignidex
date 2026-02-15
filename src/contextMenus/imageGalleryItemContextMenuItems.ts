@@ -1,8 +1,8 @@
 import {mdiContentCopy, mdiOpenInNew, mdiXml} from '@mdi/js';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
-import {CopyAsDataUriAction} from '../../actions/imageGallery/copyAsDataUriAction.ts';
-import {OpenSelectedImageInNewTabAction} from '../../actions/imageGallery/openSelectedImageInNewTabAction.ts';
-import {CopyAsSvgAction} from '../../actions/imageGallery/copyAsSvgAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
+import {CopyAsDataUriAction} from '../actions/imageGallery/copyAsDataUriAction.ts';
+import {OpenSelectedImageInNewTabAction} from '../actions/imageGallery/openSelectedImageInNewTabAction.ts';
+import {CopyAsSvgAction} from '../actions/imageGallery/copyAsSvgAction.ts';
 
 export const imageGalleryItemContextMenuItems = [
     new ContextMenuItem({

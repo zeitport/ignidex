@@ -6,12 +6,12 @@ import {
     mdiArrowDownThin,
     mdiBookmarkOutline
 } from '@mdi/js';
-import {DeleteSectionAction} from '../../actions/deleteSectionAction.ts';
-import {EditSectionAction} from '../../actions/editSectionAction.ts';
-import {AddCardAction} from '../../actions/addCardAction.ts';
-import {MoveSectionAction} from '../../actions/moveSectionAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
-import {noRemoteUrl} from '../preconditions.ts';
+import {DeleteSectionAction} from '../actions/deleteSectionAction.ts';
+import {EditSectionAction} from '../actions/editSectionAction.ts';
+import {AddCardAction} from '../actions/addCardAction.ts';
+import {MoveSectionAction} from '../actions/moveSectionAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
+import {noRemoteUrl} from '#app/preconditions.ts';
 
 export const highlightSectionContextMenuItems = [
     new ContextMenuItem({

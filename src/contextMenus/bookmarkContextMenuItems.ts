@@ -9,15 +9,15 @@ import {
     mdiPencilOutline,
     mdiSwapHorizontal
 } from '@mdi/js';
-import {CopyCardAction} from '../../actions/copyCardAction.ts';
-import {CopyUrlAction} from '../../actions/copyUrlAction.ts';
-import {DeleteCardAction} from '../../actions/deleteCardAction.ts';
-import {EditCardAction} from '../../actions/editCardAction.ts';
-import {MoveBookmarkToGroupAction} from '../../actions/moveBookmarkToGroupAction.ts';
-import {MoveCardAction} from '../../actions/moveCardAction.ts';
-import {OpenInNewTabAction} from '../../actions/openInNewTabAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
-import {noRemoteUrl} from '../preconditions.ts';
+import {CopyCardAction} from '../actions/copyCardAction.ts';
+import {CopyUrlAction} from '../actions/copyUrlAction.ts';
+import {DeleteCardAction} from '../actions/deleteCardAction.ts';
+import {EditCardAction} from '../actions/editCardAction.ts';
+import {MoveBookmarkToGroupAction} from '../actions/moveBookmarkToGroupAction.ts';
+import {MoveCardAction} from '../actions/moveCardAction.ts';
+import {OpenInNewTabAction} from '../actions/openInNewTabAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
+import {noRemoteUrl} from '#app/preconditions.ts';
 
 export const bookmarkContextMenuItems = [
     new ContextMenuItem({

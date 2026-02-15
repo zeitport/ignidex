@@ -7,8 +7,8 @@ import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import type {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {startPanelHeaderElementStyle} from './startPanelHeaderElementStyle.ts';
 import {activeContextMenu, activeRemoteUrl} from '#state';
-import {panelContextMenuItems} from '../app/contextMenus/panelContextMenuItems.ts';
-import {remoteBadgeContextMenuItems} from '../app/contextMenus/remoteBadgeContextMenuItems.ts';
+import {panelContextMenuItems} from '../contextMenus/panelContextMenuItems.ts';
+import {remoteBadgeContextMenuItems} from '../contextMenus/remoteBadgeContextMenuItems.ts';
 
 @customElement('cc-start-panel-header')
 export class StartPanelHeaderElement extends LitElement {

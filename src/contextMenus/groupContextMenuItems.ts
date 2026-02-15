@@ -8,15 +8,15 @@ import {
     mdiPlus,
     mdiSwapVertical
 } from '@mdi/js';
-import {AddCardAction} from '../../actions/addCardAction.ts';
-import {DeleteGroupAction} from '../../actions/deleteGroupAction.ts';
-import {EditGroupAction} from '../../actions/editGroupAction.ts';
-import {MoveGroupLeftAction} from '../../actions/moveGroupLeftAction.ts';
-import {MoveGroupRightAction} from '../../actions/moveGroupRightAction.ts';
-import {MoveGroupToSectionAction} from '../../actions/moveGroupToSectionAction.ts';
-import {PasteCardToGroupAction} from '../../actions/pasteCardToGroupAction.ts';
-import {ContextMenuItem} from '../../elements/contextMenuItem.ts';
-import {hasCardCopy, noRemoteUrl} from '../preconditions.ts';
+import {AddCardAction} from '../actions/addCardAction.ts';
+import {DeleteGroupAction} from '../actions/deleteGroupAction.ts';
+import {EditGroupAction} from '../actions/editGroupAction.ts';
+import {MoveGroupLeftAction} from '../actions/moveGroupLeftAction.ts';
+import {MoveGroupRightAction} from '../actions/moveGroupRightAction.ts';
+import {MoveGroupToSectionAction} from '../actions/moveGroupToSectionAction.ts';
+import {PasteCardToGroupAction} from '../actions/pasteCardToGroupAction.ts';
+import {ContextMenuItem} from '../elements/contextMenuItem.ts';
+import {hasCardCopy, noRemoteUrl} from '#app/preconditions.ts';
 
 export const groupContextMenuItems = [
     new ContextMenuItem({

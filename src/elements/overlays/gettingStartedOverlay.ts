@@ -1,4 +1,4 @@
-import {diceContextMenuItems} from '#app/contextMenus/diceContextMenuItems.ts';
+import {diceContextMenuItems} from '../../contextMenus/diceContextMenuItems.ts';
 import {hoverHint} from '#core/hoverHintDirective.ts';
 import {t} from '#i18n';
 import {Icon} from '#models/internal/icon.ts';

@@ -1,4 +1,4 @@
-import {setCornerIconType} from '#app/cornerAction/setCornerIconType.ts';
+import {setCornerIconType} from '../../cornerAction/setCornerIconType.ts';
 import {Icon} from '#models/internal/icon.ts';
 import {mdiCancel, mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
 import {html, LitElement} from 'lit';

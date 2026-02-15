@@ -1,4 +1,4 @@
-import {imageGalleryItemContextMenuItems} from '#app/contextMenus/imageGalleryItemContextMenuItems.ts';
+import {imageGalleryItemContextMenuItems} from '../../contextMenus/imageGalleryItemContextMenuItems.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
 import {inject} from '#inject';
 import type {ImageAssetEntry} from '#models/idb/imageAssetEntry.ts';
