@@ -4,6 +4,7 @@ import {LitElement, html, type PropertyValues} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {inject} from '#inject';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
+import {IconStyle} from '#models/internal/iconStyle.ts';
 import type {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {startPanelHeaderElementStyle} from './startPanelHeaderElementStyle.ts';
 import {activeContextMenu, activeRemoteUrl} from '#state';
@@ -59,7 +60,10 @@ export class StartPanelHeaderElement extends LitElement {
                 >
                 ${hasIcon ? html`
                     <div class="icon">
-                        <div class="mono-icon" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>
+                        ${this.header?.iconStyle === IconStyle.none
+                            ? html`<img class="original-icon" src="${this.iconDataUri}" aria-hidden="true">`
+                            : html`<div class="mono-icon ${this.header?.iconStyle === IconStyle.maskAccent ? 'accent' : ''}" aria-hidden="true" style="--mask-url: url('${this.iconDataUri}')"></div>`
+                        }
                     </div>
                 ` : ''}
                 <div class="content">

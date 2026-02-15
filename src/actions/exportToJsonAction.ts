@@ -32,7 +32,8 @@ export class ExportToJsonAction implements ActionInterface {
             header: startPanel.header ? {
                 title: startPanel.header.title,
                 icon: startPanel.header.icon,
-                description: startPanel.header.description
+                description: startPanel.header.description,
+                iconStyle: startPanel.header.iconStyle,
             } : new StartPanelHeader(),
             sections: startPanel.sections,
             images: images.map(icon => ({

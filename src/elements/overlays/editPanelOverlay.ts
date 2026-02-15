@@ -1,16 +1,21 @@
+import {mdiCircle, mdiCircleHalfFull, mdiCircleOutline} from '@mdi/js';
 import {html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {activeIconPreview, activeStartPanel} from '#state';
 import {inject} from '#core/injector.ts';
 import {StartPanelsStore} from '#core/idb/startPanelsStore.ts';
 import {ImageAssetsStore} from '#core/idb/imageAssetsStore.ts';
-import {IconStyle} from '#models/internal/iconStyle.ts';
+import {Icon} from '#models/internal/icon.ts';
+import {IconStyle, type IconStyle as IconStyleType} from '#models/internal/iconStyle.ts';
 import {StartPanel} from '#models/internal/startPanel.ts';
 import {StartPanelHeader} from '#models/internal/startPanelHeader.ts';
 import {StartPanelEntry} from '#models/idb/startPanelEntry.ts';
+import type {RadioOption} from '../radioButton/radioOption.ts';
+import type {CustomEventWithValue} from '../customEvents/customEventWithValue.ts';
 import {createId} from '#utils/createId.ts';
 import {CloseOverlayAction} from '../../actions/closeOverlayAction.ts';
 import {editPanelOverlayStyle} from './editPanelOverlayStyle.ts';
+import {i18n} from '#i18n';
 
 @customElement('cc-edit-panel-overlay')
 export class EditPanelOverlay extends LitElement {
@@ -29,7 +34,16 @@ export class EditPanelOverlay extends LitElement {
     private description = '';
 
     @state()
+    private iconStyle: IconStyleType = IconStyle.maskAccent;
+
+    @state()
     private nameError = '';
+
+    private iconStyleOptions: RadioOption[] = [
+        {label: '', value: IconStyle.none, icon: Icon.fromMdiIcon(mdiCircleOutline), hint: i18n.token.hints.iconStyleNone},
+        {label: '', value: IconStyle.mask, icon: Icon.fromMdiIcon(mdiCircleHalfFull), hint: i18n.token.hints.iconStyleMask},
+        {label: '', value: IconStyle.maskAccent, icon: Icon.fromMdiIcon(mdiCircle), hint: i18n.token.hints.iconStyleMaskAccent},
+    ];
 
     private isAnchorManuallyEdited = false;
 
@@ -50,11 +64,13 @@ export class EditPanelOverlay extends LitElement {
             this.name = currentPanel.header?.title ?? '';
             this.anchor = currentPanel.anchor ?? '';
             this.description = currentPanel.header?.description ?? '';
+            this.iconStyle = currentPanel.header?.iconStyle ?? IconStyle.maskAccent;
             await this.loadExistingIcon(currentPanel.header?.icon ?? null);
         } else {
             this.name = '';
             this.anchor = '';
             this.description = '';
+            this.iconStyle = IconStyle.maskAccent;
         }
         this.nameError = '';
         this.isAnchorManuallyEdited = false;
@@ -70,7 +86,7 @@ export class EditPanelOverlay extends LitElement {
             assetId: iconId,
             dataUri: entry?.dataUri ?? null,
             source: entry?.source ?? '',
-            iconStyle: IconStyle.mask,
+            iconStyle: this.iconStyle,
         };
     }
 
@@ -85,6 +101,11 @@ export class EditPanelOverlay extends LitElement {
                     <div class="icon-column">
                         <label>Icon</label>
                         <cc-icon-preview></cc-icon-preview>
+                        <cc-radio-button-group
+                            .options=${this.iconStyleOptions}
+                            .value=${this.iconStyle}
+                            @change=${(event: CustomEventWithValue<IconStyleType>) => { this.handleIconStyleChange(event.detail.value); }}
+                        ></cc-radio-button-group>
                     </div>
 
                     <div class="details-column">
@@ -156,6 +177,14 @@ export class EditPanelOverlay extends LitElement {
         this.isAnchorManuallyEdited = true;
     }
 
+    private handleIconStyleChange(value: IconStyleType) {
+        this.iconStyle = value;
+        const current = activeIconPreview.value;
+        if (current) {
+            activeIconPreview.value = {...current, iconStyle: value};
+        }
+    }
+
     private slugify(text: string): string {
         return text
             .toLowerCase()
@@ -208,7 +237,8 @@ export class EditPanelOverlay extends LitElement {
             header: new StartPanelHeader({
                 title: this.name.trim(),
                 icon: iconPreview?.assetId ?? null,
-                description: this.description.trim() || null
+                description: this.description.trim() || null,
+                iconStyle: this.iconStyle,
             }),
             sections: []
         });
@@ -251,7 +281,8 @@ export class EditPanelOverlay extends LitElement {
             header: new StartPanelHeader({
                 title: this.name.trim(),
                 icon: iconPreview?.assetId ?? null,
-                description: this.description.trim() || null
+                description: this.description.trim() || null,
+                iconStyle: this.iconStyle,
             })
         });
 

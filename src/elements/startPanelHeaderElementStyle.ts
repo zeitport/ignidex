@@ -53,6 +53,16 @@ export const startPanelHeaderElementStyle = css`
         -webkit-mask-size: contain;
     }
 
+    .icon .mono-icon.accent {
+        background-color: var(--accent);
+    }
+
+    .icon .original-icon {
+        width: 3rem;
+        height: 3rem;
+        object-fit: contain;
+    }
+
     .content {
         display: flex;
         flex-direction: column;

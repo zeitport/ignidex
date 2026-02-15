@@ -3,6 +3,7 @@ import type {CardGroupDto} from '#models/dto/cardGroupDto.ts';
 import type {CardSectionDto} from '#models/dto/cardSectionDto.ts';
 import type {StartPanelDto} from '#models/dto/startPanelDto.ts';
 import type {StartPanelHeaderDto} from '#models/dto/startPanelHeaderDto.ts';
+import type {IconStyle} from '#models/internal/iconStyle.ts';
 import {Card} from '#models/internal/card.ts';
 import {CardGroup} from '#models/internal/cardGroup.ts';
 import {CardSection} from '#models/internal/cardSection.ts';
@@ -21,7 +22,10 @@ export function mapDtoToStartPanel(startPanelDto: StartPanelDto): StartPanel {
 }
 
 export function mapDtoToStartPanelHeader(headerDto: StartPanelHeaderDto): StartPanelHeader {
-    return new StartPanelHeader(headerDto);
+    return new StartPanelHeader({
+        ...headerDto,
+        iconStyle: (headerDto.iconStyle ?? undefined) as IconStyle | undefined,
+    });
 }
 
 export function mapDtoToCardSection(sectionDto: CardSectionDto): CardSection {
