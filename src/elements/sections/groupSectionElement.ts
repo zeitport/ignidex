@@ -15,6 +15,7 @@ import {
     selectedGroup,
     bookmarkOnClickAction,
     cardDragDrop,
+    hoveredCard,
     userState
 } from '#state';
 import {bookmarkContextMenuItems} from '../../contextMenus/bookmarkContextMenuItems.ts';
@@ -102,6 +103,7 @@ export class GroupSectionElement extends LitElement {
                  @contextmenu=${(event: MouseEvent) => this.handleCardContextMenu(event, card)}
                  @mousedown=${(event: MouseEvent) => this.handleCardMouseDown(event, card, group)}
                  @mouseenter=${() => this.handleCardMouseEnter(card)}
+                 @mouseleave=${() => this.handleCardMouseLeave(card)}
                  >
                 <div class="bookmark-item-background"></div>
 
@@ -218,6 +220,10 @@ export class GroupSectionElement extends LitElement {
     }
 
     private handleCardMouseLeave(card: Card) {
+        if (hoveredCard.value?.id === card.id) {
+            hoveredCard.value = null;
+        }
+
         // Cancel pending drag if mouse leaves the card before timer completes
         if (this.pendingDragCard?.id === card.id) {
             this.clearDragTimer();
@@ -231,6 +237,8 @@ export class GroupSectionElement extends LitElement {
     }
 
     private handleCardMouseEnter(card: Card) {
+        hoveredCard.value = card;
+
         // Set drop target when hovering over a card while dragging
         const dragState = cardDragDrop.value;
         if (dragState && dragState.draggedCard.id !== card.id) {

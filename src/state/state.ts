@@ -47,6 +47,7 @@ export const cardToMove = new ObservableProperty<Card | null>(null);
 export const groupToMove = new ObservableProperty<CardGroup | null>(null);
 export const cardCopy = new ObservableProperty<Card | null>(null);
 
+export const hoveredCard = new ObservableProperty<Card | null>(null);
 export const cardDragDrop = new ObservableProperty<CardDragDropState | null>(null);
 export const messageOverlayContent = new ObservableProperty<string | null>(null);
 export const isDraggingFile = new ObservableProperty<boolean>(false);

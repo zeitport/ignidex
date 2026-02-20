@@ -1,7 +1,7 @@
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
 
 export const hints = {
-    bookmark: '[LMB] open; [CTRL] + [LMB] open in new tab; [RMB] bookmark menu',
+    bookmark: '[LMB] open; [CTRL] + [LMB] open in new tab; [RMB] bookmark menu; [E] edit',
     startPanelHeader: '[RMB] panel menu; [🠜] go back; [🠞] go forward',
     switchPanel: '[LMB] Select another panel; [1 - 9] Switch; [🠜] previous; [🠞] next',
     switchPanelUp: '[LMB] Move panel up',
@@ -73,7 +73,8 @@ export const tokens = {
         switchToPanel6: 'Switch to panel 6',
         switchToPanel7: 'Switch to panel 7',
         switchToPanel8: 'Switch to panel 8',
-        switchToPanel9: 'Switch to panel 9'
+        switchToPanel9: 'Switch to panel 9',
+        editBookmark: 'Edit hovered bookmark'
     },
     hints: hints,
     cornerActionType: {

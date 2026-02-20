@@ -9,7 +9,7 @@ import {CardGroup} from '#models/internal/cardGroup.ts';
 import {when} from 'lit/directives/when.js';
 import {hoverHint} from '#app/hoverHintDirective.ts';
 import {highlightSectionStyles} from './highlightSectionStyles.ts';
-import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, cardDragDrop, userState} from '#state';
+import {activeContextMenu, selectedCard, selectedSection, selectedGroup, bookmarkOnClickAction, cardDragDrop, hoveredCard, userState} from '#state';
 import {bookmarkContextMenuItems} from '../../contextMenus/bookmarkContextMenuItems.ts';
 import {highlightSectionContextMenuItems} from '../../contextMenus/highlightSectionContextMenuItems.ts';
 import {BookmarkOnClickAction} from '#models/idb/bookmarkOnClickAction.ts';
@@ -99,6 +99,7 @@ export class HighlightSectionElement extends LitElement {
                      @mousedown=${(event: MouseEvent) => this.handleCardMouseDown(event, card, group)}
                      @mouseup=${() => this.handleCardMouseUp()}
                      @mouseenter=${() => this.handleCardMouseEnter(card)}
+                     @mouseleave=${() => this.handleCardMouseLeave(card)}
                      >
                     <div class="bookmark-item-background"></div>
                     <cc-card-icon .card="${card}" style="--icon-size: 1.75rem"></cc-card-icon>
@@ -214,6 +215,10 @@ export class HighlightSectionElement extends LitElement {
     }
 
     private handleCardMouseLeave(card: Card) {
+        if (hoveredCard.value?.id === card.id) {
+            hoveredCard.value = null;
+        }
+
         // Cancel pending drag if mouse leaves the card before timer completes
         if (this.pendingDragCard?.id === card.id) {
             this.clearDragTimer();
@@ -227,6 +232,8 @@ export class HighlightSectionElement extends LitElement {
     }
 
     private handleCardMouseEnter(card: Card) {
+        hoveredCard.value = card;
+
         // Set drop target when hovering over a card while dragging
         const dragState = cardDragDrop.value;
         if (dragState && dragState.draggedCard.id !== card.id) {

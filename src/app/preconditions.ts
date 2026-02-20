@@ -1,4 +1,4 @@
-import {activeOverlay, activeRemoteUrl, activeSubOverlay, cardCopy} from '#state';
+import {activeOverlay, activeRemoteUrl, activeSubOverlay, cardCopy, hoveredCard} from '#state';
 import type {PreconditionFn} from '../keyboard/keyboardShortcutInterface.ts';
 
 export const noInputFocused: PreconditionFn = () => {
@@ -34,4 +34,8 @@ export const noRemoteUrl: PreconditionFn = () => {
 
 export const hasCardCopy: PreconditionFn = () => {
     return cardCopy.value != null;
+};
+
+export const hasHoveredCard: PreconditionFn = () => {
+    return hoveredCard.value !== null;
 };
