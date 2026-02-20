@@ -46,7 +46,6 @@ export class RefreshFromRemoteAction implements ActionInterface {
 
             await startPanelsStore.set(updatedEntry);
             activeStartPanel.value = updatedPanel;
-            console.log(`Refreshed panel from remote: ${remoteUrl}`);
         } catch (error) {
             console.error('Failed to refresh from remote:', error);
             messageOverlayContent.value = i18n.token.remotePanel.refreshError;

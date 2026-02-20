@@ -8,6 +8,5 @@ export class MoveBookmarkToGroupAction implements ActionInterface {
     run() {
         cardToMove.value = selectedCard.value;
         activeOverlay.value = OverlayType.selectSection;
-        console.log('[MoveBookmarkToGroup] run', [cardToMove.value, activeOverlay.value]);
     }
 }

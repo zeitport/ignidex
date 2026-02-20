@@ -63,7 +63,8 @@ export class CreateLocalPanelAction implements ActionInterface {
         }
 
         activeStartPanel.value = newPanel;
-        activeRemoteUrl.value = null;  // Local panels have no remoteUrl
-        console.log(`Copied active panel to local storage with ID: ${id}`);
+
+        // Local panels have no remoteUrl
+        activeRemoteUrl.value = null;
     }
 }

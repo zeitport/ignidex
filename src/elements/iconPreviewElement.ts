@@ -98,8 +98,6 @@ export class IconPreviewElement extends LitElement {
     private onPaste = (event: ClipboardEvent) => { void this.handlePaste(event)};
 
     private async handlePaste(event: ClipboardEvent): Promise<void> {
-        console.log('Handling icon preview paste event');
-
         const target = event.target as HTMLElement;
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
 

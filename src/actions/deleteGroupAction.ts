@@ -26,8 +26,6 @@ export class DeleteGroupAction implements ActionInterface {
     }
 
     async confirm() {
-        console.log('Confirming DeleteGroupAction');
-
         const group = selectedGroup.value;
         const startPanel = activeStartPanel.value;
 

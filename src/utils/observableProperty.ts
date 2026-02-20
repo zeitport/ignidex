@@ -7,18 +7,12 @@ export class ObservableProperty<T> {
     private propertyValue: T;
     private subscribers = new Set<ObservablePropertyCallback<T>>;
 
-    private debugOptions: {label: string} | null = null;
-
     constructor(value: T) {
         this.propertyValue = value;
     }
 
     set value(value: T) {
         if (this.propertyValue !== value) {
-            if (this.debugOptions) {
-                console.log(`${this.debugOptions.label} property value changed.`, {from: this.propertyValue, to: value});
-            }
-
             this.propertyValue = value;
             this.update();
         }
@@ -35,10 +29,6 @@ export class ObservableProperty<T> {
         }
 
         return this.propertyValue;
-    }
-
-    debug(options: {label: string} ) {
-        this.debugOptions = options;
     }
 
     observe(callback: (value: T) => void | Promise<void>) {
@@ -58,10 +48,6 @@ export class ObservableProperty<T> {
     }
 
     update() {
-        if (this.debugOptions) {
-            console.log(`${this.debugOptions.label} notifies ${this.subscribers.size} subscribers.`);
-        }
-
         for(const callback of this.subscribers.values()) {
             callback(this.propertyValue);
         }
@@ -83,10 +69,6 @@ export class ObservableProperty<T> {
      * @param host The Lit component that will use this controller.
      */
     watch(host: ReactiveControllerHost) {
-        if (this.debugOptions) {
-            console.log(`Host is watching property ${this.debugOptions?.label}`, host);
-        }
-
         return new ObservableController(host, this);
     }
 }

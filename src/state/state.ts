@@ -22,8 +22,6 @@ import type {CardDragDropState} from './cardDragDropState.ts';
 export const userState = new ObservableProperty<UserStateEntry>(new UserStateEntry());
 
 export const activeStartPanel = new ObservableProperty<StartPanel | null>(null);
-activeStartPanel.debug({label: 'activeStartPanel'});
-
 export const activeRemoteUrl = new ObservableProperty<string | null>(null);
 export const activeOverlay = new ObservableProperty<OverlayType | null>(null);
 export const activeSubOverlay = new ObservableProperty<OverlayType | null>(null);

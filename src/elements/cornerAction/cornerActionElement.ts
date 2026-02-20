@@ -38,7 +38,6 @@ export class CornerActionElement extends LitElement {
     static styles = cornerActionElementStyle;
 
     render() {
-        console.log('Rendering corner icon with actions:', cornerActions);
         const actions = cornerActions.value;
 
         if (actions.size === SettingsIconStyle.Off) {

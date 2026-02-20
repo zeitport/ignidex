@@ -206,8 +206,6 @@ export class EditBookmarkCardOverlay extends LitElement {
     }
 
     private handleSave = async () => {
-        console.log('#Interaction Save bookmark');
-
         if (!this.name.trim()) {
             this.nameError = 'Title must not be empty.';
             return;

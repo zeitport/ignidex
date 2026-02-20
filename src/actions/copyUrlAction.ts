@@ -8,7 +8,6 @@ export class CopyUrlAction implements ActionInterface {
 
         try {
             await navigator.clipboard.writeText(card.url);
-            console.log('URL copied to clipboard:', card.url);
         } catch (err) {
             console.error('Failed to copy URL to clipboard:', err);
         }
