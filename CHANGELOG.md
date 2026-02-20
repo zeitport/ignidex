@@ -1,48 +1,45 @@
 # Changelog
 
+## [0.9.0]
+
+- #074 Icon style for panel header icons
+- #075 Edit bookmark shortcut (E)
+- #076 Various UX improvements (stable settings overlay, merged context menus)
+- UX: Hints for section and group title
+- UX: Coffee icon
+
 ## [0.8.0]
 
-### Added
 - #067 Icon styles: none, mask, maskAccent
 - #068 Hints for icon style buttons
 - #069 Drop card over empty group
-
-### Fixed
 - #066 Sticky drag ghost
 - #070 Add section action
 
 ## [0.7.0]
 
-### Added
 - Copy and paste bookmarks (inside app)
 - Move a group to another section
-
-### Fixed
 - Edited bookmarks could not be stored
 
 ## [0.6.0]
 
-### Added
 - Drag and drop to reorder bookmark cards
 - Move bookmark to another group via context menu
 - Switch panel keyboard shortcuts (1-9)
 - Settings URL parameter support
 - Corner action for "Buy me a coffee"
 - Icon preview click opens image asset viewer
-
-### Changed
 - Improved layout spacing
 - Updated panel header style
 - Disabled user text selection for bookmarks
 
 ## [0.5.1]
 
-### Fixed
 - Bookmark context menu issues
 
 ## [0.5.0]
 
-### Added
 - Image/icon gallery for bookmarks
 - Corner actions (customizable corner buttons)
 - Remote start panel sharing (copy/paste URLs)
@@ -57,8 +54,6 @@
 - Bookmark on-click action setting
 - Open link in new tab with middle mouse button
 - Buy me a coffee button
-
-### Fixed
 - Icon preview
 - Edit panels overlay
 - Edit group overlay
@@ -67,7 +62,6 @@
 
 ## [0.4.0]
 
-### Added
 - Hover hints with customizable templates
 - About settings panel
 - Move panels up/down
@@ -78,6 +72,4 @@
 - Header icon and description
 - Drop JSON file to import
 - Docker health check
-
-### Fixed
 - Key capture issues
