@@ -1,6 +1,5 @@
 import {Icon} from '#models/internal/icon.ts';
-import {mdiCancel, mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
-import {Coffee} from 'lucide';
+import {mdiCancel, mdiCoffeeOutline, mdiCog, mdiExport, mdiGithub, mdiSwapHorizontal} from '@mdi/js';
 import {CornerActionType} from '#models/idb/cornerActionType.ts';
 
 export const cornerActionIconSvgMap: Record<CornerActionType, Icon> = {
@@ -9,5 +8,5 @@ export const cornerActionIconSvgMap: Record<CornerActionType, Icon> = {
     [CornerActionType.Home]: Icon.fromMdiIcon(mdiGithub),
     [CornerActionType.SwitchPanel]: Icon.fromMdiIcon(mdiSwapHorizontal),
     [CornerActionType.Export]: Icon.fromMdiIcon(mdiExport),
-    [CornerActionType.Coffee]: Icon.fromLucideIcon(Coffee),
+    [CornerActionType.Coffee]: Icon.fromMdiIcon(mdiCoffeeOutline),
 };

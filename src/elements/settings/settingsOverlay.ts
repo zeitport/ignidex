@@ -3,19 +3,21 @@ import {Icon} from '#models/internal/icon.ts';
 import {html, LitElement, css} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {ListItem} from '../listElement.ts';
-import {mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline, mdiCompassOutline} from '@mdi/js';
-import {Coffee} from 'lucide';
+import {
+    mdiPalette, mdiDatabase, mdiInformationOutline, mdiKeyboard, mdiImageMultipleOutline, mdiCompassOutline,
+    mdiCoffeeOutline
+} from '@mdi/js';
 import {activeSettingsPanelId} from '#state';
 import {updateSettingsUrlParameter} from '#app/settingsUrlParameter.ts';
 import '../overlayElement.ts';
 import '../listElement.ts';
-import '../settings/uiSettingsPanel.ts';
-import '../settings/navigationSettingsPanel.ts';
-import '../settings/storageSettingsPanel.ts';
-import '../settings/aboutSettingsPanel.ts';
-import '../settings/keyboardShortcutsSettingsPanel.ts';
-import '../settings/imageGallerySettingsPanel.ts';
-import '../settings/coffeeSettingsPanel.ts';
+import './uiSettingsPanel.ts';
+import './navigationSettingsPanel.ts';
+import './storageSettingsPanel.ts';
+import './aboutSettingsPanel.ts';
+import './keyboardShortcutsSettingsPanel.ts';
+import './imageGallerySettingsPanel.ts';
+import './coffeeSettingsPanel.ts';
 import '../dialogButton.ts';
 
 const DEFAULT_PANEL_ID = 'ui';
@@ -59,7 +61,7 @@ export class SettingsOverlay extends LitElement {
         {id: 'keyboard', label: t.settingsPanel.sidebarKeyboard, icon: Icon.fromMdiIcon(mdiKeyboard)},
         {id: 'gallery', label: t.settingsPanel.sidebarImageGallery, icon: Icon.fromMdiIcon(mdiImageMultipleOutline)},
         {id: 'storage', label: t.settingsPanel.sidebarStorage, icon: Icon.fromMdiIcon(mdiDatabase)},
-        {id: 'coffee', label: t.settingsPanel.sidebarCoffee, icon: Icon.fromLucideIcon(Coffee)},
+        {id: 'coffee', label: t.settingsPanel.sidebarCoffee, icon: Icon.fromMdiIcon(mdiCoffeeOutline)},
         {id: 'about', label: t.settingsPanel.sidebarAbout, icon: Icon.fromMdiIcon(mdiInformationOutline)}
     ];
 

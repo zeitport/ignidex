@@ -23,7 +23,7 @@ export * from './overlays/editGroupOverlay.ts';
 export * from './overlays/selectSectionOverlay.ts';
 export * from './overlays/selectGroupOverlay.ts';
 export * from './overlays/confirmationOverlay.ts';
-export * from './overlays/settingsOverlay.ts';
+export * from './settings/settingsOverlay.ts';
 export * from './overlays/messageOverlay.ts';
 export * from './overlays/selectCornerActionOverlay.ts';
 export * from './overlays/dropFileOverlay.ts';
