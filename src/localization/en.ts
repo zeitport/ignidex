@@ -51,6 +51,8 @@ export const hints = {
     dropZoneBottom: 'Release [LMB] to insert after',
     dropZoneInlineStart: 'Release [LMB] to insert before',
     dropZoneInlineEnd: 'Release [LMB] to insert after',
+    cardSectionTitle: '[RMB] Open section menu',
+    cardGroupTitle: '[RMB] Open group menu',
 }
 
 /**

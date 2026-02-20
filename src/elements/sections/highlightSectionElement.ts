@@ -50,9 +50,16 @@ export class HighlightSectionElement extends LitElement {
 
         return html`
             <div class="card-section">
-                <div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>${this.section.name}</div>
+                <div
+                    class="section-title"
+                    @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}
+                    ${hoverHint(t.hints.cardSectionTitle)}
+                >${this.section.name}</div>
 
-                <div class="bookmarks" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>
+                <div
+                    class="bookmarks"
+                    @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}
+                >
                     ${cardsWithGroup.map(({card, group}) => this.renderCard(card, group))}
                     ${emptyGroups.map(group => this.renderEmptyGroupPlaceholder(group))}
                 </div>

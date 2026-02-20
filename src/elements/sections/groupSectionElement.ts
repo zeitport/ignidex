@@ -45,7 +45,11 @@ export class GroupSectionElement extends LitElement {
 
         return html`
             <div class="card-section">
-                <div class="section-title" @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}>${this.section.name}</div>
+                <div
+                    class="section-title"
+                    @contextmenu=${(event: MouseEvent) => this.handleSectionContextMenu(event)}
+                    ${hoverHint(t.hints.cardSectionTitle)}
+                >${this.section.name}</div>
 
                 <div class="grid">
                     ${this.section.groups.map(group => this.renderList(group))}
@@ -61,7 +65,11 @@ export class GroupSectionElement extends LitElement {
 
         return html`
             <div class="bookmark-group" id="${group.id}">
-                <h2 class="group-title" @contextmenu=${(event: MouseEvent) => this.handleGroupContextMenu(event, group)}>${group.name}</h2>
+                <h2
+                    class="group-title"
+                    @contextmenu=${(event: MouseEvent) => this.handleGroupContextMenu(event, group)}
+                    ${hoverHint(t.hints.cardGroupTitle)}
+                >${group.name}</h2>
                 <div class="bookmark-group-items">
                     ${group.cards.map(card => this.renderCard(card, group))}
                     ${isDragging && isEmpty ? html`
