@@ -28,6 +28,7 @@ export const overlayElementStyle = css`
     .overlay-container {
         width: 100%;
         max-width: var(--overlay-max-width);
+        min-height: var(--overlay-min-height, auto);
         max-height: var(--overlay-max-height);
         background: var(--panel);
         border-radius: var(--overlay-border-radius);

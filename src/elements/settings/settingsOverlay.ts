@@ -70,11 +70,19 @@ export class SettingsOverlay extends LitElement {
             display: block;
             position: absolute;
             inset: 0;
+            --overlay-min-height: 80vh;
+            --overlay-max-height: 80vh;
+        }
+
+        @media (max-height: 1000px) {
+            :host {
+                --overlay-min-height: 90vh;
+                --overlay-max-height: 90vh;
+            }
         }
 
         .settings-container {
             display: flex;
-            min-height: 60vh;
             gap: 2rem;
         }
 
