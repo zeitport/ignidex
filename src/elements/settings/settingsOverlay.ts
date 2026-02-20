@@ -84,14 +84,20 @@ export class SettingsOverlay extends LitElement {
         .settings-container {
             display: flex;
             gap: 2rem;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
         }
 
         .settings-sidebar {
             width: 200px;
+            overflow-y: auto;
         }
 
         .settings-content {
             flex: 1;
+            min-height: 0;
+            overflow-y: auto;
         }
     `;
 

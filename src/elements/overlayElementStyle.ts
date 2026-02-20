@@ -39,13 +39,20 @@ export const overlayElementStyle = css`
     }
 
     .overlay-body-section {
+        flex: 1;
+        min-height: 0;
         overflow-y: auto;
         overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
     }
 
     .overlay-body {
         margin: var(--overlay-body-margin);
         flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
     }
 
     .overlay-header {
